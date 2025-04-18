@@ -65,25 +65,28 @@ const items =[
           <span className={'px-2'}>Register</span>
         </div>
       </Header>
-      <Content style={{padding: '0 48px'}}>
-        <Breadcrumb style={{margin: '16px 0'}}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        <div
-          style={{
-            padding: 24,
-            minHeight: 380,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          Content
-        </div>
+      <Content
+        // style={{padding: '0 48px'}}
+      >
+        {/*<Breadcrumb style={{margin: '16px 0'}}>*/}
+        {/*  <Breadcrumb.Item>Home</Breadcrumb.Item>*/}
+        {/*  <Breadcrumb.Item>List</Breadcrumb.Item>*/}
+        {/*  <Breadcrumb.Item>App</Breadcrumb.Item>*/}
+        {/*</Breadcrumb>*/}
+        {/*<div*/}
+        {/*  style={{*/}
+        {/*    padding: 24,*/}
+        {/*    minHeight: 380,*/}
+        {/*    // background: colorBgContainer,*/}
+        {/*    borderRadius: borderRadiusLG,*/}
+        {/*  }}*/}
+        {/*  className={"bg-[#fafcff]"}*/}
+        {/*>*/}
+        {/*  Content*/}
+        {/*</div>*/}
         <Outlet/>
       </Content>
-      <Footer style={{textAlign: 'center'}}>
+      <Footer className={"px-12 py-4 border-t"}>
         ©{new Date().getFullYear()} Dorna Sports SL. All rights reserved. All trademarks are the property of their
         respective owners.
       </Footer>

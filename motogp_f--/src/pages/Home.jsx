@@ -1,9 +1,18 @@
 import React from 'react';
+import bgHome from '../assets/bg_home.jpg';
+import {Button} from "antd"; // Import hình ảnh từ thư mục assets
 
 const Home = () => {
   return (
-    <div>
-      Home
+    <div
+      className="min-h-[812px] w-full bg-cover bg-center flex items-end justify-start reveal-bg"
+      style={{ backgroundImage: `url(${bgHome})` }}
+    >
+      <div className={"text-white p-12 space-y-6"}>
+        <div className={"text-xl"}>MotoGP™</div>
+        <div className={"text-6xl font-extrabold w-3/5"}>Aprilia provide update on Martin's recovery</div>
+        <Button className={"bg-red-600"} >READ NOW</Button>
+      </div>
     </div>
   );
 };
