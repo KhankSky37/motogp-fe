@@ -8,6 +8,7 @@ const Home = () => {
       className="min-h-[812px] w-full bg-cover bg-center flex items-end justify-start bg-gradient-to-b from-transparent to-black"
       style={{ backgroundImage: `url(${bgHome})` }}
     >
+
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black h-full w-full"></div>
       <div className={"relative text-white p-12 space-y-6"}>
         <div className={"text-xl"}>MotoGP™</div>
