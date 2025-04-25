@@ -1,5 +1,5 @@
 import React from 'react';
-import bgHome from '../assets/bg_home.jpg';
+import bgHome from '../../assets/bg_home.jpg';
 import {Button} from "antd"; // Import hình ảnh từ thư mục assets
 
 const Home = () => {
