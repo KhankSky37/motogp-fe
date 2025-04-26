@@ -2,7 +2,7 @@ import DefaultLayout from "../layouts/DefaultLayout.jsx";
 import Home from "../pages/user/Home.jsx";
 import Login from "../pages/Login.jsx";
 import AdminLayout from "../layouts/AdminLayout.jsx";
-import AdminRider from "../pages/Admin/AdminRider.jsx";
+import AdminRider from "../pages/Admin/rider/AdminRider.jsx";
 import NotFound from "../pages/NotFound.jsx";
 import AdminCategory from "../pages/Admin/AdminCategory.jsx";
 import AdminCircuit from "../pages/Admin/AdminCircuit.jsx";

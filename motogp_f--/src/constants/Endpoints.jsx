@@ -1,0 +1,15 @@
+export const API = {
+  LOGIN: "/login",
+  CATEGORIES: "/categories",
+  CIRCUITS: "/circuits",
+  EVENTS: "/events",
+  MANUFACTURERS: "/manufacturers",
+  NEWS_ARTICLES: "/news",
+  RESULTS: "/results",
+  RIDERS: "/riders",
+  SEASONS: "/seasons",
+  SESSIONS: "/sessions",
+  TEAMS: "/teams",
+  USERS: "/users",
+  CONTRACTS: "/contracts",
+}
