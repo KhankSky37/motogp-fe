@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import RiderService from '../../../services/RiderService.jsx'; // Corrected import path
-import {Alert, Button, Spin, Table} from 'antd';
-import {PlusOutlined} from "@ant-design/icons"; // Added Button for potential actions
+import {Alert, Button, Popconfirm, Spin, Table} from 'antd';
+import {DeleteOutlined, EditOutlined, EyeOutlined, FormOutlined, PlusOutlined} from "@ant-design/icons"; // Added Button for potential actions
 
 const AdminRider = () => {
   const [riders, setRiders] = useState([]);
@@ -36,9 +36,8 @@ const AdminRider = () => {
     {
       title: 'No.',
       key: 'no',
-      width: 60, // Optional: Set a fixed width
+      width: 60,
       render: (text, record, index) => {
-        // Calculate row number based on current page and page size
         return (pagination.current - 1) * pagination.pageSize + index + 1;
       },
     },
@@ -46,7 +45,7 @@ const AdminRider = () => {
       title: 'ID',
       dataIndex: 'riderId',
       key: 'riderId',
-      sorter: (a, b) => a.riderId.localeCompare(b.riderId), // Example sorter
+      sorter: (a, b) => a.riderId.localeCompare(b.riderId),
     },
     {
       title: 'First Name',
@@ -71,27 +70,38 @@ const AdminRider = () => {
       key: 'dateOfBirth',
       render: (text) => text ? new Date(text).toLocaleDateString() : 'N/A', // Format date
     },
-    // Add Actions column if needed
     {
       title: 'Actions',
-      key: 'actions',
-      // render: (text, record) => (
-      //   <span>
-      //     <Button type="link"
-      //             // onClick={() => handleEdit(record.riderId)}
-      //     >Edit</Button>
-      //     <Button type="link" danger
-      //             // onClick={() => handleDelete(record.riderId)}
-      //     >Delete</Button>
-      //   </span>
-      // ),
+      key: 'Actions',
+      align: 'center',
+      render: (_, record) => (
+        <span>
+          <Button type="link" icon={<EyeOutlined className={"text-gray-400"}/>}
+                  onClick={() => handleView(record)}
+          />
+          <Button type="link" icon={<EditOutlined/>}
+            // onClick={() => handleUpdate(record.groupId)}
+          />
+          <Popconfirm
+            title="Xóa nhóm"
+            description="Bạn có muốn xóa nhóm này không?"
+            // onConfirm={() => handleDelete(record.groupId)}
+            okText="Có"
+            cancelText="Không"
+          >
+            <Button type="link" danger icon={<DeleteOutlined/>}/>
+          </Popconfirm>
+        </span>
+      ),
     },
   ];
 
   // Placeholder functions for actions (implement these based on your needs)
   // const handleEdit = (id) => { console.log('Edit rider:', id); /* Add edit logic */ };
   // const handleDelete = (id) => { console.log('Delete rider:', id); /* Add delete logic */ };
+  const handleView = (record) => {
 
+  };
 
   if (error) {
     return <Alert message="Error" description={error} type="error" showIcon/>;
@@ -101,7 +111,6 @@ const AdminRider = () => {
     <div>
       <div className={'flex justify-between items-center mb-4'}>
         <h2 className={'text-2xl font-medium'}>Rider Management</h2>
-        {/* Add Button to create new rider */}
         <Button type="primary" className={"bg-blue-700"} onClick={() => console.log('Add new rider')}
                 icon={<PlusOutlined/>}>
           Add Rider
