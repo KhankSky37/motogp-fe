@@ -65,7 +65,7 @@ const AdminRider = () => {
   };
 
   const handleEdit = (riderId) => {
-    console.log("Edit rider clicked:", riderId);
+    navigate(`/admin/riders/update/${riderId}`);
   };
 
   const handleDelete = async (riderId) => {
