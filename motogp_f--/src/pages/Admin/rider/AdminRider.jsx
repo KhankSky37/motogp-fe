@@ -5,19 +5,9 @@ import RiderService from "../../../services/RiderService.jsx";
 import RiderTable from "../../../components/admin/rider/RiderTable.jsx";
 import RiderDetailModal from "../../../components/admin/rider/RiderDetailModal.jsx";
 import RiderSearchForm from "../../../components/admin/rider/RiderSearchForm.jsx";
-
-const countries = [
-  {code: 'ES', name: 'Spain'},
-  {code: 'IT', name: 'Italy'},
-  {code: 'FR', name: 'France'},
-  {code: 'AU', name: 'Australia'},
-  {code: 'PT', name: 'Portugal'},
-  {code: 'ZA', name: 'South Africa'},
-  {code: 'JP', name: 'Japan'},
-  {code: 'GB', name: 'United Kingdom'},
-  {code: 'DE', name: 'Germany'},
-  {code: 'MY', name: 'Malaysia'},
-];
+import {useNavigate} from "react-router-dom";
+import {COUNTRIES} from "../../../constants/Countries.jsx";
+const countries = COUNTRIES;
 
 
 const AdminRider = () => {
@@ -32,6 +22,7 @@ const AdminRider = () => {
   const [selectedRider, setSelectedRider] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
 
+  const navigate = useNavigate();
   const fetchRiders = useCallback(async (keyword = '', country = null) => {
     setLoading(true);
     setError(null);
@@ -70,6 +61,7 @@ const AdminRider = () => {
 
   const handleAdd = () => {
     console.log("Add rider clicked");
+    navigate('/admin/riders/create');
   };
 
   const handleEdit = (riderId) => {

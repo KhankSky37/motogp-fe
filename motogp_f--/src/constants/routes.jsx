@@ -15,6 +15,7 @@ import AdminSession from "../pages/Admin/AdminSession.jsx";
 import AdminTeam from "../pages/Admin/AdminTeam.jsx";
 import AdminUser from "../pages/Admin/AdminUser.jsx";
 import AdminContract from "../pages/Admin/AdminContract.jsx";
+import AdminRiderCreate from "../pages/Admin/rider/AdminRiderCreate.jsx";
 
 export const routes = [
   {
@@ -62,6 +63,10 @@ export const routes = [
       {
         path: "riders",
         element: <AdminRider/>
+      },
+      { 
+        path: "riders/create",
+        element: <AdminRiderCreate/>
       },
       {
         path: "seasons",
