@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Alert, Button } from 'antd';
+import {Alert, Button, message} from 'antd';
 import { PlusOutlined } from "@ant-design/icons";
 import RiderService from "../../../services/RiderService.jsx";
 import RiderTable from "../../../components/admin/rider/RiderTable.jsx";
@@ -12,6 +12,7 @@ const AdminRider = () => {
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 });
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRider, setSelectedRider] = useState(null);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const fetchRiders = useCallback(async () => {
     setLoading(true);
@@ -52,7 +53,13 @@ const AdminRider = () => {
   };
 
   const handleDelete = async (riderId) => {
-    console.log("Delete rider clicked:", riderId);
+    try{
+      await RiderService.deleteRider(riderId);
+      messageApi.success("Delete rider successfully!");
+      setRiders(prev => prev.filter(rider => rider.riderId !== riderId));
+    }catch (error){
+      console.error("Error deleting rider:", error);
+    }
   };
 
   const handleView = (record) => {
@@ -72,6 +79,7 @@ const AdminRider = () => {
 
   return (
     <div>
+      {contextHolder}
       <div className={'flex justify-between items-center mb-4'}>
         <h2 className={'text-2xl font-medium'}>Rider Management</h2>
         <Button
