@@ -38,11 +38,12 @@ const AdminRider = () => {
     try {
       const params = {
         keyword: keyword,
-        country: country,
+        nationality: country,
       };
 
       const response = await RiderService.getAllRiders(params);
       setRiders(response.data);
+      console.log("Fetched riders:", response);
     } catch (err) {
       console.error("Error fetching riders:", err);
       setError("Failed to load rider data. Please try again.");

@@ -3,7 +3,7 @@ import { API } from "../constants/Endpoints.jsx";
 
 const RiderService = {
   getAllRiders: (params) => {
-    return httpClient.get(API.RIDERS,params);
+    return httpClient.get(API.RIDERS, {params});
   },
 
   getRiderById: (id) => {
