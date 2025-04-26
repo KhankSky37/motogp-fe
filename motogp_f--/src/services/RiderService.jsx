@@ -2,8 +2,8 @@ import httpClient from "../config/HttpClient.jsx";
 import { API } from "../constants/Endpoints.jsx";
 
 const RiderService = {
-  getAllRiders: () => {
-    return httpClient.get(API.RIDERS);
+  getAllRiders: (params) => {
+    return httpClient.get(API.RIDERS,params);
   },
 
   getRiderById: (id) => {

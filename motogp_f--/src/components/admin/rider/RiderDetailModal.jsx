@@ -1,9 +1,9 @@
 import React from 'react';
-import { Modal, Button, Descriptions, Image } from 'antd';
-import { formatDate } from '../../../utils/formatters';
-import { getImageUrl } from '../../../utils/urlHelpers';
+import {Modal, Button, Descriptions, Image} from 'antd';
+import {formatDate} from '../../../utils/formatters';
+import {getImageUrl} from '../../../utils/urlHelpers';
 
-const RiderDetailModal = ({ rider, visible, onClose }) => {
+const RiderDetailModal = ({rider, visible, onClose}) => {
   if (!rider) return null; // Don't render if no rider data
 
   const photoUrl = getImageUrl(rider.photoUrl);

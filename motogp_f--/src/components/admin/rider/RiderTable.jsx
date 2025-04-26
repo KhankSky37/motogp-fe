@@ -15,8 +15,8 @@ const RiderTable = ({
                       pagination,
                       onTableChange,
                       onView,
-                      onEdit, // Placeholder for edit handler
-                      onDelete // Placeholder for delete handler
+                      onEdit,
+                      onDelete
                     }) => {
 
   const columns = [
@@ -25,7 +25,6 @@ const RiderTable = ({
       key: 'no',
       width: 60,
       render: (text, record, index) => {
-        // Ensure pagination and pageSize exist before calculation
         const current = pagination?.current ?? 1;
         const pageSize = pagination?.pageSize ?? 10;
         return (current - 1) * pageSize + index + 1;
@@ -93,8 +92,11 @@ const RiderTable = ({
         columns={columns}
         rowKey="riderId" // Ensure unique key
         bordered
-        pagination={pagination} // Pass pagination state
-        onChange={onTableChange} // Pass handler
+        pagination={{
+          showSizeChanger: true,
+          pageSizeOptions: ['10', '20', '50'],
+        }}
+        onChange={onTableChange}
         scroll={{x: 'max-content'}}
       />
     </Spin>

@@ -1,24 +1,47 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, Button, message} from 'antd';
-import { PlusOutlined } from "@ant-design/icons";
+import {PlusOutlined} from "@ant-design/icons";
 import RiderService from "../../../services/RiderService.jsx";
 import RiderTable from "../../../components/admin/rider/RiderTable.jsx";
 import RiderDetailModal from "../../../components/admin/rider/RiderDetailModal.jsx";
+import RiderSearchForm from "../../../components/admin/rider/RiderSearchForm.jsx";
+
+const countries = [
+  {code: 'ES', name: 'Spain'},
+  {code: 'IT', name: 'Italy'},
+  {code: 'FR', name: 'France'},
+  {code: 'AU', name: 'Australia'},
+  {code: 'PT', name: 'Portugal'},
+  {code: 'ZA', name: 'South Africa'},
+  {code: 'JP', name: 'Japan'},
+  {code: 'GB', name: 'United Kingdom'},
+  {code: 'DE', name: 'Germany'},
+  {code: 'MY', name: 'Malaysia'},
+];
+
 
 const AdminRider = () => {
   const [riders, setRiders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 });
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+  });
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRider, setSelectedRider] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const fetchRiders = useCallback(async () => {
+  const fetchRiders = useCallback(async (keyword = '', country = null) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await RiderService.getAllRiders();
+      const params = {
+        keyword: keyword,
+        country: country,
+      };
+
+      const response = await RiderService.getAllRiders(params);
       setRiders(response.data);
     } catch (err) {
       console.error("Error fetching riders:", err);
@@ -36,7 +59,7 @@ const AdminRider = () => {
 
   const handleTableChange = (newPagination, filters, sorter) => {
     console.log('Table changed:', newPagination, filters, sorter);
-    const { current, pageSize } = newPagination;
+    const {current, pageSize} = newPagination;
     setPagination(prev => ({
       ...prev,
       current: current,
@@ -53,11 +76,11 @@ const AdminRider = () => {
   };
 
   const handleDelete = async (riderId) => {
-    try{
+    try {
       await RiderService.deleteRider(riderId);
       messageApi.success("Delete rider successfully!");
       setRiders(prev => prev.filter(rider => rider.riderId !== riderId));
-    }catch (error){
+    } catch (error) {
       console.error("Error deleting rider:", error);
     }
   };
@@ -74,8 +97,13 @@ const AdminRider = () => {
   };
 
   if (error) {
-    return <Alert message="Error" description={error} type="error" showIcon closable onClose={() => setError(null)} />;
+    return <Alert message="Error" description={error} type="error" showIcon closable onClose={() => setError(null)}/>;
   }
+
+  const onSearchFinish = (values) => {
+    console.log("Search values:", values);
+    fetchRiders(values.keyword, values.country);
+  };
 
   return (
     <div>
@@ -86,11 +114,12 @@ const AdminRider = () => {
           type="primary"
           className={"bg-blue-700"}
           onClick={handleAdd}
-          icon={<PlusOutlined />}
+          icon={<PlusOutlined/>}
         >
           Add Rider
         </Button>
       </div>
+      <RiderSearchForm countries={countries} onFinish={onSearchFinish}/>
 
       <RiderTable
         dataSource={riders}
