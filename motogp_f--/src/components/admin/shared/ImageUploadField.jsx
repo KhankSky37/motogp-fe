@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Image, Tooltip, Upload, message } from 'antd'; // Import message
-import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
-import { getImageUrl } from '../../../utils/urlHelpers'; // Import helper nếu cần tạo URL đầy đủ
+import React, {useCallback, useEffect, useState} from 'react';
+import {Button, Image, message, Tooltip, Upload} from 'antd';
+import {CloseOutlined, PlusOutlined} from '@ant-design/icons';
+import {getImageUrl} from '../../../utils/urlHelpers'; // Đảm bảo đã import
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -11,37 +11,33 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
+
 const ImageUploadField = ({
-                            value = null, // Nhận value từ Form.Item
-                            onChange,     // Callback để cập nhật Form.Item
+                            value = null,
+                            onChange,
                             maxSizeMB = 2,
                             acceptedTypes = ['image/jpeg', 'image/png', 'image/webp'],
                           }) => {
-  // Không cần internalFileList nữa vì Antd Upload quản lý file list khi dùng onChange
   const [previewImageUrl, setPreviewImageUrl] = useState('');
   const [uploadError, setUploadError] = useState('');
-  const [messageApi, contextHolder] = message.useMessage(); // Dùng messageApi nội bộ
+  const [messageApi, contextHolder] = message.useMessage();
 
-  // Effect để xử lý giá trị value ban đầu (URL ảnh hoặc null)
   useEffect(() => {
     if (typeof value === 'string' && value) {
-      // Nếu value là string (URL ảnh ban đầu), hiển thị nó
-      // Giả sử value là đường dẫn tương đối, cần getImageUrl nếu backend trả về vậy
-      // const fullUrl = getImageUrl(value); // Bỏ comment nếu cần
-      // setPreviewImageUrl(fullUrl || '');
-      setPreviewImageUrl(value); // Nếu value đã là URL đầy đủ hoặc ImageUploadField xử lý được
+      const fullUrl = getImageUrl(value); // Tạo URL đầy đủ từ đường dẫn tương đối
+      setPreviewImageUrl(fullUrl || ''); // Set URL đầy đủ cho preview
     } else if (value instanceof File) {
-      // Nếu value ban đầu là File (ít gặp hơn cho update, nhưng xử lý cho chắc)
+      // Nếu value ban đầu là File, tạo Base64 preview
       getBase64(value).then(url => setPreviewImageUrl(url)).catch(() => setPreviewImageUrl(''));
-    }
-    else {
-      // Nếu value là null hoặc không hợp lệ, không hiển thị preview
+    } else {
+      // Nếu value là null hoặc không hợp lệ, xóa preview
       setPreviewImageUrl('');
     }
   }, [value]); // Chạy lại khi value từ Form thay đổi
 
+  // ... (handleInternalUploadChange, handleInternalRemove, handleBeforeUpload remain the same) ...
   // Xử lý khi người dùng chọn file mới
-  const handleInternalUploadChange = useCallback(async ({ file, fileList }) => {
+  const handleInternalUploadChange = useCallback(async ({file, fileList}) => {
     // fileList là danh sách file do Antd Upload quản lý
     const latestFile = fileList.slice(-1)[0]; // Lấy file mới nhất
 
@@ -104,31 +100,32 @@ const ImageUploadField = ({
     return false;
   }, [acceptedTypes, maxSizeMB, messageApi]);
 
+
   const uploadButton = (
     <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <PlusOutlined/>
+      <div style={{marginTop: 8}}>Upload</div>
     </div>
   );
 
   return (
     <div className="flex items-start gap-2">
-      {contextHolder} {/* Để hiển thị messageApi */}
+      {contextHolder}
       {previewImageUrl && (
         <div className="relative h-[102px] w-[102px]">
           <Image
             width="100%"
             height="100%"
-            src={previewImageUrl}
+            src={previewImageUrl} // Sử dụng URL đầy đủ hoặc Base64
             alt="Preview"
             className="border border-gray-300 p-1 object-contain"
-            preview={{ src: previewImageUrl }}
+            preview={{src: previewImageUrl}}
           />
           <Tooltip title="Remove image">
             <Button
-              icon={<CloseOutlined />}
+              icon={<CloseOutlined/>}
               size="small"
-              onClick={handleInternalRemove} // Gọi hàm xóa tùy chỉnh
+              onClick={handleInternalRemove}
               className="absolute right-[-8px] top-[-8px] z-10 rounded-full shadow-md"
               aria-label="Remove image"
               danger
@@ -138,17 +135,15 @@ const ImageUploadField = ({
         </div>
       )}
 
-      {/* Chỉ hiển thị nút Upload khi chưa có ảnh preview */}
       {!previewImageUrl && (
         <div>
           <Upload
             listType="picture-card"
             beforeUpload={handleBeforeUpload}
-            onChange={handleInternalUploadChange} // onChange sẽ nhận fileList từ Antd
+            onChange={handleInternalUploadChange}
             maxCount={1}
             accept={acceptedTypes.join(',')}
-            showUploadList={false} // Không hiển thị danh sách file mặc định của Antd
-            // fileList={[]} // Không cần quản lý fileList ở đây nữa nếu dùng onChange đúng cách
+            showUploadList={false}
           >
             {uploadButton}
           </Upload>
