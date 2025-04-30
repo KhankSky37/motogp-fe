@@ -1,0 +1,8 @@
+body {
+  @apply font-sans;
+}
+
+.list-item {
+  @apply pl-[10px] pr-[14px] text-[18px] font-medium text-[18px] hover:text-white;
+}
+
