@@ -17,6 +17,8 @@ import AdminUser from "../pages/Admin/AdminUser.jsx";
 import AdminContract from "../pages/Admin/AdminContract.jsx";
 import AdminRiderCreate from "../pages/Admin/rider/AdminRiderCreate.jsx";
 import AdminRiderUpdate from "../pages/Admin/rider/AdminRiderUpdate.jsx";
+import AdminSeasonCreate from "../pages/Admin/season/AdminSeasonCreate.jsx";
+import AdminSeasonUpdate from "../pages/Admin/season/AdminSeasonUpdate.jsx";
 
 export const routes = [
   {
@@ -70,12 +72,20 @@ export const routes = [
         element: <AdminRiderCreate/>
       },
       {
-        path: "riders/update/:riderId", //
+        path: "riders/update/:riderId",
         element: <AdminRiderUpdate/>
       },
       {
         path: "seasons",
         element: <AdminSeason/>
+      },
+      {
+        path: "seasons/create",
+        element: <AdminSeasonCreate/>
+      },
+      {
+        path: "seasons/update/:seasonId",
+        element: <AdminSeasonUpdate/>
       },
       {
         path: "sessions",
