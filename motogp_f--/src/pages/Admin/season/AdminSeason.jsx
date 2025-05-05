@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, Button, message} from 'antd';
 import {PlusOutlined} from "@ant-design/icons";
-import SeasonService from "../../services/SeasonService.jsx";
-import SeasonTable from "../../components/admin/season/SeasonTable.jsx";
-import SeasonDetailModal from "../../components/admin/season/SeasonDetailModal.jsx";
-import SeasonSearchForm from "../../components/admin/season/SeasonSearchForm.jsx";
+import SeasonService from "../../../services/SeasonService.jsx";
+import SeasonTable from "../../../components/admin/season/SeasonTable.jsx";
+import SeasonDetailModal from "../../../components/admin/season/SeasonDetailModal.jsx";
+import SeasonSearchForm from "../../../components/admin/season/SeasonSearchForm.jsx";
 import {useNavigate} from "react-router-dom";
 
 const AdminSeason = () => {
