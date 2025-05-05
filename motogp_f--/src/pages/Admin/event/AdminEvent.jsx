@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Button, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import EventService from "../../services/EventService.jsx";
+import EventService from "../../../services/EventService.jsx";
 import { useNavigate } from "react-router-dom";
-import EventTable from "../../components/admin/event/EventTable.jsx";
-import EventDetailModal from "../../components/admin/event/EventDetailModal.jsx";
-import EventSearchForm from "../../components/admin/event/EventSearchForm.jsx";
+import EventTable from "../../../components/admin/event/EventTable.jsx";
+import EventDetailModal from "../../../components/admin/event/EventDetailModal.jsx";
+import EventSearchForm from "../../../components/admin/event/EventSearchForm.jsx";
 
 const AdminEvent = () => {
   const [events, setEvents] = useState([]);
