@@ -34,12 +34,7 @@ const EventTable = ({
         return (current - 1) * pageSize + index + 1;
       },
     },
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      sorter: safeStringSorter("id"),
-    },
+    
     {
       title: "Name",
       dataIndex: "name",
