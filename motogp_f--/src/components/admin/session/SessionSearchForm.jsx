@@ -24,7 +24,7 @@ const SessionSearchForm = ({
     <Card title="Search Sessions" className="mb-4">
       <Form form={form} layout="vertical" onFinish={handleSearch}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Form.Item name="eventId" label="Event">
+          <Form.Item name="eventId" >
             <Select allowClear placeholder="Select event" loading={loading}>
               {events.map((event) => (
                 <Option key={event.id} value={event.id}>
@@ -34,7 +34,7 @@ const SessionSearchForm = ({
             </Select>
           </Form.Item>
 
-          <Form.Item name="categoryId" label="Category">
+          <Form.Item name="categoryId" >
             <Select allowClear placeholder="Select category" loading={loading}>
               {categories.map((category) => (
                 <Option key={category.id} value={category.id}>
@@ -44,7 +44,7 @@ const SessionSearchForm = ({
             </Select>
           </Form.Item>
 
-          <Form.Item name="sessionType" label="Session Type">
+          <Form.Item name="sessionType" >
             <Select allowClear placeholder="Select session type">
               <Option value="PRACTICE">Practice</Option>
               <Option value="QUALIFYING">Qualifying</Option>
@@ -54,11 +54,11 @@ const SessionSearchForm = ({
             </Select>
           </Form.Item>
 
-          <Form.Item name="dateFrom" label="From Date">
+          <Form.Item name="dateFrom" >
             <DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm" />
           </Form.Item>
 
-          <Form.Item name="dateTo" label="To Date">
+          <Form.Item name="dateTo" >
             <DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm" />
           </Form.Item>
         </div>
