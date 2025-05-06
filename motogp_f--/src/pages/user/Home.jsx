@@ -21,6 +21,7 @@ const Home = () => {
           Get Started
         </Button>
       </div>
+      <div>test conflict</div>
     </div>
   );
 };

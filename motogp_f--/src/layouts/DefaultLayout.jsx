@@ -1,15 +1,21 @@
 import React from "react";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
-import { Outlet } from "react-router-dom";
+import { Layout, Menu } from "antd";
+import { Outlet, useNavigate } from "react-router-dom";
 import motogp from "../assets/motogp1.jpg";
 
 const { Header, Content, Footer } = Layout;
 
 const DefaultLayout = () => {
+  const navigate = useNavigate();
+
   const items = [
     {
       key: "calendar",
-      label: "calendar",
+      label: "Calendar",
+    },
+    {
+      key: "sessions",
+      label: "Sessions",
     },
     {
       key: "Results&Standings",
@@ -32,9 +38,13 @@ const DefaultLayout = () => {
       label: "News",
     },
   ];
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+
+  const handleMenuClick = (e) => {
+    if (e.key === "sessions") {
+      navigate("/sessions");
+    }
+  };
+
   return (
     <Layout>
       <Header
@@ -58,6 +68,7 @@ const DefaultLayout = () => {
           mode="horizontal"
           defaultSelectedKeys={["2"]}
           items={items}
+          onClick={handleMenuClick}
           style={{ flex: 1, minWidth: 0 }}
           className="text-white font-medium bg-black"
         />
@@ -67,25 +78,7 @@ const DefaultLayout = () => {
           <span className={"px-2"}>Register</span>
         </div>
       </Header>
-      <Content
-      // style={{padding: '0 48px'}}
-      >
-        {/*<Breadcrumb style={{margin: '16px 0'}}>*/}
-        {/*  <Breadcrumb.Item>Home</Breadcrumb.Item>*/}
-        {/*  <Breadcrumb.Item>List</Breadcrumb.Item>*/}
-        {/*  <Breadcrumb.Item>App</Breadcrumb.Item>*/}
-        {/*</Breadcrumb>*/}
-        {/*<div*/}
-        {/*  style={{*/}
-        {/*    padding: 24,*/}
-        {/*    minHeight: 380,*/}
-        {/*    // background: colorBgContainer,*/}
-        {/*    borderRadius: borderRadiusLG,*/}
-        {/*  }}*/}
-        {/*  className={"bg-[#fafcff]"}*/}
-        {/*>*/}
-        {/*  Content*/}
-        {/*</div>*/}
+      <Content>
         <Outlet />
       </Content>
       <Footer className={"px-12 py-4 border-t"}>
