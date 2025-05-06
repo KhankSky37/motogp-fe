@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, Button, message } from 'antd';
+import React, { useCallback, useEffect, useState } from "react";
+import { Alert, Button, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import SessionService from "../../services/SessionService.jsx";
 import EventService from "../../services/EventService.jsx";
@@ -25,23 +25,23 @@ const AdminSession = () => {
   const [searchParams, setSearchParams] = useState({});
 
   const navigate = useNavigate();
-  
+
   // Fetch events and categories for search dropdowns
   useEffect(() => {
     const fetchDropdownData = async () => {
       try {
         const [eventsResponse, categoriesResponse] = await Promise.all([
           EventService.getAllEvents({}),
-          CategoryService.getAllCategories()
+          CategoryService.getAllCategories(),
         ]);
-        
+
         setEvents(eventsResponse.data);
         setCategories(categoriesResponse.data);
       } catch (err) {
         console.error("Error fetching dropdown data:", err);
       }
     };
-    
+
     fetchDropdownData();
   }, []);
 
@@ -75,9 +75,9 @@ const AdminSession = () => {
   }, [fetchSessions, searchParams]);
 
   const handleTableChange = (newPagination, filters, sorter) => {
-    console.log('Table changed:', newPagination, filters, sorter);
+    console.log("Table changed:", newPagination, filters, sorter);
     const { current, pageSize } = newPagination;
-    setPagination(prev => ({
+    setPagination((prev) => ({
       ...prev,
       current: current,
       pageSize: pageSize,
@@ -86,7 +86,7 @@ const AdminSession = () => {
 
   const handleAdd = () => {
     console.log("Add session clicked");
-    navigate('/admin/sessions/create');
+    navigate("/admin/sessions/create");
   };
 
   const handleEdit = (sessionId) => {
@@ -97,7 +97,7 @@ const AdminSession = () => {
     try {
       await SessionService.deleteSession(sessionId);
       messageApi.success("Delete session successfully!");
-      setSessions(prev => prev.filter(session => session.id !== sessionId));
+      setSessions((prev) => prev.filter((session) => session.id !== sessionId));
     } catch (error) {
       console.error("Error deleting session:", error);
       messageApi.error("Failed to delete session. Please try again.");
@@ -121,25 +121,34 @@ const AdminSession = () => {
   };
 
   if (error) {
-    return <Alert message="Error" description={error} type="error" showIcon closable onClose={() => setError(null)}/>;
+    return (
+      <Alert
+        message="Error"
+        description={error}
+        type="error"
+        showIcon
+        closable
+        onClose={() => setError(null)}
+      />
+    );
   }
 
   return (
     <div>
       {contextHolder}
-      <div className={'flex justify-between items-center mb-4'}>
-        <h2 className={'text-2xl font-medium'}>Session Management</h2>
+      <div className={"flex justify-between items-center mb-4"}>
+        <h2 className={"text-2xl font-medium"}>Session Management</h2>
         <Button
           type="primary"
           className={"bg-blue-700"}
           onClick={handleAdd}
-          icon={<PlusOutlined/>}
+          icon={<PlusOutlined />}
         >
           Add Session
         </Button>
       </div>
-      
-      <SessionSearchForm 
+
+      <SessionSearchForm
         onSearch={handleSearch}
         events={events}
         categories={categories}
