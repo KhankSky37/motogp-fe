@@ -15,6 +15,7 @@ const Home = () => {
         <div className={"text-6xl font-extrabold w-3/5"}>Aprilia provide update on Martin's recovery</div>
         <Button className={"bg-red-600"} >READ NOW</Button>
       </div>
+      <div>test conflict</div>
     </div>
   );
 };
