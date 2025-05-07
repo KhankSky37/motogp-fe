@@ -24,6 +24,7 @@ import AdminSessionCreate from "../pages/Admin/session/AdminSessionCreate.jsx";
 import AdminSessionUpdate from "../pages/Admin/session/AdminSessionUpdate.jsx";
 import AdminEventCreate from "../pages/Admin/event/AdminEventCreate.jsx";
 import AdminEventUpdate from "../pages/Admin/event/AdminEventUpdate.jsx";
+import Result from "../pages/user/Result.jsx";
 
 export const routes = [
   {
@@ -34,11 +35,10 @@ export const routes = [
         index: true,
         element: <Home />,
       },
-      // Temporarily commenting out the sessions route until the component is created
-      // {
-      //   path: "sessions",
-      //   element: <Sessions />,
-      // },
+      {
+        path:'/gp-results',
+        element: <Result/>
+      },
     ],
   },
   {

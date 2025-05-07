@@ -42,6 +42,8 @@ const DefaultLayout = () => {
   const handleMenuClick = (e) => {
     if (e.key === "sessions") {
       navigate("/sessions");
+    }else if(e.key === 'Results&Standings'){
+      navigate('/gp-results')
     }
   };
 
