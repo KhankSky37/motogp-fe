@@ -112,10 +112,17 @@ const UserTable = ({
       columns={columns}
       dataSource={dataSource}
       loading={loading}
-      pagination={pagination}
+      // pagination={pagination}
       onChange={onTableChange}
       rowKey="id"
+      bordered
       scroll={{x: 'max-content'}}
+      pagination={{
+        showSizeChanger: true,
+        pageSizeOptions: ["10", "20", "50"],
+        showTotal: (total, range) =>
+          `[${range[0]}-${range[1]}] - ${total} records`,
+      }}
     />
   );
 };
