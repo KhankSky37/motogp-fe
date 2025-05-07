@@ -1,46 +1,24 @@
-import httpClient from "../config/HttpClient.jsx";
-import { API } from "../constants/Endpoints.jsx";
+import HttpClient from "../config/HttpClient.jsx";
 
 const RiderService = {
-  getAllRiders: (params) => {
-    return httpClient.get(API.RIDERS, {params});
+  getAllRiders(params = {}) {
+    return HttpClient.get("/riders", { params });
   },
 
-  getRiderById: (id) => {
-    return httpClient.get(`${API.RIDERS}/${id}`);
+  getRiderById(id) {
+    return HttpClient.get(`/riders/${id}`);
   },
 
-  createRider: (riderDto, photoFile) => {
-    const formData = new FormData();
-    // Append rider data as a JSON string blob part, matching the backend @RequestPart("rider")
-    formData.append('rider', new Blob([JSON.stringify(riderDto)], { type: 'application/json' }));
-    // Append the photo file part, matching the backend @RequestPart("photo")
-    formData.append('photo', photoFile);
-
-    return httpClient.post(API.RIDERS, formData, {
-      headers: {
-        // Override default Content-Type for multipart/form-data
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+  createRider(riderData) {
+    return HttpClient.post("/riders", riderData);
   },
 
-  updateRider: (id, riderDto, photoFile = null) => {
-    const formData = new FormData();
-    formData.append('rider', new Blob([JSON.stringify(riderDto)], { type: 'application/json' }));
-    if (photoFile) {
-      formData.append('photo', photoFile);
-    }
-
-    return httpClient.put(`${API.RIDERS}/${id}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+  updateRider(id, riderData) {
+    return HttpClient.put(`/riders/${id}`, riderData);
   },
 
-  deleteRider: (id) => {
-    return httpClient.delete(`${API.RIDERS}/${id}`);
+  deleteRider(id) {
+    return HttpClient.delete(`/riders/${id}`);
   },
 };
 

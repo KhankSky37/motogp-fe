@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Button, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import EventService from "../../services/EventService.jsx";
+import ResultService from "../../../services/ResultService.jsx";
+import ResultTable from "../../../components/admin/result/ResultTable.jsx";
+import ResultDetailModal from "../../../components/admin/result/ResultDetailModal.jsx";
+import ResultSearchForm from "../../../components/admin/result/ResultSearchForm.jsx";
 import { useNavigate } from "react-router-dom";
-import EventTable from "../../components/admin/event/EventTable.jsx";
-import EventDetailModal from "../../components/admin/event/EventDetailModal.jsx";
-import EventSearchForm from "../../components/admin/event/EventSearchForm.jsx";
 
-const AdminEvent = () => {
-  const [events, setEvents] = useState([]);
+const AdminResult = () => {
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pagination, setPagination] = useState({
@@ -16,31 +16,30 @@ const AdminEvent = () => {
     pageSize: 10,
   });
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedResult, setSelectedResult] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
   const [searchParams, setSearchParams] = useState({});
 
   const navigate = useNavigate();
 
-  const fetchEvents = useCallback(async (params = {}) => {
+  const fetchResults = useCallback(async (params = {}) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await EventService.getAllEvents(params);
-      setEvents(response.data);
-      console.log("Fetched events:", response);
+      const response = await ResultService.getAllResults(params);
+      setResults(response.data);
     } catch (err) {
-      console.error("Error fetching events:", err);
-      setError("Failed to load event data. Please try again.");
-      setEvents([]);
+      console.error("Error fetching results:", err);
+      setError("Failed to load result data. Please try again.");
+      setResults([]);
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchEvents(searchParams);
-  }, [fetchEvents, searchParams]);
+    fetchResults(searchParams);
+  }, [fetchResults, searchParams]);
 
   const handleTableChange = (newPagination) => {
     const { current, pageSize } = newPagination;
@@ -52,58 +51,58 @@ const AdminEvent = () => {
   };
 
   const handleAdd = () => {
-    navigate("/admin/events/create");
+    navigate("/admin/results/create");
   };
 
-  const handleEdit = (eventId) => {
-    navigate(`/admin/events/update/${eventId}`);
+  const handleEdit = (resultId) => {
+    navigate(`/admin/results/update/${resultId}`);
   };
 
-  const handleDelete = async (eventId) => {
+  const handleDelete = async (resultId) => {
     try {
-      await EventService.deleteEvent(eventId);
-      messageApi.success("Event deleted successfully!");
-      fetchEvents(searchParams); // Refresh the list
+      await ResultService.deleteResult(resultId);
+      messageApi.success("Result deleted successfully!");
+      fetchResults(searchParams); // Refresh the list
     } catch (error) {
-      console.error("Error deleting event:", error);
+      console.error("Error deleting result:", error);
 
-      // More specific error messages for delete operation
       if (error.response) {
         if (error.response.status === 404) {
           messageApi.error(
-            "Event not found. It may have been already deleted."
+            "Result not found. It may have been already deleted."
           );
         } else if (error.response.status === 409) {
           messageApi.error(
-            "This event cannot be deleted because it is referenced by other data."
+            "This result cannot be deleted because it is referenced by other data."
           );
         } else {
           messageApi.error(
-            `Failed to delete event: ${
+            `Failed to delete result: ${
               error.response.data?.message || "Unknown error"
             }`
           );
         }
       } else {
         messageApi.error(
-          "Failed to delete event. Please check your network connection."
+          "Failed to delete result. Please check your network connection."
         );
       }
     }
   };
 
   const handleView = (record) => {
-    setSelectedEvent(record);
+    setSelectedResult(record);
     setIsModalVisible(true);
   };
 
   const handleModalClose = () => {
     setIsModalVisible(false);
-    setSelectedEvent(null);
+    setSelectedResult(null);
   };
 
   const handleSearch = (values) => {
     setSearchParams(values);
+    setPagination((prev) => ({ ...prev, current: 1 }));
   };
 
   if (error) {
@@ -123,21 +122,21 @@ const AdminEvent = () => {
     <div>
       {contextHolder}
       <div className={"flex justify-between items-center mb-4"}>
-        <h2 className={"text-2xl font-medium"}>Event Management</h2>
+        <h2 className={"text-2xl font-medium"}>Result Management</h2>
         <Button
           type="primary"
           className={"bg-blue-700"}
           onClick={handleAdd}
           icon={<PlusOutlined />}
         >
-          Add Event
+          Add Result
         </Button>
       </div>
 
-      <EventSearchForm onSearch={handleSearch} />
+      <ResultSearchForm onFinish={handleSearch} />
 
-      <EventTable
-        events={events}
+      <ResultTable
+        results={results}
         loading={loading}
         pagination={pagination}
         onTableChange={handleTableChange}
@@ -146,14 +145,13 @@ const AdminEvent = () => {
         onDelete={handleDelete}
       />
 
-      <EventDetailModal
+      <ResultDetailModal
         visible={isModalVisible}
-        onCancel={handleModalClose}
-        event={selectedEvent}
-        viewOnly={true}
+        onClose={handleModalClose}
+        result={selectedResult}
       />
     </div>
   );
 };
 
-export default AdminEvent;
+export default AdminResult;

@@ -1,11 +1,3 @@
-import React from 'react';
-
-const AdminResult = () => {
-  return (
-    <div>
-      Hello Admin Result
-    </div>
-  );
-};
+import AdminResult from "./result/AdminResult";
 
 export default AdminResult;
