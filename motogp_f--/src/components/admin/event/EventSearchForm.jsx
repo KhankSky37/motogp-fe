@@ -44,7 +44,7 @@ const EventSearchForm = ({
       className="mb-4 bg-white p-4 rounded shadow-sm"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Form.Item name="keyword" label="Search">
+        <Form.Item name="keyword" >
           <Input
             placeholder="Search by name or official name"
             allowClear
@@ -54,7 +54,7 @@ const EventSearchForm = ({
 
         {expandForm && (
           <>
-            <Form.Item name="seasonId" label="Season">
+            <Form.Item name="seasonId" >
               <Select
                 placeholder="Select season"
                 allowClear
@@ -73,7 +73,7 @@ const EventSearchForm = ({
               </Select>
             </Form.Item>
 
-            <Form.Item name="circuitId" label="Circuit">
+            <Form.Item name="circuitId" >
               <Select
                 placeholder="Select circuit"
                 allowClear
@@ -92,14 +92,14 @@ const EventSearchForm = ({
               </Select>
             </Form.Item>
 
-            <Form.Item name="eventType" label="Event Type">
+            <Form.Item name="eventType">
               <Select allowClear placeholder="Select event type">
                 <Option value="RACE">Race</Option>
                 <Option value="TEST">Test</Option>
               </Select>
             </Form.Item>
 
-            <Form.Item name="dateRange" label="Date Range">
+            <Form.Item name="dateRange" >
               <RangePicker className="w-full" format="YYYY-MM-DD" />
             </Form.Item>
           </>

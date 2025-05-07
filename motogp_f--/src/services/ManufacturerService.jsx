@@ -1,68 +1,24 @@
-import httpClient from "../config/HttpClient.jsx";
-import { API } from "../constants/Endpoints.jsx";
+import HttpClient from "../config/HttpClient.jsx";
 
 const ManufacturerService = {
-  getAllManufacturers: (params) => {
-    // Process the params to handle the country to locationCountry conversion
-    const adjustedParams = { ...params };
-    if (adjustedParams.country) {
-      adjustedParams.locationCountry = adjustedParams.country;
-      delete adjustedParams.country;
-    }
-
-    return httpClient.get(API.MANUFACTURERS, {
-      params: adjustedParams,
-      // Add error handling
-      validateStatus: (status) => status < 500,
-    });
+  getAllManufacturers(params = {}) {
+    return HttpClient.get("/manufacturers", { params });
   },
 
-  getManufacturerById: (id) => {
-    return httpClient.get(`${API.MANUFACTURERS}/${id}`, {
-      // Add error handling
-      validateStatus: (status) => status < 500,
-    });
+  getManufacturerById(id) {
+    return HttpClient.get(`/manufacturers/${id}`);
   },
 
-  createManufacturer: (manufacturerDto) => {
-    // Chuẩn bị dữ liệu - chuyển đổi country thành locationCountry
-    const adjustedData = {
-      ...manufacturerDto,
-      locationCountry: manufacturerDto.country,
-    };
-    delete adjustedData.country; // Xóa trường country vì backend không sử dụng
-
-    return httpClient.post(API.MANUFACTURERS, adjustedData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // Add error handling
-      validateStatus: (status) => status < 500,
-    });
+  createManufacturer(manufacturerData) {
+    return HttpClient.post("/manufacturers", manufacturerData);
   },
 
-  updateManufacturer: (id, manufacturerDto) => {
-    // Chuẩn bị dữ liệu - chuyển đổi country thành locationCountry
-    const adjustedData = {
-      ...manufacturerDto,
-      locationCountry: manufacturerDto.country,
-    };
-    delete adjustedData.country; // Xóa trường country vì backend không sử dụng
-
-    return httpClient.put(`${API.MANUFACTURERS}/${id}`, adjustedData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // Add error handling
-      validateStatus: (status) => status < 500,
-    });
+  updateManufacturer(id, manufacturerData) {
+    return HttpClient.put(`/manufacturers/${id}`, manufacturerData);
   },
 
-  deleteManufacturer: (id) => {
-    return httpClient.delete(`${API.MANUFACTURERS}/${id}`, {
-      // Add error handling
-      validateStatus: (status) => status < 500,
-    });
+  deleteManufacturer(id) {
+    return HttpClient.delete(`/manufacturers/${id}`);
   },
 };
 

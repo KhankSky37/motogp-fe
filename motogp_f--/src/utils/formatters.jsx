@@ -51,3 +51,32 @@ export const formatDateTime = (dateTimeString) => {
     return String(dateTimeString); // Return original string on error
   }
 };
+
+export const formatTime = (milliseconds) => {
+  if (!milliseconds && milliseconds !== 0) return "N/A";
+
+  try {
+    // Convert to number in case it's a string
+    const ms = Number(milliseconds);
+
+    if (isNaN(ms)) {
+      return "Invalid Time";
+    }
+
+    // For lap times
+    const minutes = Math.floor(ms / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
+    const remainingMs = Math.floor(ms % 1000);
+
+    if (minutes > 0) {
+      return `${minutes}:${seconds.toString().padStart(2, "0")}.${remainingMs
+        .toString()
+        .padStart(3, "0")}`;
+    } else {
+      return `${seconds}.${remainingMs.toString().padStart(3, "0")}`;
+    }
+  } catch (e) {
+    console.error("Error formatting time:", milliseconds, e);
+    return String(milliseconds);
+  }
+};

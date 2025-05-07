@@ -28,6 +28,8 @@ import AdminCircuitUpdate from "../pages/Admin/circuit/AdminCircuitUpdate.jsx";
 import AdminManufacturer from "../pages/Admin/manufacturer/AdminManufacturer.jsx";
 import AdminManufacturerCreate from "../pages/Admin/manufacturer/AdminManufacturerCreate.jsx";
 import AdminManufacturerUpdate from "../pages/Admin/manufacturer/AdminManufacturerUpdate.jsx";
+import AdminResultCreate from "../pages/Admin/result/AdminResultCreate.jsx";
+import AdminResultUpdate from "../pages/Admin/result/AdminResultUpdate.jsx";
 
 export const routes = [
   {
@@ -100,6 +102,14 @@ export const routes = [
       {
         path: "results",
         element: <AdminResult />,
+      },
+      {
+        path: "results/create",
+        element: <AdminResultCreate />,
+      },
+      {
+        path: "results/update/:resultId",
+        element: <AdminResultUpdate />,
       },
       {
         path: "riders",

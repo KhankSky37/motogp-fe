@@ -1,36 +1,24 @@
-import httpClient from "../config/HttpClient.jsx";
-import { API } from "../constants/Endpoints.jsx";
+import HttpClient from "../config/HttpClient.jsx";
 
 const SessionService = {
-  getAllSessions: (params = {}) => {
-    // Convert date objects to ISO strings for API compatibility
-    const formattedParams = { ...params };
-
-    if (formattedParams.dateFrom && formattedParams.dateFrom._isAMomentObject) {
-      formattedParams.dateFrom = formattedParams.dateFrom.toISOString();
-    }
-
-    if (formattedParams.dateTo && formattedParams.dateTo._isAMomentObject) {
-      formattedParams.dateTo = formattedParams.dateTo.toISOString();
-    }
-
-    return httpClient.get(API.SESSIONS, { params: formattedParams });
+  getAllSessions(params = {}) {
+    return HttpClient.get("/sessions", { params });
   },
 
-  getSessionById: (id) => {
-    return httpClient.get(`${API.SESSIONS}/${id}`);
+  getSessionById(id) {
+    return HttpClient.get(`/sessions/${id}`);
   },
 
-  createSession: (sessionDto) => {
-    return httpClient.post(API.SESSIONS, sessionDto);
+  createSession(sessionData) {
+    return HttpClient.post("/sessions", sessionData);
   },
 
-  updateSession: (id, sessionDto) => {
-    return httpClient.put(`${API.SESSIONS}/${id}`, sessionDto);
+  updateSession(id, sessionData) {
+    return HttpClient.put(`/sessions/${id}`, sessionData);
   },
 
-  deleteSession: (id) => {
-    return httpClient.delete(`${API.SESSIONS}/${id}`);
+  deleteSession(id) {
+    return HttpClient.delete(`/sessions/${id}`);
   },
 };
 
