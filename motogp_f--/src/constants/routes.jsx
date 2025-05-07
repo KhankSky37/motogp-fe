@@ -8,7 +8,7 @@ import AdminEvent from "../pages/Admin/event/AdminEvent.jsx";
 import AdminNewsArticle from "../pages/Admin/AdminNewsArticle.jsx";
 import AdminResult from "../pages/Admin/AdminResult.jsx";
 import AdminTeam from "../pages/Admin/AdminTeam.jsx";
-import AdminUser from "../pages/Admin/AdminUser.jsx";
+import AdminUser from "../pages/Admin/userAdmin/AdminUser.jsx";
 import AdminContract from "../pages/Admin/AdminContract.jsx";
 import AdminRider from "../pages/Admin/rider/AdminRider.jsx";
 import AdminRiderCreate from "../pages/Admin/rider/AdminRiderCreate.jsx";
