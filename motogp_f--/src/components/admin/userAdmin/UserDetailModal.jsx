@@ -40,7 +40,7 @@ const UserDetailModal = ({ user, visible, onClose }) => {
           </Tag>
         </Descriptions.Item>
 
-        <Descriptions.Item label="Full Name">{user.name || 'N/A'}</Descriptions.Item>
+        <Descriptions.Item label="Name">{user.name || 'N/A'}</Descriptions.Item>
         <Descriptions.Item label="Surname">{user.surname || 'N/A'}</Descriptions.Item>
 
         <Descriptions.Item label="Nickname">{user.nickname || 'N/A'}</Descriptions.Item>

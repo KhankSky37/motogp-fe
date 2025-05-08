@@ -31,6 +31,7 @@ import AdminResultCreate from "../pages/Admin/result/AdminResultCreate.jsx";
 import AdminResultUpdate from "../pages/Admin/result/AdminResultUpdate.jsx";
 import Result from "../pages/user/Result.jsx";
 import AdminUserCreate from "../pages/Admin/userAdmin/AdminUserCreate.jsx";
+import AdminUserUpdate from "../pages/Admin/userAdmin/AdminUserUpdate.jsx";
 
 export const routes = [
   {
@@ -158,6 +159,10 @@ export const routes = [
       {
         path: "users/create", // Trang tạo user mới
         element: <AdminUserCreate/>
+      },
+      {
+        path: "users/update/:id", // Route mới cho trang cập nhật user
+        element: <AdminUserUpdate/>
       },
       {
         path: "contracts",

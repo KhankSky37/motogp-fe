@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import UserService from '../../../services/UserService.jsx';
 import UserTable from "../../../components/admin/userAdmin/UserTable.jsx";
 import UserDetailModal from "../../../components/admin/userAdmin/UserDetailModal.jsx";
+import UserSearchForm from "../../../components/admin/userAdmin/UserSearchForm.jsx";
 
 const { Title } = Typography;
 
@@ -111,6 +112,7 @@ const AdminUser = () => {
           Add User
         </Button>
       </div>
+      <UserSearchForm/>
       <Spin spinning={loading} tip="Loading users...">
         <UserTable
           dataSource={users}

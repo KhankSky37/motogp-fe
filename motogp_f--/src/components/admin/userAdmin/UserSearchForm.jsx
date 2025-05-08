@@ -1,9 +1,10 @@
 import React from 'react';
-import { Form, Input, Button, Row, Col, Select } from 'antd';
+import {Form, Input, Button, Row, Col, Select, Space} from 'antd';
+import {SearchOutlined} from "@ant-design/icons";
 
-const { Option } = Select;
+const {Option} = Select;
 
-const UserSearchForm = ({ onSearch, loading }) => {
+const UserSearchForm = ({onSearch, loading}) => {
   const [form] = Form.useForm();
 
   const handleFinish = (values) => {
@@ -20,25 +21,19 @@ const UserSearchForm = ({ onSearch, loading }) => {
       form={form}
       layout="vertical"
       onFinish={handleFinish}
-      style={{ marginBottom: 20 }}
     >
       <Row gutter={16}>
         <Col xs={24} sm={12} md={8} lg={6}>
-          <Form.Item name="name" label="Name">
-            <Input placeholder="Search by name" allowClear />
+          <Form.Item name="keyword">
+            <Input placeholder="Search Name, Email, Nickname" prefix={<SearchOutlined/>}
+                   allowClear/>
           </Form.Item>
         </Col>
         <Col xs={24} sm={12} md={8} lg={6}>
-          <Form.Item name="email" label="Email">
-            <Input placeholder="Search by email" allowClear />
-          </Form.Item>
-        </Col>
-        <Col xs={24} sm={12} md={8} lg={6}>
-          <Form.Item name="role" label="Role">
+          <Form.Item name="role">
             <Select placeholder="Select role" allowClear>
               <Option value="ADMIN">ADMIN</Option>
               <Option value="USER">USER</Option>
-              {/* Thêm các role khác nếu có */}
             </Select>
           </Form.Item>
         </Col>
