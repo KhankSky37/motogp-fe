@@ -37,7 +37,7 @@ const AdminUser = () => {
     setLoading(true);
     try {
 
-      const response = await UserService.getAllUsers();
+      const response = await UserService.getAllUsers(searchParams);
       setUsers(response.data);
       setPagination(prev => ({ // Giả lập pagination ở client
         ...prev,
@@ -51,7 +51,7 @@ const AdminUser = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     fetchUsers({ current: pagination.current, pageSize: pagination.pageSize });
@@ -65,8 +65,7 @@ const AdminUser = () => {
 
   const handleSearch = (values) => {
     setSearchParams(values);
-    // Reset về trang 1 khi thực hiện tìm kiếm mới
-    fetchUsers({ current: 1, pageSize: pagination.pageSize, ...values });
+    setPagination(prev => ({ ...prev, current: 1 }));
   };
 
   const handleAdd = () => {
@@ -112,7 +111,7 @@ const AdminUser = () => {
           Add User
         </Button>
       </div>
-      <UserSearchForm/>
+      <UserSearchForm onSearch={handleSearch}/>
       <Spin spinning={loading} tip="Loading users...">
         <UserTable
           dataSource={users}

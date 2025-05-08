@@ -27,6 +27,7 @@ const AdminUserUpdate = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [riders, setRiders] = useState([]);
   const [loadingRiders, setLoadingRiders] = useState(false);
+  const [passwordForm] = Form.useForm(); // Thêm form instance cho tab đổi mật khẩu
 
   // Fetch riders for selection
   useEffect(() => {
@@ -97,8 +98,18 @@ const AdminUserUpdate = () => {
     return <Spin spinning={true} tip="Loading user data..." className="flex justify-center items-center h-64"/>;
   }
 
-  const onChangePassword = async () => {
-    console.log('change password')
+  const onChangePassword = async (values) => {
+    setLoading(true);
+    try {
+      const response = await UserService.changePassword(userId, values);
+      console.log(response)
+      messageApi.info(response.data);
+      passwordForm.resetFields();
+    } catch (error) {
+      messageApi.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -215,6 +226,7 @@ const AdminUserUpdate = () => {
           label: 'Change password',
           children:
             <Form
+              form={passwordForm}
               layout="horizontal"
               labelAlign="left"
               requiredMark="optional"
@@ -226,7 +238,6 @@ const AdminUserUpdate = () => {
               <Form.Item
                 name="oldPassword"
                 label="Old Password"
-                tooltip="Leave blank if you don't want to change the password."
                 rules={[{required: true, message: 'Please input the old password!'}]}
                 hasFeedback
               >
@@ -236,23 +247,22 @@ const AdminUserUpdate = () => {
               <Form.Item
                 name="newPassword"
                 label="New Password"
+                rules={[{required: true, message: 'Please input the old password!'}]}
                 tooltip="Leave blank if you don't want to change the password."
               >
                 <Input.Password placeholder="Enter new password"/>
               </Form.Item>
 
               <Form.Item
-                name="confirmNewPassword"
+                name="confirmPassword"
                 label="Confirm New Password"
                 dependencies={['newPassword']}
                 hasFeedback
                 rules={[
-                  ({getFieldValue}) => ({
+                  { required: true, message: 'Please confirm your new password!' },
+                  ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value && !getFieldValue('newPassword')) { // Allow empty if newPassword is empty
-                        return Promise.resolve();
-                      }
-                      if (getFieldValue('newPassword') === value) {
+                      if (!value || getFieldValue('newPassword') === value) {
                         return Promise.resolve();
                       }
                       return Promise.reject(new Error('The two new passwords that you entered do not match!'));
@@ -260,7 +270,7 @@ const AdminUserUpdate = () => {
                   }),
                 ]}
               >
-                <Input.Password placeholder="Confirm new password"/>
+                <Input.Password placeholder="Confirm new password" />
               </Form.Item>
 
               <Form.Item wrapperCol={{offset: 6, span: 18}} className={"border-t pt-4 mt-4"}>

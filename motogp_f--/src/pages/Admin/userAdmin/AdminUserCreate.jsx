@@ -97,14 +97,6 @@ const AdminUserCreate = () => {
           autoComplete="off"
         >
           <Form.Item
-            name="name"
-            label="Full Name"
-            rules={[{required: true, message: 'Please input the full name!'}]}
-          >
-            <Input placeholder="Enter full name"/>
-          </Form.Item>
-
-          <Form.Item
             name="email"
             label="Email"
             rules={[
@@ -143,6 +135,14 @@ const AdminUserCreate = () => {
           >
             <Input.Password placeholder="Confirm password"/>
           </Form.Item>
+
+          <Form.Item
+            name="name"
+            label="Name"
+          >
+            <Input placeholder="Enter full name"/>
+          </Form.Item>
+
 
           <Form.Item name="surname" label="Surname">
             <Input placeholder="Enter surname (optional)"/>

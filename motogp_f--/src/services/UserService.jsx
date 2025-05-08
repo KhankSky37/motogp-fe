@@ -21,6 +21,9 @@ const UserService = {
   deleteUser: (id) => {
     return httpClient.delete(`${API.USERS}/${id}`);
   },
+  changePassword: (id, passwordDto) => {
+    return httpClient.put(`${API.USERS}/change-password/${id}`, passwordDto);
+  },
 };
 
 export default UserService;
