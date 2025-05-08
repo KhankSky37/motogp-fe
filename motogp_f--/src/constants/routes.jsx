@@ -6,6 +6,8 @@ import NotFound from "../pages/NotFound.jsx";
 import AdminCategory from "../pages/Admin/AdminCategory.jsx";
 import AdminEvent from "../pages/Admin/event/AdminEvent.jsx";
 import AdminNewsArticle from "../pages/Admin/AdminNewsArticle.jsx";
+import AdminResult from "../pages/Admin/result/AdminResult.jsx";
+import AdminUser from "../pages/Admin/AdminUser.jsx";
 import AdminResult from "../pages/Admin/AdminResult.jsx";
 import AdminTeam from "../pages/Admin/AdminTeam.jsx";
 import AdminUser from "../pages/Admin/userAdmin/AdminUser.jsx";
@@ -30,131 +32,137 @@ import AdminManufacturerUpdate from "../pages/Admin/manufacturer/AdminManufactur
 import AdminResultCreate from "../pages/Admin/result/AdminResultCreate.jsx";
 import AdminResultUpdate from "../pages/Admin/result/AdminResultUpdate.jsx";
 import Result from "../pages/user/Result.jsx";
-import AdminUserCreate from "../pages/Admin/userAdmin/AdminUserCreate.jsx";
-import AdminUserUpdate from "../pages/Admin/userAdmin/AdminUserUpdate.jsx";
 
 export const routes = [
   {
     path: "/",
-    element: <DefaultLayout/>,
+    element: <DefaultLayout />,
     children: [
       {
         index: true,
-        element: <Home/>,
+        element: <Home />,
       },
       {
-        path: '/gp-results',
-        element: <Result/>
+        path: "/gp-results",
+        element: <Result />,
       },
     ],
   },
   {
     path: "/admin",
-    element: <AdminLayout/>,
+    element: <AdminLayout />,
     children: [
       {
         index: true,
-        element: <AdminCategory/>,
+        element: <AdminCategory />,
       },
       {
         path: "categories",
-        element: <AdminCategory/>,
+        element: <AdminCategory />,
       },
       {
         path: "circuits",
-        element: <AdminCircuit/>,
+        element: <AdminCircuit />,
       },
       {
         path: "circuits/create",
-        element: <AdminCircuitCreate/>,
+        element: <AdminCircuitCreate />,
       },
       {
         path: "circuits/update/:id",
-        element: <AdminCircuitUpdate/>,
+        element: <AdminCircuitUpdate />,
       },
       {
         path: "events",
-        element: <AdminEvent/>,
+        element: <AdminEvent />,
       },
       {
         path: "events/create",
-        element: <AdminEventCreate/>,
+        element: <AdminEventCreate />,
       },
       {
         path: "events/update/:eventId",
-        element: <AdminEventUpdate/>,
+        element: <AdminEventUpdate />,
       },
       {
         path: "manufacturers",
-        element: <AdminManufacturer/>,
+        element: <AdminManufacturer />,
       },
       {
         path: "manufacturers/create",
-        element: <AdminManufacturerCreate/>,
+        element: <AdminManufacturerCreate />,
       },
       {
         path: "manufacturers/update/:id",
-        element: <AdminManufacturerUpdate/>,
+        element: <AdminManufacturerUpdate />,
       },
       {
         path: "news",
-        element: <AdminNewsArticle/>,
+        element: <AdminNewsArticle />,
       },
       {
         path: "results",
-        element: <AdminResult/>,
+        element: <AdminResult />,
       },
       {
         path: "results/create",
-        element: <AdminResultCreate/>,
+        element: <AdminResultCreate />,
       },
       {
         path: "results/update/:resultId",
-        element: <AdminResultUpdate/>,
+        element: <AdminResultUpdate />,
       },
       {
         path: "riders",
-        element: <AdminRider/>,
+        element: <AdminRider />,
       },
       {
         path: "riders/create",
-        element: <AdminRiderCreate/>,
+        element: <AdminRiderCreate />,
       },
       {
         path: "riders/update/:riderId",
-        element: <AdminRiderUpdate/>,
+        element: <AdminRiderUpdate />,
       },
       {
         path: "seasons",
-        element: <AdminSeason/>,
+        element: <AdminSeason />,
       },
       {
         path: "seasons/create",
-        element: <AdminSeasonCreate/>,
+        element: <AdminSeasonCreate />,
       },
       {
         path: "seasons/update/:seasonId",
-        element: <AdminSeasonUpdate/>,
+        element: <AdminSeasonUpdate />,
       },
       {
         path: "sessions",
-        element: <AdminSession/>,
+        element: <AdminSession />,
       },
       {
         path: "sessions/create",
-        element: <AdminSessionCreate/>,
+        element: <AdminSessionCreate />,
       },
       {
         path: "sessions/update/:sessionId",
-        element: <AdminSessionUpdate/>,
+        element: <AdminSessionUpdate />,
       },
       {
         path: "teams",
-        element: <AdminTeam/>,
+        element: <AdminTeam />,
+      },
+      {
+        path: "teams/create",
+        element: <AdminTeamCreate />,
+      },
+      {
+        path: "teams/update/:id",
+        element: <AdminTeamUpdate />,
       },
       {
         path: "users",
-        element: <AdminUser/>,
+        element: <AdminUser />,
       },
       {
         path: "users/create", // Trang tạo user mới
@@ -166,16 +174,16 @@ export const routes = [
       },
       {
         path: "contracts",
-        element: <AdminContract/>,
+        element: <AdminContract />,
       },
     ],
   },
   {
     path: "/login",
-    element: <Login/>,
+    element: <Login />,
   },
   {
     path: "*",
-    element: <NotFound/>,
+    element: <NotFound />,
   },
 ];
