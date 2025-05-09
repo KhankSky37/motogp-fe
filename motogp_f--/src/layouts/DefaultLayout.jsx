@@ -1,9 +1,9 @@
 import React from "react";
-import { Layout, Menu } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
+import {ConfigProvider, Layout, Menu} from "antd";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 import motogp from "../assets/motogp1.jpg";
 
-const { Header, Content, Footer } = Layout;
+const {Header, Content, Footer} = Layout;
 
 const DefaultLayout = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const DefaultLayout = () => {
   const handleMenuClick = (e) => {
     if (e.key === "sessions") {
       navigate("/sessions");
-    }else if(e.key === 'Results&Standings'){
+    } else if (e.key === 'Results&Standings') {
       navigate('/gp-results')
     }
   };
@@ -60,20 +60,32 @@ const DefaultLayout = () => {
         }}
         className={"bg-black"}
       >
-        <img
-          src={motogp}
-          alt="MotoGP Logo"
-          style={{ height: 40, marginRight: 16, width: 200 }}
-        />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["2"]}
-          items={items}
-          onClick={handleMenuClick}
-          style={{ flex: 1, minWidth: 0 }}
-          className="text-white font-medium bg-black"
-        />
+        <Link to="/">
+          <img
+            src={motogp}
+            alt="MotoGP Logo"
+            style={{height: 40, marginRight: 16, width: 200}}
+          />
+        </Link>
+        <ConfigProvider
+          theme={{
+            components: {
+              Menu: {
+                darkItemSelectedBg: '#8c8c8c',
+              },
+            },
+          }}
+        >
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={["2"]}
+            items={items}
+            onClick={handleMenuClick}
+            style={{flex: 1, minWidth: 0}}
+            className="text-white font-medium bg-black"
+          />
+        </ConfigProvider>
 
         <div className={"text-[#e5e7eb] divide-x-2"}>
           <span className={"px-2"}>Login</span>
@@ -81,7 +93,7 @@ const DefaultLayout = () => {
         </div>
       </Header>
       <Content>
-        <Outlet />
+        <Outlet/>
       </Content>
       <Footer className={"px-12 py-4 border-t"}>
         ©{new Date().getFullYear()} Dorna Sports SL. All rights reserved. All
