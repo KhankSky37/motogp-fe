@@ -5,7 +5,6 @@ import AdminLayout from "../layouts/AdminLayout.jsx";
 import NotFound from "../pages/NotFound.jsx";
 import AdminCategory from "../pages/Admin/AdminCategory.jsx";
 import AdminEvent from "../pages/Admin/event/AdminEvent.jsx";
-import AdminNewsArticle from "../pages/Admin/AdminNewsArticle.jsx";
 import AdminResult from "../pages/Admin/result/AdminResult.jsx";
 import AdminUser from "../pages/Admin/userAdmin/AdminUser.jsx";
 import AdminContract from "../pages/Admin/AdminContract.jsx";
@@ -34,6 +33,9 @@ import AdminTeamCreate from "../pages/Admin/team/AdminTeamCreate.jsx";
 import AdminTeamUpdate from "../pages/Admin/team/AdminTeamUpdate.jsx";
 import AdminUserCreate from "../pages/Admin/userAdmin/AdminUserCreate.jsx";
 import AdminUserUpdate from "../pages/Admin/userAdmin/AdminUserUpdate.jsx";
+import AdminNewsArticle from "../pages/Admin/newsArticle/AdminNewsArticle.jsx";
+import AdminNewsArticleCreate from "../pages/Admin/newsArticle/AdminNewsArticleCreate.jsx";
+import AdminNewsArticleUpdate from "../pages/Admin/newsArticle/AdminNewsArticleUpdate.jsx";
 
 export const routes = [
   {
@@ -177,6 +179,19 @@ export const routes = [
       {
         path: "contracts",
         element: <AdminContract/>,
+      },
+
+      {
+        path: "news-articles", // Hoặc tên route bạn muốn
+        element: <AdminNewsArticle/>
+      },
+      {
+        path: "news-articles/create", // Trang tạo bài viết mới
+        element: <AdminNewsArticleCreate/>
+      },
+      {
+        path: "news-articles/update/:id", // Route mới cho trang cập nhật
+        element: <AdminNewsArticleUpdate/>
       },
     ],
   },

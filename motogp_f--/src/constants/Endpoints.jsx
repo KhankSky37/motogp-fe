@@ -12,4 +12,5 @@ export const API = {
   TEAMS: "/teams",
   USERS: "/users",
   CONTRACTS: "/contracts",
+  NEWS: "/news",
 }
