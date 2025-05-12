@@ -1,10 +1,14 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Button, message, Spin, Typography} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import ContractService from '../../../services/ContractService.jsx';
 import ContractTable from '../../../components/admin/contract/ContractTable.jsx';
 import ContractFormModal from '../../../components/admin/contract/ContractFormModal.jsx';
 import ContractDetailModal from '../../../components/admin/contract/ContractDetailModal.jsx';
+import RiderService from "../../../services/RiderService.jsx";
+import TeamService from "../../../services/TeamService.jsx";
+import SeasonService from "../../../services/SeasonService.jsx";
+import CategoryService from "../../../services/CategoryService.jsx";
 
 const {Title} = Typography;
 
@@ -22,6 +26,60 @@ const AdminContract = () => {
     pageSize: 10,
     total: 0,
   });
+  const [teamsList, setTeamsList] = useState([]);
+  const [ridersList, setRidersList] = useState([]);
+  const [seasonsList, setSeasonsList] = useState([]); // Thêm state cho seasons
+  const [categoriesList, setCategoriesList] = useState([]); // Thêm state cho categories
+
+  const fetchData = useCallback(async (page = pagination.current, pageSize = pagination.pageSize) => {
+    setLoading(true);
+    try {
+      const [contractsRes, teamsRes, ridersRes, seasonsRes, categoriesRes] = await Promise.all([
+        ContractService.getAllContracts(),
+        TeamService.getAllTeams(),
+        RiderService.getAllRiders(),
+        SeasonService.getAllSeasons(), // Fetch seasons
+        CategoryService.getAllCategories() // Fetch categories
+      ]);
+
+      setContracts(contractsRes.data);
+      setPagination(prev => ({
+        ...prev,
+        total: contractsRes.data.length,
+        current: page,
+        pageSize: pageSize,
+      }));
+
+      setTeamsList(teamsRes.data?.content || teamsRes.data || []);
+      setRidersList(ridersRes.data?.content || ridersRes.data || []);
+      setSeasonsList(seasonsRes.data || []); // Giả sử seasonsRes.data là một mảng
+      setCategoriesList(categoriesRes.data || []); // Giả sử categoriesRes.data là một mảng
+
+    } catch (err) {
+      console.error("Failed to fetch data:", err);
+      messageApi.error("Failed to fetch data. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }, [messageApi, pagination.current, pagination.pageSize]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const teamsMap = useMemo(() => {
+    return teamsList.reduce((acc, team) => {
+      acc[team.id] = team.name;
+      return acc;
+    }, {});
+  }, [teamsList]);
+
+  const ridersMap = useMemo(() => {
+    return ridersList.reduce((acc, rider) => {
+      acc[rider.riderId] = `${rider.firstName} ${rider.lastName}`;
+      return acc;
+    }, {});
+  }, [ridersList]);
 
   const fetchContracts = useCallback(async (page = pagination.current, pageSize = pagination.pageSize) => {
     setLoading(true);
@@ -89,9 +147,6 @@ const AdminContract = () => {
 
     try {
       if (modalMode === 'edit' && editingContract) {
-        // For update, ensure the ID from the form (if present and disabled) or from editingContract is used.
-        // The backend expects the ID in the path, and the DTO might also contain it.
-        // The DTO from the form will have all fields including the ID if it was set.
         await ContractService.updateContract(editingContract.id, contractDto);
         messageApi.success('Contract updated successfully!');
       } else {
@@ -142,6 +197,8 @@ const AdminContract = () => {
           onDelete={handleDelete}
           pagination={pagination}
           onTableChange={handleTableChange}
+          teamsMap={teamsMap}
+          ridersMap={ridersMap}
         />
       </Spin>
       {isFormModalVisible && (
@@ -152,6 +209,11 @@ const AdminContract = () => {
           initialData={editingContract}
           loading={formModalLoading}
           mode={modalMode}
+          teamsData={teamsList}
+          ridersData={ridersList}
+          seasonsData={seasonsList}
+          categoriesData={categoriesList}
+          dataLoading={loading} // Sử dụng loading chung của parent cho các Select trong modal
         />
       )}
       {isDetailModalVisible && editingContract && (

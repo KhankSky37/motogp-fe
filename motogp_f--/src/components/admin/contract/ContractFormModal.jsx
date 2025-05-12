@@ -1,11 +1,8 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Form, Input, message, Modal, Select, Spin} from 'antd';
-import TeamService from '../../../services/TeamService.jsx';
-import RiderService from '../../../services/RiderService.jsx';
-import SeasonService from '../../../services/SeasonService.jsx';
-import CategoryService from '../../../services/CategoryService.jsx';
+import React, { useEffect } from 'react'; // Bỏ useCallback, useState, message
+import { Modal, Form, Input, Select, Spin } from 'antd';
+// Bỏ import các Service (TeamService, RiderService, SeasonService, CategoryService)
 
-const {Option} = Select;
+const { Option } = Select;
 
 const ContractFormModal = ({
                              visible,
@@ -13,43 +10,22 @@ const ContractFormModal = ({
                              onSubmit,
                              initialData,
                              loading,
-                             mode, // 'add' or 'edit'
+                             mode,
+                             teamsData = [],
+                             ridersData = [],
+                             seasonsData = [],
+                             categoriesData = [],
+                             dataLoading = false,
                            }) => {
   const [form] = Form.useForm();
-  const [teams, setTeams] = useState([]);
-  const [riders, setRiders] = useState([]);
-  const [seasons, setSeasons] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [dataLoading, setDataLoading] = useState(false);
 
-  const fetchRelatedData = useCallback(async () => {
-    setDataLoading(true);
-    try {
-      const [teamsRes, ridersRes, seasonsRes, categoriesRes] = await Promise.all([
-        TeamService.getAllTeams(),
-        RiderService.getAllRiders(), // Assuming this fetches all riders needed
-        SeasonService.getAllSeasons(),
-        CategoryService.getAllCategories(),
-      ]);
-      setTeams(teamsRes.data?.content || teamsRes.data || []);
-      setRiders(ridersRes.data?.content || ridersRes.data || []);
-      setSeasons(seasonsRes.data || []); // Assuming seasonsRes.data is an array
-      setCategories(categoriesRes.data || []);
-    } catch (error) {
-      console.error("Failed to fetch related data for contract form:", error);
-      message.error("Failed to load data for dropdowns. Please try again.");
-    } finally {
-      setDataLoading(false);
-    }
-  }, []);
 
   useEffect(() => {
     if (visible) {
-      fetchRelatedData();
+      // Không cần fetchRelatedData() ở đây nữa
       if (mode === 'edit' && initialData) {
         form.setFieldsValue({
           ...initialData,
-          // Ensure IDs are correctly set for Select components
           teamId: initialData.teamId,
           riderId: initialData.riderId,
           seasonId: initialData.seasonId,
@@ -57,9 +33,10 @@ const ContractFormModal = ({
         });
       } else {
         form.resetFields();
+        // Khi thêm mới, trường ID sẽ được người dùng nhập
       }
     }
-  }, [visible, initialData, form, mode, fetchRelatedData]);
+  }, [visible, initialData, form, mode]);
 
   const handleOk = () => {
     form
@@ -80,81 +57,59 @@ const ContractFormModal = ({
       open={visible}
       onOk={handleOk}
       onCancel={onClose}
-      confirmLoading={loading}
+      confirmLoading={loading} // Loading cho nút OK (khi submit)
       destroyOnClose
       width={600}
     >
-      <Spin spinning={dataLoading || loading}>
+      {/* Spin này sẽ dựa vào dataLoading từ parent */}
+      <Spin spinning={dataLoading}>
         <Form form={form} layout="vertical" name="contract_form">
+          {/* Khi edit, hiển thị ID nhưng không cho sửa */}
           {mode === 'edit' && initialData && (
             <Form.Item label="Contract ID">
-              <Input value={initialData.id} disabled/>
+              <Input value={initialData.id} disabled />
             </Form.Item>
           )}
           <Form.Item
             name="teamId"
             label="Team"
-            rules={[{required: true, message: 'Please select a team!'}]}
+            rules={[{ required: true, message: 'Please select a team!' }]}
           >
-            <Select placeholder="Select team" loading={dataLoading} showSearch
-                    filterOption={(input, option) =>
-                      String(option?.children ?? '').toLowerCase().includes(input.toLowerCase())
-                    }
-            >
-              {teams.map(team => <Option key={team.id} value={team.id}>{team.name} ({team.id})</Option>)}
+            <Select placeholder="Select team" loading={dataLoading} showSearch filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
+              {teamsData.map(team => <Option key={team.id} value={team.id} label={`${team.name} (${team.id})`}>{team.name} ({team.id})</Option>)}
             </Select>
           </Form.Item>
           <Form.Item
             name="riderId"
             label="Rider"
-            rules={[{required: true, message: 'Please select a rider!'}]}
+            rules={[{ required: true, message: 'Please select a rider!' }]}
           >
-            <Select placeholder="Select rider" loading={dataLoading} showSearch
-                    filterOption={(input, option) =>
-                      String(option?.children ?? '').toLowerCase().includes(input.toLowerCase())
-                    }
-            >
-              {riders.map(rider => <Option key={rider.riderId}
-                                           value={rider.riderId}>{rider.firstName} {rider.lastName} ({rider.riderId})</Option>)}
+            <Select placeholder="Select rider" loading={dataLoading} showSearch filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
+              {ridersData.map(rider => <Option key={rider.riderId} value={rider.riderId} label={`${rider.firstName} ${rider.lastName} (${rider.riderId})`}>{rider.firstName} {rider.lastName} ({rider.riderId})</Option>)}
             </Select>
           </Form.Item>
           <Form.Item
             name="seasonId"
             label="Season"
-            rules={[{required: true, message: 'Please select a season!'}]}
+            rules={[{ required: true, message: 'Please select a season!' }]}
           >
-            <Select placeholder="Select season" loading={dataLoading} showSearch
-                    filterOption={(input, option) =>
-                      String(option?.children ?? '').toLowerCase().includes(input.toLowerCase())
-                    }
-            >
-              {seasons.map(season => <Option key={season.id} value={season.id}>{season.name} ({season.id})</Option>)}
+            <Select placeholder="Select season" loading={dataLoading} showSearch filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
+              {seasonsData.map(season => <Option key={season.id} value={season.id} label={`${season.name} (${season.id})`}>{season.name} ({season.id})</Option>)}
             </Select>
           </Form.Item>
           <Form.Item
             name="categoryId"
             label="Category"
-            rules={[{required: true, message: 'Please select a category!'}]}
+            rules={[{ required: true, message: 'Please select a category!' }]}
           >
-            <Select
-              placeholder="Select category"
-              loading={dataLoading}
-              showSearch
-              filterOption={(input, option) =>
-                String(option?.children ?? '').toLowerCase().includes(input.toLowerCase()) // Ép kiểu sang String
-              }
-            >
-              {categories.map(category => <Option key={category.categoryId}
-                                                  value={category.categoryId}>{category.name} ({category.categoryId})</Option>)}
+            <Select placeholder="Select category" loading={dataLoading} showSearch filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
+              {categoriesData.map(category => <Option key={category.categoryId} value={category.categoryId} label={`${category.name} (${category.categoryId})`}>{category.name} ({category.categoryId})</Option>)}
             </Select>
           </Form.Item>
           <Form.Item
             name="riderRole"
             label="Rider Role"
-            rules={[{
-              required: true,
-              message: 'Please select the rider role!'
-            }]} // Có thể đặt là true nếu vai trò luôn cần thiết
+            rules={[{ required: true, message: 'Please select the rider role!'}]}
           >
             <Select placeholder="Select rider role">
               <Option value="Factory Rider">Factory Rider</Option>
@@ -162,7 +117,6 @@ const ContractFormModal = ({
               <Option value="Test Rider">Test Rider</Option>
               <Option value="Replacement Rider">Replacement Rider</Option>
               <Option value="Wildcard Rider">Wildcard Rider</Option>
-              {/* Bạn có thể thêm các vai trò khác nếu cần */}
             </Select>
           </Form.Item>
         </Form>
