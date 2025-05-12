@@ -3,7 +3,7 @@ import Home from "../pages/user/Home.jsx";
 import Login from "../pages/Login.jsx";
 import AdminLayout from "../layouts/AdminLayout.jsx";
 import NotFound from "../pages/NotFound.jsx";
-import AdminCategory from "../pages/Admin/AdminCategory.jsx";
+import AdminCategory from "../pages/Admin/category/AdminCategory.jsx";
 import AdminEvent from "../pages/Admin/event/AdminEvent.jsx";
 import AdminResult from "../pages/Admin/result/AdminResult.jsx";
 import AdminUser from "../pages/Admin/userAdmin/AdminUser.jsx";
