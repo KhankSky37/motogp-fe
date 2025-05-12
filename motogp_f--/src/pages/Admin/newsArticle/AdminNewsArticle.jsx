@@ -70,9 +70,7 @@ const AdminNewsArticle = () => {
   };
 
   const handleSearch = (values) => {
-    setSearchParams(values); // values là { keyword: "..." }
-    // fetchNewsArticles sẽ được gọi lại do searchParams thay đổi
-    // Reset pagination về trang 1 khi có tìm kiếm mới
+    setSearchParams(values);
     setPagination(prev => ({ ...prev, current: 1 }));
   };
 
@@ -116,6 +114,7 @@ const AdminNewsArticle = () => {
         <Button
           type="primary"
           icon={<PlusOutlined />}
+          className={"bg-blue-700"}
           onClick={handleAdd}
         >
           Add News Article
