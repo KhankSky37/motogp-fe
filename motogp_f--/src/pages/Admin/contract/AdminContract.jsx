@@ -9,6 +9,7 @@ import RiderService from "../../../services/RiderService.jsx";
 import TeamService from "../../../services/TeamService.jsx";
 import SeasonService from "../../../services/SeasonService.jsx";
 import CategoryService from "../../../services/CategoryService.jsx";
+import ContractSearchForm from "../../../components/admin/contract/ContractSearchForm.jsx";
 
 const {Title} = Typography;
 
@@ -30,25 +31,18 @@ const AdminContract = () => {
   const [ridersList, setRidersList] = useState([]);
   const [seasonsList, setSeasonsList] = useState([]); // Thêm state cho seasons
   const [categoriesList, setCategoriesList] = useState([]); // Thêm state cho categories
+  const [searchParams, setSearchParams] = useState({}); // State cho search params
 
-  const fetchData = useCallback(async (page = pagination.current, pageSize = pagination.pageSize) => {
+
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [contractsRes, teamsRes, ridersRes, seasonsRes, categoriesRes] = await Promise.all([
-        ContractService.getAllContracts(),
+      const [teamsRes, ridersRes, seasonsRes, categoriesRes] = await Promise.all([
         TeamService.getAllTeams(),
         RiderService.getAllRiders(),
         SeasonService.getAllSeasons(), // Fetch seasons
         CategoryService.getAllCategories() // Fetch categories
       ]);
-
-      setContracts(contractsRes.data);
-      setPagination(prev => ({
-        ...prev,
-        total: contractsRes.data.length,
-        current: page,
-        pageSize: pageSize,
-      }));
 
       setTeamsList(teamsRes.data?.content || teamsRes.data || []);
       setRidersList(ridersRes.data?.content || ridersRes.data || []);
@@ -61,7 +55,7 @@ const AdminContract = () => {
     } finally {
       setLoading(false);
     }
-  }, [messageApi, pagination.current, pagination.pageSize]);
+  }, [messageApi]);
 
   useEffect(() => {
     fetchData();
@@ -83,12 +77,14 @@ const AdminContract = () => {
 
   const fetchContracts = useCallback(async (page = pagination.current, pageSize = pagination.pageSize) => {
     setLoading(true);
+    const queryParams = { ...searchParams };
+
     try {
-      const response = await ContractService.getAllContracts(); // Backend doesn't seem to support pagination for contracts
+      const response = await ContractService.getAllContracts(queryParams);
       setContracts(response.data);
       setPagination(prev => ({
         ...prev,
-        total: response.data.length, // Client-side pagination
+        total: response.data.length,
         current: page,
         pageSize: pageSize,
       }));
@@ -98,7 +94,7 @@ const AdminContract = () => {
     } finally {
       setLoading(false);
     }
-  }, [messageApi, pagination.current, pagination.pageSize]);
+  }, [searchParams, pagination.current, pagination.pageSize]);
 
   useEffect(() => {
     fetchContracts();
@@ -110,7 +106,6 @@ const AdminContract = () => {
       current: newPagination.current,
       pageSize: newPagination.pageSize,
     }));
-    // fetchContracts will be called by useEffect due to pagination state change
   };
 
   const handleAdd = () => {
@@ -175,6 +170,12 @@ const AdminContract = () => {
     setEditingContract(null);
   };
 
+  const handleSearch = (values) => {
+    console.log("helo search", values)
+    setSearchParams(values);
+    setPagination(prev => ({...prev, current: 1})); // Reset về trang 1 khi tìm kiếm
+  };
+
   return (
     <>
       {contextHolder}
@@ -184,10 +185,19 @@ const AdminContract = () => {
           type="primary"
           icon={<PlusOutlined/>}
           onClick={handleAdd}
+          className={"bg-blue-700"}
         >
           Add Contract
         </Button>
       </div>
+      <ContractSearchForm
+        onSearch={handleSearch}
+        loading={loading} // Sử dụng loading chung khi form đang tìm kiếm
+        teamsData={teamsList}
+        ridersData={ridersList}
+        seasonsData={seasonsList}
+        categoriesData={categoriesList}
+      />
       <Spin spinning={loading} tip="Loading contracts...">
         <ContractTable
           dataSource={contracts}
