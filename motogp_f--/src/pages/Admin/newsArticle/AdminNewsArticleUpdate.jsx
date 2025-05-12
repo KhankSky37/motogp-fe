@@ -1,24 +1,22 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Button, Card, DatePicker, Form, Image as AntImage, Input, message, Select, Spin, Typography} from 'antd';
+import {Button, Card, DatePicker, Form, Input, message, Select, Spin, Typography} from 'antd';
 import {ArrowLeftOutlined} from '@ant-design/icons';
 import {useNavigate, useParams} from 'react-router-dom';
 import NewsArticleService from '../../../services/NewsArticleService.jsx';
+import ImageUploadField from '../../../components/admin/shared/ImageUploadField.jsx'; // Import ImageUploadField
 import dayjs from 'dayjs';
-import {getImageUrl} from '../../../utils/urlHelpers.jsx'; // For displaying current image
 
 const {Title} = Typography;
-const {Option} = Select; // Assuming you might use Select for articleType
+const {Option} = Select;
 
 const AdminNewsArticleUpdate = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const {id: articleId} = useParams(); // Get articleId from URL
+  const {id: articleId} = useParams();
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
-  const [currentImageUrl, setCurrentImageUrl] = useState('');
   const [messageApi, contextHolder] = message.useMessage();
 
-  // Fetch article data on component mount
   useEffect(() => {
     const fetchArticleData = async () => {
       if (!articleId) return;
@@ -30,11 +28,10 @@ const AdminNewsArticleUpdate = () => {
         const formattedData = {
           ...articleData,
           publishDate: articleData.publishDate ? dayjs(articleData.publishDate) : null,
+          photo: articleData.imageUrl || null,
         };
         form.setFieldsValue(formattedData);
-        if (articleData.imageUrl) {
-          setCurrentImageUrl(getImageUrl(articleData.imageUrl));
-        }
+
       } catch (error) {
         console.error('Failed to fetch news article data:', error);
         messageApi.error('Failed to load news article data. Please try again.');
@@ -49,16 +46,17 @@ const AdminNewsArticleUpdate = () => {
   const onFinish = useCallback(async (values) => {
     setLoading(true);
 
+    const newPhotoFile = values.photo instanceof File ? values.photo : null;
+
     const newsArticleDto = {
       title: values.title,
       publishDate: values.publishDate ? values.publishDate.toISOString() : null,
-      imageUrl: values.imageUrl, // Send the imageUrl string
       articleLink: values.articleLink,
       articleType: values.articleType,
     };
 
     try {
-      await NewsArticleService.updateNewsArticle(articleId, newsArticleDto);
+      await NewsArticleService.updateNewsArticle(articleId, newsArticleDto, newPhotoFile);
       messageApi.success('News article updated successfully!');
       navigate('/admin/news-articles', {
         state: {successMessage: 'News article updated successfully!'},
@@ -70,28 +68,11 @@ const AdminNewsArticleUpdate = () => {
     } finally {
       setLoading(false);
     }
-  }, [articleId, messageApi, navigate]); // Removed form from dependencies
+  }, [articleId, messageApi, navigate]);
 
   const handleCancel = useCallback(() => {
     navigate('/admin/news-articles');
   }, [navigate]);
-
-  // Update currentImageUrl when form's imageUrl field changes
-  const handleImageUrlChange = (e) => {
-    const url = e.target.value;
-    if (url) {
-      // Basic check for URL format, can be improved
-      try {
-        const validUrl = new URL(url);
-        setCurrentImageUrl(getImageUrl(validUrl.pathname.startsWith('/') ? validUrl.pathname : `/${validUrl.pathname}`));
-      } catch (_) {
-        setCurrentImageUrl(''); // Clear preview if URL is invalid
-      }
-    } else {
-      setCurrentImageUrl('');
-    }
-  };
-
 
   if (initialLoading) {
     return <Spin spinning={true} tip="Loading article data..." className="flex justify-center items-center h-64"/>;
@@ -108,7 +89,7 @@ const AdminNewsArticleUpdate = () => {
       }>
         <Form
           form={form}
-          layout="horizontal"
+          layout="horizontal" // Giữ layout như file bạn cung cấp
           labelAlign="left"
           requiredMark="optional"
           labelCol={{span: 6}}
@@ -124,35 +105,18 @@ const AdminNewsArticleUpdate = () => {
             <Input placeholder="Enter article title"/>
           </Form.Item>
 
-          {currentImageUrl && (
-            <Form.Item label="Current Image">
-              <AntImage
-                width={200}
-                src={currentImageUrl}
-                alt="Current article image"
-                style={{border: '1px solid #f0f0f0', objectFit: 'contain', marginBottom: '10px'}}
-                onError={() => setCurrentImageUrl('')} // Clear if image fails to load
-              />
-            </Form.Item>
-          )}
-
           <Form.Item
-            name="imageUrl"
-            label="Image URL"
-            rules={[
-              {required: true, message: 'Please input the image URL!'},
-              {type: 'url', message: 'Please enter a valid URL!'}
-            ]}
+            name="photo" // Đổi tên thành "photo" để khớp với ImageUploadField
+            label="Article Image"
+            // rules không bắt buộc cho update, trừ khi bạn muốn người dùng luôn phải có ảnh
           >
-            <Input placeholder="Enter new image URL (e.g., /uploads/image.jpg or https://example.com/image.jpg)"
-                   onChange={handleImageUrlChange}/>
+            <ImageUploadField/>
           </Form.Item>
-
 
           <Form.Item
             name="publishDate"
             label="Publish Date"
-            rules={[{required: true, message: 'Please select the publish date!'}]}
+            // rules={[{ required: true, message: 'Please select the publish date!' }]}
           >
             <DatePicker showTime style={{width: '100%'}} format="YYYY-MM-DD HH:mm:ss"/>
           </Form.Item>
@@ -171,10 +135,9 @@ const AdminNewsArticleUpdate = () => {
           <Form.Item
             name="articleType"
             label="Article Type"
-            rules={[{required: true, message: 'Please input the article type!'}]}
+            // rules={[{ required: true, message: 'Please select the article type!' }]}
           >
-            {/* Using Select as in your AdminNewsArticleCreate.jsx */}
-            <Select placeholder="Select article type">
+            <Select placeholder="Select article type" allowClear>
               <Option value="latest motogp news">Latest MotoGP News</Option>
               <Option value="news by gp">News by GP</Option>
               <Option value="motogp grand prix and test reports">MotoGP™ Grand Prix and Test reports</Option>
@@ -183,7 +146,7 @@ const AdminNewsArticleUpdate = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item className={"border-t pt-4 mt-4"}>
+          <Form.Item wrapperCol={{offset: 6, span: 18}} className={"border-t pt-4 mt-4"}>
             <div style={{display: 'flex', justifyContent: 'flex-end', gap: '8px'}}>
               <Button onClick={handleCancel} disabled={loading}>
                 Cancel
