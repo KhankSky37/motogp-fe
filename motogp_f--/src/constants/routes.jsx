@@ -1,6 +1,6 @@
 import DefaultLayout from "../layouts/DefaultLayout.jsx";
 import Home from "../pages/user/Home.jsx";
-import Login from "../pages/Login.jsx";
+import Login from "../pages/auth/Login.jsx";
 import AdminLayout from "../layouts/AdminLayout.jsx";
 import NotFound from "../pages/NotFound.jsx";
 import AdminCategory from "../pages/Admin/category/AdminCategory.jsx";
