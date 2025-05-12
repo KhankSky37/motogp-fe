@@ -7,7 +7,7 @@ import AdminCategory from "../pages/Admin/category/AdminCategory.jsx";
 import AdminEvent from "../pages/Admin/event/AdminEvent.jsx";
 import AdminResult from "../pages/Admin/result/AdminResult.jsx";
 import AdminUser from "../pages/Admin/userAdmin/AdminUser.jsx";
-import AdminContract from "../pages/Admin/AdminContract.jsx";
+import AdminContract from "../pages/Admin/contract/AdminContract.jsx";
 import AdminRider from "../pages/Admin/rider/AdminRider.jsx";
 import AdminRiderCreate from "../pages/Admin/rider/AdminRiderCreate.jsx";
 import AdminRiderUpdate from "../pages/Admin/rider/AdminRiderUpdate.jsx";
@@ -192,6 +192,10 @@ export const routes = [
       {
         path: "news-articles/update/:id", // Route mới cho trang cập nhật
         element: <AdminNewsArticleUpdate/>
+      },
+      { // Add Contract Route
+        path: "contracts",
+        element: <AdminContract />,
       },
     ],
   },

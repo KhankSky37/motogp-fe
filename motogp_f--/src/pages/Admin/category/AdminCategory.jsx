@@ -120,7 +120,7 @@ const AdminCategory = () => {
     <>
       {contextHolder}
       <div className={'flex justify-between items-center mb-4'}>
-        <Title level={3} style={{margin: 0}}>Manage Categories</Title>
+        <Title level={3} style={{margin: 0}}>Categories Management</Title>
         <Button
           type="primary"
           icon={<PlusOutlined/>}
