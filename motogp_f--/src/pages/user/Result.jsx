@@ -1,9 +1,11 @@
-import React from 'react';
-import {Col, ConfigProvider, Form, Row, Select, Tabs, theme} from "antd";
+import React, {useEffect, useState} from 'react';
+import {Col, ConfigProvider, Form, message, Row, Select, Tabs, theme} from "antd";
 import bgHome from "../../assets/bg_results.png";
+import SeasonService from "../../services/SeasonService.jsx";
 
 const Result = () => {
   const [form] = Form.useForm();
+  const [seasonYears, setSeasonYears] = useState([]); // State for fetched years
 
   const items = [
     {
@@ -22,8 +24,8 @@ const Result = () => {
 
 
   // Dữ liệu mẫu - bạn sẽ cần thay thế bằng dữ liệu thực tế hoặc fetch từ API
-  const years = ['2024', '2023', '2022', '2021']; // Ví dụ
-  const types = ['MotoGP™', 'Moto2™', 'Moto3™', 'MotoE™']; // Ví dụ
+  // const years = ['2024', '2023', '2022', '2021']; // Ví dụ
+  const types = ['All Events','Grands Prix']; // Ví dụ
   const events = [ // Ví dụ - nên được cập nhật dựa trên năm và loại được chọn
     {id: 'qatar', name: 'Qatar Grand Prix'},
     {id: 'portugal', name: 'Portuguese Grand Prix'},
@@ -31,6 +33,33 @@ const Result = () => {
   ];
   const categories = ['Race', 'Qualifying', 'Practice 1', 'Practice 2']; // Ví dụ
   const sessions = ['Full Session', 'Highlights', 'Last 5 Minutes']; // Ví dụ
+
+
+  useEffect(() => {
+    const fetchSeasonYears = async () => {
+      try {
+        const response = await SeasonService.getAllSeasons();
+        // Assuming response.data is an array of season objects
+        // And each season object has an 'id' (e.g., 2024) or 'name' (e.g., "2024") that represents the year.
+        // Let's assume 'id' is the year and convert it to a string.
+        // Adjust .map() based on your actual Season DTO structure.
+        if (response && response.data) {
+          const yearsData = response.data.map(season => String(season.id)).sort((a, b) => b.localeCompare(a)); // Sort descending
+          setSeasonYears(yearsData);
+        } else {
+          setSeasonYears([]);
+          message.error('Could not fetch season years.');
+        }
+      } catch (error) {
+        console.error("Failed to fetch season years:", error);
+        message.error("Failed to load season years. Please try again.");
+        setSeasonYears([]);
+      }
+    };
+
+    fetchSeasonYears();
+  }, []);
+
 
   return (
     <>
@@ -70,7 +99,7 @@ const Result = () => {
                   name="year"
                 >
                   <Select placeholder="Select Year">
-                    {years.map(year => (
+                    {seasonYears.map(year => (
                       <Option key={year} value={year}>{year}</Option>
                     ))}
                   </Select>

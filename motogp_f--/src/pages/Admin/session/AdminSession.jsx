@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Alert, Button, message } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import React, {useCallback, useEffect, useState} from "react";
+import {Alert, Button, message} from "antd";
+import {PlusOutlined} from "@ant-design/icons";
 import SessionService from "../../../services/SessionService.jsx";
 import EventService from "../../../services/EventService.jsx";
 import CategoryService from "../../../services/CategoryService.jsx";
 import SessionTable from "../../../components/admin/session/SessionTable.jsx";
 import SessionDetailModal from "../../../components/admin/session/SessionDetailModal.jsx";
 import SessionSearchForm from "../../../components/admin/session/SessionSearchForm.jsx";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const AdminSession = () => {
   const [sessions, setSessions] = useState([]);
@@ -72,7 +72,7 @@ const AdminSession = () => {
   }, [fetchSessions, searchParams]);
 
   const handleTableChange = (newPagination) => {
-    const { current, pageSize } = newPagination;
+    const {current, pageSize} = newPagination;
     setPagination((prev) => ({
       ...prev,
       current: current,
@@ -157,7 +157,7 @@ const AdminSession = () => {
           type="primary"
           className={"bg-blue-700"}
           onClick={handleAdd}
-          icon={<PlusOutlined />}
+          icon={<PlusOutlined/>}
         >
           Add Session
         </Button>
@@ -184,8 +184,6 @@ const AdminSession = () => {
         visible={isModalVisible}
         onCancel={handleModalClose}
         session={selectedSession}
-        events={events}
-        categories={categories}
         viewOnly={true}
       />
     </div>

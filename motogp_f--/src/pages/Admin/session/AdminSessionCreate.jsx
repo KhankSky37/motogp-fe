@@ -48,19 +48,15 @@ const AdminSessionCreate = () => {
   const onFinish = useCallback(
     async (values) => {
       setLoading(true);
-
       try {
         // Format the datetime to ISO string
         const formattedValues = {
           ...values,
           sessionDatetime: values.sessionDatetime.toISOString(),
           event: { id: values.eventId },
-          category: { id: values.categoryId },
+          category: { categoryId: values.categoryId },
         };
 
-        // Remove separate IDs as they're now in nested objects
-        delete formattedValues.eventId;
-        delete formattedValues.categoryId;
 
         await SessionService.createSession(formattedValues);
         messageApi.success("Session created successfully!");
@@ -153,7 +149,7 @@ const AdminSessionCreate = () => {
           >
             <Select placeholder="Select category" loading={categoriesLoading}>
               {categories.map((category) => (
-                <Option key={category.id} value={category.id}>
+                <Option key={category.categoryId} value={category.categoryId}>
                   {category.name}
                 </Option>
               ))}
