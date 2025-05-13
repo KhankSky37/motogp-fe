@@ -1,7 +1,7 @@
 import React from "react";
 import bgHome from "../../assets/bg_home.jpg";
 import { Button } from "antd";
-import NewsSection from "../../components/NewsSection/NewsSection.jsx";
+import NewsSection from "../../components/user/home/NewsSection/NewsSection.jsx";
 
 const Home = () => {
   return (

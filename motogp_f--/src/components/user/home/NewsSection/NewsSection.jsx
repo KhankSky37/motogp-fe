@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Card, Typography, Spin } from "antd";
 import Slider from "react-slick";
-import NewsArticleService from "../../services/NewsArticleService.jsx"; // ✅ sửa lại import đúng service
-import CustomArrow from "../CustomArrow/CustomArrow.jsx";
+import NewsArticleService from "../../../../services/NewsArticleService.jsx"; // ✅ sửa lại import đúng service
+import CustomArrow from "../CustomArrow.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./news-section.css";
