@@ -7,6 +7,7 @@ import CustomArrow from "../CustomArrow.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./news-section.css";
+import {getImageUrl} from "../../../../utils/urlHelpers.jsx";
 
 const { Title, Paragraph } = Typography;
 
@@ -69,7 +70,7 @@ const NewsSection = () => {
                             <Card
                                 hoverable
                                 className="rounded-md overflow-hidden shadow-md transition-all duration-300"
-                                cover={<img alt="news" src={article.imageUrl} />}
+                                cover={<img alt="news" src={getImageUrl(article.imageUrl)} />}
                                 onClick={() => window.open(article.articleLink, "_blank")}
                             >
                                 <Card.Meta title={article.title} />
