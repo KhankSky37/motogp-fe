@@ -69,7 +69,7 @@ const NewsSection = () => {
                         <div className="group relative transition-transform duration-300 ease-in-out hover:scale-[1.2] hover:z-10">
                             <Card
                                 hoverable
-                                className="rounded-md overflow-hidden shadow-md transition-all duration-300"
+                                className="rounded-md overflow-hidden shadow-md transition-all duration-300 w-[350px] h-[200px] object-cover object-center"
                                 cover={<img alt="news" src={getImageUrl(article.imageUrl)} />}
                                 onClick={() => window.open(article.articleLink, "_blank")}
                             >
