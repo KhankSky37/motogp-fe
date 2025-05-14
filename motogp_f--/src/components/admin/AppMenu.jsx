@@ -24,18 +24,18 @@ function getItem(label, key, icon, children, type) {
 }
 
 const menuItems = [
-  getItem(<Link to="/admin/categories">Category</Link>, 'categories', <AppstoreOutlined/>),
+  getItem(<Link to="/admin/riders">Rider</Link>, 'riders', <UserOutlined/>),
+  getItem(<Link to="/admin/teams">Team</Link>, 'teams', <TeamOutlined/>),
+  getItem(<Link to="/admin/manufacturers">Manufacturer</Link>, 'manufacturers', <ToolOutlined/>),
+  getItem(<Link to="/admin/contracts">Contract</Link>, 'contracts', <FileTextOutlined/>),
+  getItem(<Link to="/admin/seasons">Season</Link>, 'seasons', <CalendarOutlined/>),
   getItem(<Link to="/admin/circuits">Circuit</Link>, 'circuits', <GlobalOutlined/>),
   getItem(<Link to="/admin/events">Event</Link>, 'events', <CalendarOutlined/>),
-  getItem(<Link to="/admin/manufacturers">Manufacturer</Link>, 'manufacturers', <ToolOutlined/>),
-  getItem(<Link to="/admin/news">News Article</Link>, 'news', <ReadOutlined/>),
-  getItem(<Link to="/admin/results">Result</Link>, 'results', <TrophyOutlined/>),
-  getItem(<Link to="/admin/riders">Rider</Link>, 'riders', <UserOutlined/>),
-  getItem(<Link to="/admin/seasons">Season</Link>, 'seasons', <CalendarOutlined/>),
+  getItem(<Link to="/admin/categories">Category</Link>, 'categories', <AppstoreOutlined/>),
   getItem(<Link to="/admin/sessions">Session</Link>, 'sessions', <CalendarOutlined/>),
-  getItem(<Link to="/admin/teams">Team</Link>, 'teams', <TeamOutlined/>),
+  getItem(<Link to="/admin/results">Result</Link>, 'results', <TrophyOutlined/>),
+  getItem(<Link to="/admin/news">News Article</Link>, 'news', <ReadOutlined/>),
   getItem(<Link to="/admin/users">User</Link>, 'users', <UserOutlined/>),
-  getItem(<Link to="/admin/contracts">Contract</Link>, 'contracts', <FileTextOutlined/>),
 ];
 
 const AppMenu = () => {
