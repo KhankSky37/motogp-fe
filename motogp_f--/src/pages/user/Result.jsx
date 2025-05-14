@@ -44,18 +44,18 @@ const Result = () => {
     },
     {
       title: "Rider",
-      dataIndex: "rider",
-      key: "rider",
+      dataIndex: ["rider", "name"],
+      key: "riderName",
     },
     {
       title: "Team",
-      dataIndex: "team",
-      key: "team",
+      dataIndex: ["team", "name"],
+      key: "teamName",
     },
     {
       title: "Lead Gap",
-      dataIndex: "leadGap",
-      key: "leadGap",
+      dataIndex: "gapMillis",
+      key: "gapMillis",
       align: "right",
     },
     {
@@ -78,9 +78,6 @@ const Result = () => {
     },
   ];
 
-  // const categories = ['Race', 'Qualifying', 'Practice 1', 'Practice 2'];
-  // const sessions = ['Full Session', 'Highlights', 'Last 5 Minutes'];
-
   useEffect(() => {
     const fetchSeasonYears = async () => {
       try {
@@ -91,7 +88,7 @@ const Result = () => {
             .sort((a, b) => b.localeCompare(a)); // Sort descending
           setSeasonYears(yearsData);
           if (yearsData.length > 0) {
-            form.setFieldsValue({year: yearsData[0]}); // Set default form value after data is loaded
+            form.setFieldsValue({year: yearsData[0]});
           }
         } else {
           setSeasonYears([]);
@@ -127,8 +124,6 @@ const Result = () => {
         if (response && response.data) {
           setEventsList(response.data);
           if (response.data.length > 0 && response.data[0]?.id) {
-            // Nếu event hiện tại đang được chọn không có trong danh sách mới,
-            // hoặc chưa có event nào được chọn, thì chọn event đầu tiên
             const currentSelectedEventId = form.getFieldValue("event");
             const isCurrentSelectedEventInNewList = response.data.some(
               (event) => event.id === currentSelectedEventId
@@ -153,7 +148,6 @@ const Result = () => {
     fetchEventsAsync();
   }, [Form.useWatch("year", form), Form.useWatch("type", form), form]); // Thêm form vào dependencies
 
-  // useEffect để cập nhật selectedEventDetails khi watchedEventId hoặc eventsList thay đổi
   useEffect(() => {
     let eventDetailToSet = null;
     if (watchedEventId && eventsList.length > 0) {
@@ -372,6 +366,9 @@ const Result = () => {
         <div className={"mx-14 mt-14 mb-7 bg-white"}>
           <div>
             <Table
+              loading={loading}
+              dataSource={sessionData[0]?.results}
+              columns={columns}
               title={() => (
                 <div className={"flex space-x-4"}>
                   <SunOutlined className={"text-3xl"}/>
@@ -393,8 +390,6 @@ const Result = () => {
                   </div>
                 </div>
               )}
-              columns={columns}
-              dataSource={null}
             />
           </div>
         </div>
