@@ -5,7 +5,7 @@ import bestMoments from "../../assets/Best-Moments-Promo.webp";
 import discount from "../../assets/MGP_2025_VP_1st_Price_Drop_WEB_Single_Promo_Home-1-.webp";
 import { Button } from "antd";
 import NewsSection from "../../components/user/home/NewsSection/NewsSection.jsx";
-import FeaturedContent from "../../components/user/home/FeaturedContent/FeaturedContent.jsx";
+import FeaturedContent from "../../components/user/home/FeaturedContent.jsx";
 
 const Home = () => {
   return (
