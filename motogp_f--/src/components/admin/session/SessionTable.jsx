@@ -19,14 +19,6 @@ const SessionTable = ({
 }) => {
   const columns = [
     {
-      title: "Event",
-      dataIndex: ["event", "name"],
-      key: "eventName",
-      render: (text, record) => record.event?.name || "-",
-      sorter: (a, b) =>
-        (a.event?.name || "").localeCompare(b.event?.name || ""),
-    },
-    {
       title: "Category",
       dataIndex: ["category", "name"],
       key: "categoryName",
