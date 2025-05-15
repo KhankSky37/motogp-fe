@@ -24,7 +24,6 @@ const AdminResultCreate = () => {
   const [manufacturersLoading, setManufacturersLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
-  // Fetch all reference data for dropdowns
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -68,20 +67,12 @@ const AdminResultCreate = () => {
       setLoading(true);
 
       try {
-        // Format the result object
         const resultData = {
           ...values,
-          session: { id: values.sessionId },
           rider: { riderId: values.riderId },
           team: { id: values.teamId },
           manufacturer: { id: values.manufacturerId },
         };
-
-        // Remove separate IDs as they're now in nested objects
-        delete resultData.sessionId;
-        delete resultData.riderId;
-        delete resultData.teamId;
-        delete resultData.manufacturerId;
 
         await ResultService.createResult(resultData);
         messageApi.success("Result created successfully!");
