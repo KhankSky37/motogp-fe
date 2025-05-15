@@ -37,13 +37,26 @@ const CircuitService = {
   },
 
   updateCircuit: (id, circuitDto, imageFile = null) => {
+    console.log("CircuitService.updateCircuit - imageFile:", imageFile);
+    console.log("imageFile type:", typeof imageFile);
+
     const formData = new FormData();
     formData.append(
       "circuit",
       new Blob([JSON.stringify(circuitDto)], { type: "application/json" })
     );
-    if (imageFile) {
+
+    // Chỉ thêm image vào formData nếu là File object hợp lệ
+    if (imageFile && imageFile instanceof File) {
+      console.log(
+        "Appending valid image file:",
+        imageFile.name,
+        imageFile.type,
+        imageFile.size
+      );
       formData.append("image", imageFile);
+    } else {
+      console.log("No new image file to upload");
     }
 
     return httpClient.put(`${API.CIRCUITS}/${id}`, formData, {

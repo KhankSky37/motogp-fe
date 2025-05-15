@@ -12,7 +12,7 @@ const CircuitSearchForm = ({ onFinish }) => {
     <Form form={form} layout="inline" onFinish={onFinish} className="mb-4">
       <Form.Item name="keyword">
         <Input
-          placeholder="Search by Name, City or Country"
+          placeholder="Search by Name or City"
           allowClear
           prefix={<SearchOutlined />}
           style={{ width: 300 }}

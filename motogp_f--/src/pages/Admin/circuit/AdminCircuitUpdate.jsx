@@ -15,10 +15,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import CircuitService from "../../../services/CircuitService.jsx";
 import { COUNTRIES } from "../../../constants/Countries.jsx";
 import ImageUploadField from "../../../components/admin/shared/ImageUploadField.jsx";
-import { getImageUrl } from "../../../utils/urlHelpers.jsx";
+
 
 const { Option } = Select;
-const { TextArea } = Input;
 const { Text } = Typography;
 
 const AdminCircuitUpdate = () => {
@@ -29,7 +28,8 @@ const AdminCircuitUpdate = () => {
   const [fetchLoading, setFetchLoading] = useState(true);
   const [circuit, setCircuit] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
-  const [imageUrl, setImageUrl] = useState(null);
+  const [initialImageUrl, setInitialImageUrl] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     const fetchCircuit = async () => {
@@ -38,17 +38,18 @@ const AdminCircuitUpdate = () => {
         const response = await CircuitService.getCircuitById(id);
         const circuitData = response.data;
         setCircuit(circuitData);
-        setImageUrl(
-          circuitData.imageUrl ? getImageUrl(circuitData.imageUrl) : null
-        );
 
-        // Set form values
+        // Save the image URL separately for ImageUploadField
+        if (circuitData.imageUrl) {
+          setInitialImageUrl(circuitData.imageUrl);
+        }
+
+        // Set form values - exclude image since we handle it separately
         form.setFieldsValue({
           name: circuitData.name,
           locationCity: circuitData.locationCity,
           locationCountry: circuitData.locationCountry,
           lengthKm: circuitData.lengthKm,
-          description: circuitData.description,
         });
       } catch (error) {
         console.error("Failed to fetch circuit details:", error);
@@ -64,8 +65,17 @@ const AdminCircuitUpdate = () => {
     }
   }, [id, form, messageApi, navigate]);
 
+  // Handle image change
+  const handleImageChange = useCallback((newImageFile) => {
+    console.log("Image changed:", newImageFile);
+    setImageFile(newImageFile); // Save File object when a new image is selected
+  }, []);
+
   const onFinish = useCallback(
     async (values) => {
+      console.log("Form values:", values);
+      console.log("Image file (separate state):", imageFile);
+
       setLoading(true);
 
       const circuitDto = {
@@ -74,11 +84,18 @@ const AdminCircuitUpdate = () => {
         locationCity: values.locationCity,
         locationCountry: values.locationCountry,
         lengthKm: values.lengthKm,
-        description: values.description,
       };
 
+      console.log("Circuit DTO:", circuitDto);
+
       try {
-        await CircuitService.updateCircuit(id, circuitDto, values.image);
+        // Use imageFile from state instead of values.image
+        const response = await CircuitService.updateCircuit(
+          id,
+          circuitDto,
+          imageFile
+        );
+        console.log("Update response:", response);
         messageApi.success("Circuit updated successfully!");
         navigate("/admin/circuits");
       } catch (error) {
@@ -91,7 +108,7 @@ const AdminCircuitUpdate = () => {
         setLoading(false);
       }
     },
-    [id, messageApi, navigate]
+    [id, messageApi, navigate, imageFile]
   );
 
   const handleCancel = useCallback(() => {
@@ -133,8 +150,12 @@ const AdminCircuitUpdate = () => {
           onFinish={onFinish}
           autoComplete="off"
         >
-          <Form.Item name="image" label="Circuit Image">
-            <ImageUploadField initialImageUrl={imageUrl} />
+          {/* Handle image upload as a custom form field */}
+          <Form.Item label="Circuit Image">
+            <ImageUploadField
+              value={initialImageUrl}
+              onChange={handleImageChange}
+            />
             <Text type="secondary" className="mt-1 block">
               Upload a new image, or leave empty to keep the current one.
             </Text>
@@ -195,10 +216,6 @@ const AdminCircuitUpdate = () => {
               placeholder="Enter circuit length in kilometers"
               style={{ width: "100%" }}
             />
-          </Form.Item>
-
-          <Form.Item name="description" label="Description">
-            <TextArea rows={4} placeholder="Enter circuit description" />
           </Form.Item>
 
           <Form.Item
