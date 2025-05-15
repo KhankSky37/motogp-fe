@@ -1,18 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {Col, ConfigProvider, Form, message, Row, Select, Table, Tabs, theme,} from "antd";
-import bgHome from "../../assets/bg_results.png";
+import {ConfigProvider, Form, message, Tabs,} from "antd";
 import SeasonService from "../../services/SeasonService.jsx";
 import EventService from "../../services/EventService.jsx";
-import {SunOutlined} from "@ant-design/icons";
 import SessionService from "../../services/SessionService.jsx";
+import ResultsHeader from "../../components/user/result/ResultsHeader.jsx";
+import SearchForm from "../../components/user/result/SearchForm.jsx";
+import EventBanner from "../../components/user/result/EventBanner.jsx";
+import ResultsTable from "../../components/user/result/ResultsTable.jsx";
 
 const Result = () => {
   const [form] = Form.useForm();
-  const [seasonYears, setSeasonYears] = useState([]); // State for fetched years
-  const [eventsList, setEventsList] = useState([]); // State for fetched events
-  const [selectedEventDetails, setSelectedEventDetails] = useState(null); // State mới cho event được chọn
-  const [sessionData, setSessionData] = useState(null); // State mới để lưu kết quả session
-  const [loading, setLoading] = useState(false); // State để hiển thị trạng thái loading
+  const [seasonYears, setSeasonYears] = useState([]);
+  const [eventsList, setEventsList] = useState([]);
+  const [selectedEventDetails, setSelectedEventDetails] = useState(null);
+  const [sessionData, setSessionData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const watchedCategory = Form.useWatch("category", form);
   const watchedSession = Form.useWatch("session", form);
@@ -32,49 +34,6 @@ const Result = () => {
     {
       key: "3",
       label: <span className="font-semibold text-lg">RECORDS</span>,
-    },
-  ];
-
-  const columns = [
-    {
-      title: "Pos.",
-      dataIndex: "position",
-      key: "position",
-      align: "center",
-    },
-    {
-      title: "Rider",
-      dataIndex: ["rider", "name"],
-      key: "riderName",
-    },
-    {
-      title: "Team",
-      dataIndex: ["team", "name"],
-      key: "teamName",
-    },
-    {
-      title: "Lead Gap",
-      dataIndex: "gapMillis",
-      key: "gapMillis",
-      align: "right",
-    },
-    {
-      title: "Prev Gap",
-      dataIndex: "prevGap",
-      key: "prevGap",
-      align: "right",
-    },
-    {
-      title: "Laps",
-      dataIndex: "laps",
-      key: "laps",
-      align: "center",
-    },
-    {
-      title: "Fastest Lap",
-      dataIndex: "fastestLap",
-      key: "fastestLap",
-      align: "center",
     },
   ];
 
@@ -214,7 +173,6 @@ const Result = () => {
     }
   };
 
-  // Thêm useEffect mới để tự động lấy dữ liệu khi tất cả các trường đã được chọn
   useEffect(() => {
     if (watchedEventId && watchedCategory && watchedSession) {
       fetchSessionResults();
@@ -224,13 +182,8 @@ const Result = () => {
 
   return (
     <>
-      <div className={"px-12 pt-4 pb-10 relative bg-[#c80502]"}>
-        <div className="absolute inset-0 bg-black opacity-85"></div>
-        <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-l to-black from-transparent"></div>
-        <span className={"relative text-5xl font-extrabold text-white"}>
-          RESULTS
-        </span>
-      </div>
+      <ResultsHeader/>
+
       <div className={"px-12 relative bg-[#c80502]"}>
         <div className="absolute inset-0 bg-black opacity-85"></div>
         <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-l to-black from-transparent"></div>
@@ -249,151 +202,23 @@ const Result = () => {
           <Tabs defaultActiveKey="1" items={items} rootClassName={"relative"}/>
           ;
         </ConfigProvider>
-        <ConfigProvider
-          theme={{
-            algorithm: theme.darkAlgorithm,
-          }}
-        >
-          <Form form={form} name="motogp_search" layout="vertical">
-            <Row gutter={16}>
-              <Col md={24} lg={4}>
-                <Form.Item name="year">
-                  <Select placeholder="Select Year">
-                    {seasonYears.map((year) => (
-                      <Option key={year} value={year}>
-                        {year}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-
-              <Col md={24} lg={4}>
-                <Form.Item name="type">
-                  <Select placeholder="Select Type" defaultValue={"ALL"}>
-                    <Option key="ALL" value="ALL">
-                      All Events
-                    </Option>
-                    <Option key="GRAND_PRIX" value="GRAND_PRIX">
-                      Grands Prix
-                    </Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-
-              <Col md={24} lg={4}>
-                <Form.Item name="event">
-                  <Select
-                    placeholder="Select Event"
-                    showSearch
-                    filterOption={(input, option) =>
-                      option.children
-                        .toLowerCase()
-                        .indexOf(input.toLowerCase()) >= 0
-                    }
-                  >
-                    {eventsList.map((event) => (
-                      <Option key={event.id} value={event.id}>
-                        {event.name}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-
-              <Col md={24} lg={4}>
-                <Form.Item name="category">
-                  <Select placeholder="Select Category">
-                    {availableCategories.map((category) => (
-                      <Option key={category} value={category}>
-                        {category}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-
-              <Col md={24} lg={4}>
-                <Form.Item name="session">
-                  <Select placeholder="Select Session">
-                    {availableSessions.map((session) => (
-                      <Option key={session} value={session}>
-                        {session}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </ConfigProvider>
+        <SearchForm
+          form={form}
+          seasonYears={seasonYears}
+          eventsList={eventsList}
+          availableCategories={availableCategories}
+          availableSessions={availableSessions}
+        />
       </div>
-      <div className={"h-52 relative"}>
-        <div className={"absolute w-full h-full"}>
-          <img
-            src={bgHome}
-            className={"h-full w-full object-cover object-[50%_75%]"}
-          />
-        </div>
-        <div
-          className={"h-full w-full absolute"}
-          style={{
-            background: "linear-gradient(90deg, #000 18.54%, transparent)",
-          }}
-        ></div>
-        <div className={"absolute  lg:w-[50%] w-[75%]"}>
-          <div className="text-white text-4xl font-extrabold px-12 pb-4">
-            {eventsList[0]?.officialName}
-          </div>
-          <div className="text-white flex px-12 pb-12 space-x-2">
-            <img
-              src="https://photos.motogp.com/countries/flags/iso2/fra.svg"
-              alt="FR flag"
-              className="w-6 boder border-white"
-            />
-            <div className={"divide-x flex"}>
-              <div className="pr-2">
-                {selectedEventDetails?.circuit?.locationCity}
-              </div>
-              <div className="px-2">{selectedEventDetails?.startDate}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <EventBanner
+        selectedEvent={selectedEventDetails}
+        fallbackName={eventsList[0]?.officialName}
+      />
 
-      {/*// result table*/}
-      <div>
-        <div className={"mx-14 mt-14 mb-7 bg-white"}>
-          <div>
-            <Table
-              loading={loading}
-              dataSource={sessionData[0]?.results}
-              columns={columns}
-              title={() => (
-                <div className={"flex space-x-4"}>
-                  <SunOutlined className={"text-3xl"}/>
-                  <div className={"flex flex-col"}>
-                    <span>Clear</span>
-                    <span>23º</span>
-                  </div>
-                  <div className={"flex flex-col"}>
-                    <span>Track conditions</span>
-                    <span>Dry</span>
-                  </div>
-                  <div className={"flex flex-col"}>
-                    <span>Humidity</span>
-                    <span>55%</span>
-                  </div>
-                  <div className={"flex flex-col"}>
-                    <span>Ground</span>
-                    <span>28º</span>
-                  </div>
-                </div>
-              )}
-            />
-          </div>
-        </div>
-      </div>
+      <ResultsTable
+        loading={loading}
+        sessionData={sessionData?.[0]?.results}
+      />
     </>
   );
 };
