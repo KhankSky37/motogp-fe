@@ -16,7 +16,6 @@ import { COUNTRIES } from "../../../constants/Countries.jsx";
 import ImageUploadField from "../../../components/admin/shared/ImageUploadField.jsx";
 
 const { Option } = Select;
-const { TextArea } = Input;
 
 const AdminCircuitCreate = () => {
   const [form] = Form.useForm();
@@ -33,7 +32,6 @@ const AdminCircuitCreate = () => {
         locationCity: values.locationCity,
         locationCountry: values.locationCountry,
         lengthKm: values.lengthKm,
-        description: values.description,
       };
 
       try {
@@ -150,10 +148,6 @@ const AdminCircuitCreate = () => {
               placeholder="Enter circuit length in kilometers"
               style={{ width: "100%" }}
             />
-          </Form.Item>
-
-          <Form.Item name="description" label="Description">
-            <TextArea rows={4} placeholder="Enter circuit description" />
           </Form.Item>
 
           <Form.Item
