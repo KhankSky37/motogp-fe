@@ -7,6 +7,7 @@ import ResultsHeader from "../../components/user/result/ResultsHeader.jsx";
 import SearchForm from "../../components/user/result/SearchForm.jsx";
 import EventBanner from "../../components/user/result/EventBanner.jsx";
 import ResultsTable from "../../components/user/result/ResultsTable.jsx";
+import PDFResultsTable from "../../components/user/result/PDFResultsTable.jsx";
 
 const Result = () => {
   const [form] = Form.useForm();
@@ -142,11 +143,7 @@ const Result = () => {
     const category = form.getFieldValue("category");
     const session = form.getFieldValue("session");
 
-    if (!eventId || !category || !session) {
-      message.warning("Vui lòng chọn đầy đủ Event, Category và Session");
-      return;
-    }
-
+    console.log("Fetching session results with params:", "log")
     setLoading(true);
     try {
       const params = {
@@ -217,8 +214,11 @@ const Result = () => {
 
       <ResultsTable
         loading={loading}
-        sessionData={sessionData?.[0]?.results}
+        resultData={sessionData?.[0]?.results}
+        sessionType={sessionData?.[0]?.sessionType}
       />
+
+      <PDFResultsTable/>
     </>
   );
 };
