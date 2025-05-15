@@ -1,9 +1,9 @@
 import React from "react";
 import { Table } from "antd";
 import { SunOutlined } from "@ant-design/icons";
-import {getImageUrl} from "../../../utils/urlHelpers.jsx";
+import { getImageUrl } from "../../../utils/urlHelpers.jsx";
 
-const ResultsTable = ({ loading, sessionData }) => {
+const ResultsTable = ({ loading, sessionData , sessionType}) => {
   const columns = [
     {
       title: "Pos.",
@@ -16,6 +16,33 @@ const ResultsTable = ({ loading, sessionData }) => {
       dataIndex: "points",
       key: "points",
       align: "center",
+      render: (_, record) => {
+        if (
+          record.status &&
+          ["DNF", "DNS", "DSQ", "RET"].includes(record.status.toUpperCase())
+        ) {
+          return "-";
+        }
+
+        if (!record.status || record.status.toUpperCase() === "FINISHED") {
+          const position = parseInt(record.position, 10);
+
+          if (!isNaN(position)) {
+            if (sessionType === "RACE") {
+              const pointsSystem = [
+                25, 20, 16, 13, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+              ];
+              return position <= 15 ? pointsSystem[position - 1] : "-";
+            }
+            else if (sessionType === "SPR") {
+              const sprintPointsSystem = [12, 9, 7, 6, 5, 4, 3, 2, 1];
+              return position <= 9 ? sprintPointsSystem[position - 1] : "-";
+            }
+          }
+        }
+
+        return "-";
+      },
     },
     {
       title: "image",
@@ -26,7 +53,7 @@ const ResultsTable = ({ loading, sessionData }) => {
         <div className="h-20 overflow-hidden">
           <img
             src={getImageUrl(photoUrl)}
-            className="w-40 object-cover object-top" /* object-top để hiển thị phần trên của ảnh */
+            className="w-40 object-cover object-top"
           />
         </div>
       ),
@@ -35,7 +62,9 @@ const ResultsTable = ({ loading, sessionData }) => {
       title: "Rider",
       dataIndex: ["rider", "name"],
       key: "riderName",
-      render: (name, record) => name || `${record.rider?.firstName || ''} ${record.rider?.lastName || ''}`,
+      render: (name, record) =>
+        name ||
+        `${record.rider?.firstName || ""} ${record.rider?.lastName || ""}`,
     },
     {
       title: "Team",
@@ -71,6 +100,9 @@ const ResultsTable = ({ loading, sessionData }) => {
     // },
   ];
 
+  if(sessionType!=="RACE"|| sessionType!=='SPR'){
+    columns.splice(1, 1);
+  }
   // Helper function to format time values
   // const formatTime = (milliseconds) => {
   //   if (!milliseconds) return "-";
@@ -84,7 +116,7 @@ const ResultsTable = ({ loading, sessionData }) => {
   //   const formattedTime = `${minutes ? `${minutes}:` : ''}${seconds.toString().padStart(2, '0')}.${ms.toString().padStart(3, '0')}`;
   //   return isPositive ? formattedTime : `+${formattedTime}`;
   // };
-
+  console.log("sessionData", sessionData);
   return (
     <div className="mx-14 mt-14 mb-7 bg-white">
       <Table

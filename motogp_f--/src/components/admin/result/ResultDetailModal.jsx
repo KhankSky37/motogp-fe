@@ -53,10 +53,6 @@ const ResultDetailModal = ({result, visible, onClose, loading = false}) => {
             {result.laps || "N/A"}
           </Descriptions.Item>
 
-          <Descriptions.Item label="Points">
-            {result.points || "0"}
-          </Descriptions.Item>
-
           <Descriptions.Item label="Status">
             {result.status || "N/A"}
           </Descriptions.Item>

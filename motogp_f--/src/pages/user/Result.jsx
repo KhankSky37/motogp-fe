@@ -218,6 +218,7 @@ const Result = () => {
       <ResultsTable
         loading={loading}
         sessionData={sessionData?.[0]?.results}
+        sessionType={sessionData?.[0]?.sessionType}
       />
     </>
   );

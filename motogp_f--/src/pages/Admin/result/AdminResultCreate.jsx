@@ -285,21 +285,6 @@ const AdminResultCreate = () => {
           </Form.Item>
 
           <Form.Item
-            name="points"
-            label="Points"
-            rules={[
-              {
-                type: "number",
-                min: 0,
-                message: "Points must be a non-negative number!",
-              },
-            ]}
-            initialValue={0}
-          >
-            <InputNumber placeholder="Enter points" style={{ width: "100%" }} />
-          </Form.Item>
-
-          <Form.Item
             name="status"
             label="Status"
             rules={[{ required: true, message: "Please select a status!" }]}

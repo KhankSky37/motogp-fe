@@ -68,7 +68,6 @@ const AdminResultUpdate = () => {
           timeMillis: resultData.timeMillis,
           gapMillis: resultData.gapMillis,
           laps: resultData.laps,
-          points: resultData.points,
           status: resultData.status,
         });
       } catch (error) {
@@ -317,20 +316,6 @@ const AdminResultUpdate = () => {
               placeholder="Enter number of laps"
               style={{ width: "100%" }}
             />
-          </Form.Item>
-
-          <Form.Item
-            name="points"
-            label="Points"
-            rules={[
-              {
-                type: "number",
-                min: 0,
-                message: "Points must be a non-negative number!",
-              },
-            ]}
-          >
-            <InputNumber placeholder="Enter points" style={{ width: "100%" }} />
           </Form.Item>
 
           <Form.Item
