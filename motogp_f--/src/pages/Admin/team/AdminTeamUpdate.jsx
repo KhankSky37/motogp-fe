@@ -1,32 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  Select,
-  message,
-  Spin,
-  Typography,
-} from "antd";
+import { Button, Card, Form, Input, Select, message, Spin } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import TeamService from "../../../services/TeamService.jsx";
 import ManufacturerService from "../../../services/ManufacturerService.jsx";
 import ImageUploadField from "../../../components/admin/shared/ImageUploadField.jsx";
-import { getImageUrl } from "../../../utils/urlHelpers.jsx";
 
 const { Option } = Select;
-const { TextArea } = Input;
-const { Text } = Typography;
 
 const AdminTeamUpdate = () => {
   const { id } = useParams();
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [fetchLoading, setFetchLoading] = useState(true);
-  const [team, setTeam] = useState(null);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [manufacturers, setManufacturers] = useState([]);
   const [manufacturersLoading, setManufacturersLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
@@ -53,25 +40,25 @@ const AdminTeamUpdate = () => {
   useEffect(() => {
     const fetchTeamData = async () => {
       if (!id) return;
-      setFetchLoading(true);
+      setInitialLoading(true);
       try {
         const response = await TeamService.getTeamById(id);
         const teamData = response.data;
-        setTeam(teamData);
 
-        // Set form values
-        form.setFieldsValue({
-          name: teamData.name,
+        // Set form values with the correct structure for ImageUploadField
+        const formattedData = {
+          ...teamData,
+          logo: teamData.logoUrl || null,
           manufacturerId: teamData.manufacturer?.id,
-          description: teamData.description,
-          // For the logo, we'll keep the URL in the component state
-        });
+        };
+
+        form.setFieldsValue(formattedData);
       } catch (error) {
         console.error("Failed to fetch team data:", error);
         messageApi.error("Failed to load team data. Please try again.");
         navigate("/admin/teams");
       } finally {
-        setFetchLoading(false);
+        setInitialLoading(false);
       }
     };
 
@@ -83,7 +70,7 @@ const AdminTeamUpdate = () => {
       setLoading(true);
 
       // Check if values.logo is a new File object or the initial URL string/null
-      const newLogoFile = values.logo instanceof File ? values.logo : null;
+      const logoFile = values.logo instanceof File ? values.logo : null;
 
       // Construct the DTO
       const teamDto = {
@@ -92,12 +79,11 @@ const AdminTeamUpdate = () => {
         manufacturer: values.manufacturerId
           ? { id: values.manufacturerId }
           : null,
-        description: values.description,
         // logoUrl is handled by the backend based on whether a new file is sent
       };
 
       try {
-        await TeamService.updateTeam(id, teamDto, newLogoFile);
+        await TeamService.updateTeam(id, teamDto, logoFile);
         messageApi.success("Team updated successfully!");
         navigate("/admin/teams");
       } catch (error) {
@@ -117,7 +103,7 @@ const AdminTeamUpdate = () => {
     navigate("/admin/teams");
   }, [navigate]);
 
-  if (fetchLoading) {
+  if (initialLoading) {
     return (
       <Spin
         spinning={true}
@@ -158,21 +144,6 @@ const AdminTeamUpdate = () => {
             name="logo"
             label="Team Logo"
             rules={[{ required: false }]}
-            extra={
-              team?.logoUrl && (
-                <div className="mt-2">
-                  <Text type="secondary">Current logo:</Text>
-                  <div className="mt-1">
-                    <img
-                      src={getImageUrl(team.logoUrl)}
-                      alt={`${team.name} logo`}
-                      style={{ maxHeight: "100px", maxWidth: "200px" }}
-                      className="border rounded p-1"
-                    />
-                  </div>
-                </div>
-              )
-            }
           >
             <ImageUploadField />
           </Form.Item>
@@ -201,14 +172,6 @@ const AdminTeamUpdate = () => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="description"
-            label="Description"
-            rules={[{ required: false }]}
-          >
-            <TextArea rows={4} placeholder="Enter team description" />
           </Form.Item>
 
           <Form.Item
