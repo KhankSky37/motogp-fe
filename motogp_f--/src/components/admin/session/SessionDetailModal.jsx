@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   DatePicker,
@@ -7,6 +7,7 @@ import {
   Select,
   Spin,
   Descriptions,
+  Tag,
 } from "antd";
 import moment from "moment";
 import { formatDateTime } from "../../../utils/formatters";
@@ -19,26 +20,29 @@ const SessionDetailModal = ({
   onSave,
   loading,
   session,
-  events = [],
   categories = [],
-  eventsLoading = false,
   categoriesLoading = false,
   viewOnly = false,
 }) => {
   const [form] = Form.useForm();
   const isEdit = !!session?.id;
+  const [localLoading, setLocalLoading] = useState(loading);
+
+  useEffect(() => {
+    setLocalLoading(loading);
+
+    if (visible) {
+      const timer = setTimeout(() => {
+        setLocalLoading(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [visible, loading]);
 
   useEffect(() => {
     if (visible && session && !viewOnly) {
-      // Handle both cases - when event exists or is undefined
-      let eventId = null;
-      if (session.event) {
-        eventId = session.event.id;
-      }
-
       form.setFieldsValue({
         ...session,
-        eventId: eventId,
         categoryId: session.category?.id,
         sessionDatetime: session.sessionDatetime
           ? moment(session.sessionDatetime)
@@ -49,25 +53,52 @@ const SessionDetailModal = ({
     }
   }, [visible, session, form, viewOnly]);
 
+  const renderSessionTypeTag = (sessionType) => {
+    let color = "default";
+    switch (sessionType) {
+      case "PRACTICE":
+        color = "blue";
+        break;
+      case "QUALIFYING":
+        color = "purple";
+        break;
+      case "RACE":
+        color = "red";
+        break;
+      case "SPRINT":
+        color = "orange";
+        break;
+      case "WARM_UP":
+        color = "green";
+        break;
+    }
+    return <Tag color={color}>{sessionType}</Tag>;
+  };
+
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
 
-      // Format the datetime to ISO string
       if (values.sessionDatetime) {
         values.sessionDatetime = values.sessionDatetime.toISOString();
       }
 
-      // Prepare the session object
+      if (!values.categoryId) {
+        form.setFields([
+          {
+            name: "categoryId",
+            errors: ["Please select a category"],
+          },
+        ]);
+        return;
+      }
+
       const sessionData = {
         ...values,
         id: session?.id,
-        event: { id: values.eventId },
-        category: { id: values.categoryId },
+        category: { categoryId: values.categoryId },
       };
 
-      // Remove the separate IDs as they're now in the nested objects
-      delete sessionData.eventId;
       delete sessionData.categoryId;
 
       onSave(sessionData);
@@ -82,7 +113,6 @@ const SessionDetailModal = ({
     ? "Edit Session"
     : "Add Session";
 
-  // In view-only mode, display session details without form
   if (viewOnly && session) {
     return (
       <Modal
@@ -96,16 +126,13 @@ const SessionDetailModal = ({
           </Button>,
         ]}
       >
-        <Spin spinning={loading}>
+        <Spin spinning={localLoading}>
           <Descriptions bordered column={1}>
-            <Descriptions.Item label="Event">
-              {session.event?.name || "N/A"}
-            </Descriptions.Item>
             <Descriptions.Item label="Category">
               {session.category?.name || "N/A"}
             </Descriptions.Item>
             <Descriptions.Item label="Session Type">
-              {session.sessionType || "N/A"}
+              {renderSessionTypeTag(session.sessionType) || "N/A"}
             </Descriptions.Item>
             <Descriptions.Item label="Date & Time">
               {formatDateTime(session.sessionDatetime) || "N/A"}
@@ -130,32 +157,14 @@ const SessionDetailModal = ({
           key="save"
           type="primary"
           onClick={handleSubmit}
-          loading={loading}
+          loading={localLoading}
         >
           Save
         </Button>,
       ]}
     >
-      <Spin spinning={loading}>
+      <Spin spinning={localLoading}>
         <Form form={form} layout="vertical">
-          <Form.Item
-            name="eventId"
-            label="Event"
-            rules={[{ required: true, message: "Please select an event" }]}
-          >
-            <Select
-              placeholder="Select event"
-              loading={eventsLoading}
-              disabled={loading}
-            >
-              {events.map((event) => (
-                <Option key={event.id} value={event.id}>
-                  {event.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-
           <Form.Item
             name="categoryId"
             label="Category"
@@ -165,9 +174,13 @@ const SessionDetailModal = ({
               placeholder="Select category"
               loading={categoriesLoading}
               disabled={loading}
+              showSearch
+              filterOption={(input, option) =>
+                option.children.toLowerCase().includes(input.toLowerCase())
+              }
             >
               {categories.map((category) => (
-                <Option key={category.id} value={category.id}>
+                <Option key={category.categoryId} value={category.categoryId}>
                   {category.name}
                 </Option>
               ))}
