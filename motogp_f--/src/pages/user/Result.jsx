@@ -7,6 +7,7 @@ import ResultsHeader from "../../components/user/result/ResultsHeader.jsx";
 import SearchForm from "../../components/user/result/SearchForm.jsx";
 import EventBanner from "../../components/user/result/EventBanner.jsx";
 import ResultsTable from "../../components/user/result/ResultsTable.jsx";
+import PDFResultsTable from "../../components/user/result/PDFResultsTable.jsx";
 
 const Result = () => {
   const [form] = Form.useForm();
@@ -213,9 +214,11 @@ const Result = () => {
 
       <ResultsTable
         loading={loading}
-        sessionData={sessionData?.[0]?.results}
+        resultData={sessionData?.[0]?.results}
         sessionType={sessionData?.[0]?.sessionType}
       />
+
+      <PDFResultsTable/>
     </>
   );
 };
