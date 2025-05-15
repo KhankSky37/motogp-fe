@@ -142,11 +142,7 @@ const Result = () => {
     const category = form.getFieldValue("category");
     const session = form.getFieldValue("session");
 
-    if (!eventId || !category || !session) {
-      message.warning("Vui lòng chọn đầy đủ Event, Category và Session");
-      return;
-    }
-
+    console.log("Fetching session results with params:", "log")
     setLoading(true);
     try {
       const params = {
