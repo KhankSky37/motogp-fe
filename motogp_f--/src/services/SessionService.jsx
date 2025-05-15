@@ -18,6 +18,7 @@ const SessionService = {
   },
 
   deleteSession(id) {
+    console.log(`Sending DELETE request to /sessions/${id}`);
     return HttpClient.delete(`/sessions/${id}`);
   },
 };
