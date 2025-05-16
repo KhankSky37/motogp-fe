@@ -6,6 +6,10 @@ const EventService = {
     return httpClient.get(API.EVENTS, { params });
   },
 
+  getEventSearchOptions: (params) => {
+    return httpClient.get(`${API.EVENTS}/search-options`, { params });
+  },
+
   getEventById: (id) => {
     return httpClient.get(`${API.EVENTS}/${id}`);
   },

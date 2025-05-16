@@ -1,155 +1,224 @@
-import React from 'react';
-import {Col, ConfigProvider, Form, Row, Select, Tabs, theme} from "antd";
-import bgHome from "../../assets/bg_results.png";
+import React, {useEffect, useState} from "react";
+import {ConfigProvider, Form, message, Tabs,} from "antd";
+import SeasonService from "../../services/SeasonService.jsx";
+import EventService from "../../services/EventService.jsx";
+import SessionService from "../../services/SessionService.jsx";
+import ResultsHeader from "../../components/user/result/ResultsHeader.jsx";
+import SearchForm from "../../components/user/result/SearchForm.jsx";
+import EventBanner from "../../components/user/result/EventBanner.jsx";
+import ResultsTable from "../../components/user/result/ResultsTable.jsx";
+import PDFResultsTable from "../../components/user/result/PDFResultsTable.jsx";
 
 const Result = () => {
   const [form] = Form.useForm();
+  const [seasonYears, setSeasonYears] = useState([]);
+  const [eventsList, setEventsList] = useState([]);
+  const [selectedEventDetails, setSelectedEventDetails] = useState(null);
+  const [sessionData, setSessionData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  const watchedCategory = Form.useWatch("category", form);
+  const watchedSession = Form.useWatch("session", form);
+
+  const watchedEventId = Form.useWatch("event", form);
+  const availableCategories = selectedEventDetails?.categoryIds ? Array.from(selectedEventDetails.categoryIds) : [];
+  const availableSessions = selectedEventDetails?.sessionTypes ? Array.from(selectedEventDetails.sessionTypes) : [];
   const items = [
     {
-      key: '1',
-      label: <span className="font-semibold">RESULTS</span>,
+      key: "1",
+      label: <span className="font-semibold text-lg">RESULTS</span>,
     },
     {
-      key: '2',
-      label: <span className="font-semibold">STANDINGS</span>,
+      key: "2",
+      label: <span className="font-semibold text-lg">STANDINGS</span>,
     },
     {
-      key: '3',
-      label: <span className="font-semibold">RECORDS</span>,
+      key: "3",
+      label: <span className="font-semibold text-lg">RECORDS</span>,
     },
   ];
 
+  useEffect(() => {
+    const fetchSeasonYears = async () => {
+      try {
+        const response = await SeasonService.getAllSeasons();
+        if (response && response.data) {
+          const yearsData = response.data
+            .map((season) => String(season.id))
+            .sort((a, b) => b.localeCompare(a)); // Sort descending
+          setSeasonYears(yearsData);
+          if (yearsData.length > 0) {
+            form.setFieldsValue({year: yearsData[0]});
+          }
+        } else {
+          setSeasonYears([]);
+          message.error("Could not fetch season years.");
+        }
+      } catch (error) {
+        console.error("Failed to fetch season years:", error);
+        message.error("Failed to load season years. Please try again.");
+        setSeasonYears([]);
+      }
+    };
 
-  // Dữ liệu mẫu - bạn sẽ cần thay thế bằng dữ liệu thực tế hoặc fetch từ API
-  const years = ['2024', '2023', '2022', '2021']; // Ví dụ
-  const types = ['MotoGP™', 'Moto2™', 'Moto3™', 'MotoE™']; // Ví dụ
-  const events = [ // Ví dụ - nên được cập nhật dựa trên năm và loại được chọn
-    {id: 'qatar', name: 'Qatar Grand Prix'},
-    {id: 'portugal', name: 'Portuguese Grand Prix'},
-    {id: 'americas', name: 'Grand Prix of The Americas'},
-  ];
-  const categories = ['Race', 'Qualifying', 'Practice 1', 'Practice 2']; // Ví dụ
-  const sessions = ['Full Session', 'Highlights', 'Last 5 Minutes']; // Ví dụ
+    fetchSeasonYears();
+  }, []);
+
+  useEffect(() => {
+    const fetchEventsAsync = async () => {
+      const currentYear = form.getFieldValue("year"); // Hoặc watchedYear từ Form.useWatch('year', form)
+      const currentType = form.getFieldValue("type"); // Hoặc watchedType từ Form.useWatch('type', form)
+
+      if (!currentYear) {
+        setEventsList([]);
+        form.setFieldsValue({event: undefined}); // Reset event field
+        return;
+      }
+      try {
+        const queryParams = {seasonId: currentYear};
+        if (currentType && currentType !== "ALL") {
+          queryParams.eventType = currentType;
+        }
+
+        const response = await EventService.getEventSearchOptions(queryParams);
+        if (response && response.data) {
+          setEventsList(response.data);
+          if (response.data.length > 0 && response.data[0]?.id) {
+            const currentSelectedEventId = form.getFieldValue("event");
+            const isCurrentSelectedEventInNewList = response.data.some(
+              (event) => event.id === currentSelectedEventId
+            );
+            if (!currentSelectedEventId || !isCurrentSelectedEventInNewList) {
+              form.setFieldsValue({event: response.data[0].id});
+            }
+          } else {
+            form.setFieldsValue({event: undefined}); // Không có event, reset lựa chọn
+          }
+        } else {
+          setEventsList([]);
+          form.setFieldsValue({event: undefined}); // Không có data, reset lựa chọn
+        }
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+        message.error("Failed to load events. Please try again.");
+        setEventsList([]);
+        form.setFieldsValue({event: undefined}); // Lỗi, reset lựa chọn
+      }
+    };
+    fetchEventsAsync();
+  }, [Form.useWatch("year", form), Form.useWatch("type", form), form]); // Thêm form vào dependencies
+
+  useEffect(() => {
+    let eventDetailToSet = null;
+    if (watchedEventId && eventsList.length > 0) {
+      const foundEvent = eventsList.find(
+        (event) => event.id === watchedEventId
+      );
+      eventDetailToSet = foundEvent || null;
+    }
+    setSelectedEventDetails(eventDetailToSet);
+
+
+    if (form) {
+      form.setFieldsValue({category: undefined, session: undefined});
+      if (eventDetailToSet) {
+        const newAvailableCategories = eventDetailToSet.categoryIds ? Array.from(eventDetailToSet.categoryIds) : [];
+        const newAvailableSessions = eventDetailToSet.sessionTypes ? Array.from(eventDetailToSet.sessionTypes) : [];
+        const defaultFormValues = {};
+        if (newAvailableCategories.length > 0) {
+          defaultFormValues.category = newAvailableCategories[0]; // Đặt category mặc định là mục đầu tiên
+        }
+        if (newAvailableSessions.length > 0) {
+          defaultFormValues.session = newAvailableSessions[0]; // Đặt session mặc định là mục đầu tiên
+        }
+        if (Object.keys(defaultFormValues).length > 0) {
+          form.setFieldsValue(defaultFormValues);
+        }
+      }
+    }
+  }, [watchedEventId, eventsList, form]);
+
+  const fetchSessionResults = async () => {
+    const eventId = form.getFieldValue("event");
+    const category = form.getFieldValue("category");
+    const session = form.getFieldValue("session");
+
+    console.log("Fetching session results with params:", "log")
+    setLoading(true);
+    try {
+      const params = {
+        eventId: eventId,
+        categoryId: category,
+        sessionType: session,
+      };
+
+      const response = await SessionService.getAllSessions(params);
+      console.log("Session data:", response.data);
+      if (response && response.data) {
+        setSessionData(response.data);
+        message.success("Đã lấy dữ liệu session thành công");
+      } else {
+        message.error("Không tìm thấy dữ liệu cho session này");
+        setSessionData(null);
+      }
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu session:", error);
+      message.error("Không thể lấy dữ liệu session. Vui lòng thử lại.");
+      setSessionData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (watchedEventId && watchedCategory && watchedSession) {
+      fetchSessionResults();
+    }
+  }, [watchedEventId, watchedCategory, watchedSession]);
+
 
   return (
     <>
-      <div className={'px-12 pt-4 pb-10 relative bg-[#c80502]'}>
+      <ResultsHeader/>
+
+      <div className={"px-12 relative bg-[#c80502]"}>
         <div className="absolute inset-0 bg-black opacity-85"></div>
         <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-l to-black from-transparent"></div>
-        <span className={'relative text-5xl font-extrabold text-white'}>RESULTS</span>
-      </div>
-      <div className={"px-12 bg-black"}>
         <ConfigProvider
           theme={{
             components: {
               Tabs: {
-                itemColor: '#ffffff',
-                itemSelectedColor: '#ffffff',
-                itemHoverColor: '#ffffff',
-                inkBarColor: '#ffffff',
+                itemColor: "#ffffff",
+                itemSelectedColor: "#ffffff",
+                itemHoverColor: "#ffffff",
+                inkBarColor: "#ffffff",
               },
             },
           }}
         >
-          <Tabs defaultActiveKey="1" items={items} rootClassName={'relative'}/>;
+          <Tabs defaultActiveKey="1" items={items} rootClassName={"relative"}/>
+          ;
         </ConfigProvider>
-        <ConfigProvider
-          theme={{
-            algorithm: theme.darkAlgorithm,
-          }}
-        >
-          <Form
-            form={form}
-            name="motogp_search"
-            layout="vertical"
-          >
-            <Row gutter={16}>
-              <Col md={24} lg={4}>
-                <Form.Item
-                  name="year"
-                >
-                  <Select placeholder="Select Year">
-                    {years.map(year => (
-                      <Option key={year} value={year}>{year}</Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-
-              <Col md={24} lg={4}>
-                <Form.Item
-                  name="type"
-                >
-                  <Select placeholder="Select Type">
-                    {types.map(type => (
-                      <Option key={type} value={type}>{type}</Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-
-              <Col md={24} lg={4}>
-                <Form.Item
-                  name="event"
-                >
-                  <Select placeholder="Select Event" showSearch filterOption={(input, option) =>
-                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }>
-                    {events.map(event => (
-                      <Option key={event.id} value={event.id}>{event.name}</Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-
-              <Col md={24} lg={4}>
-                <Form.Item
-                  name="category"
-                >
-                  <Select placeholder="Select Category">
-                    {categories.map(category => (
-                      <Option key={category} value={category}>{category}</Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-
-              <Col md={24} lg={4}>
-                <Form.Item
-                  name="session"
-                >
-                  <Select placeholder="Select Session">
-                    {sessions.map(session => (
-                      <Option key={session} value={session}>{session}</Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </ConfigProvider>
-
+        <SearchForm
+          form={form}
+          seasonYears={seasonYears}
+          eventsList={eventsList}
+          availableCategories={availableCategories}
+          availableSessions={availableSessions}
+        />
       </div>
-      <div
-        className={"h-52 relative"}
-      >
-        <div className={'absolute w-full h-full'}>
-          <img src={bgHome} className={"h-full w-full object-cover object-[50%_75%]"}
-          />
-        </div>
-        <div className={"h-full w-full absolute"}
-             style={{background: 'linear-gradient(90deg, #000 18.54%, transparent)'}}>
-        </div>
-        <div className={"absolute  lg:w-[50%] w-[75%]"}>
-          <div className="text-white text-4xl font-extrabold px-12 pb-4">Michelin® Grand Prix of France 2025</div>
-          <div className="text-white flex divide-x px-12 pb-12">
-            <div className="pr-2">Le Mans</div>
-            <div className="px-2">9 - 11 May</div>
-          </div>
-        </div>
-      </div>
-      v
+      <EventBanner
+        selectedEvent={selectedEventDetails}
+        fallbackName={eventsList[0]?.officialName}
+      />
+
+      <ResultsTable
+        loading={loading}
+        resultData={sessionData?.[0]?.results}
+        sessionType={sessionData?.[0]?.sessionType}
+      />
+
+      <PDFResultsTable/>
     </>
   );
 };

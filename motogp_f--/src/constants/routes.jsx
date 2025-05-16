@@ -36,6 +36,8 @@ import AdminUserUpdate from "../pages/Admin/userAdmin/AdminUserUpdate.jsx";
 import AdminNewsArticle from "../pages/Admin/newsArticle/AdminNewsArticle.jsx";
 import AdminNewsArticleCreate from "../pages/Admin/newsArticle/AdminNewsArticleCreate.jsx";
 import AdminNewsArticleUpdate from "../pages/Admin/newsArticle/AdminNewsArticleUpdate.jsx";
+// Import News page component
+import NewsPage from "../pages/user/news/NewsPage.jsx";
 import Riders from "../pages/user/Riders.jsx";
 import Teams from "../pages/user/Teams.jsx";
 import Legends from "../pages/user/Legends.jsx";
@@ -44,15 +46,20 @@ import Legends from "../pages/user/Legends.jsx";
 export const routes = [
   {
     path: "/",
-    element: <DefaultLayout />,
+    element: <DefaultLayout/>,
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <Home/>,
       },
       {
-        path: "gp-results",
-        element: <Result />,
+        path: "/gp-results",
+        element: <Result/>,
+      },
+      // Add News route
+      {
+        path: "/news",
+        element: <NewsPage />,
       },
       {
         path: "riders",
@@ -68,7 +75,6 @@ export const routes = [
       },
     ],
   },
-
   {
     path: "/admin",
     element: <AdminLayout/>,

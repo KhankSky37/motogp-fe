@@ -9,9 +9,9 @@ import {
   Descriptions,
 } from "antd";
 import moment from "moment";
-import { formatDateTime } from "../../../utils/formatters";
+import {formatDateTime} from "../../../utils/formatters";
 
-const { Option } = Select;
+const {Option} = Select;
 
 const SessionDetailModal = ({
   visible,
@@ -38,7 +38,6 @@ const SessionDetailModal = ({
 
       form.setFieldsValue({
         ...session,
-        eventId: eventId,
         categoryId: session.category?.id,
         sessionDatetime: session.sessionDatetime
           ? moment(session.sessionDatetime)
@@ -48,6 +47,28 @@ const SessionDetailModal = ({
       form.resetFields();
     }
   }, [visible, session, form, viewOnly]);
+
+  const renderSessionTypeTag = (sessionType) => {
+    let color = "default";
+    switch (sessionType) {
+      case "PRACTICE":
+        color = "blue";
+        break;
+      case "QUALIFYING":
+        color = "purple";
+        break;
+      case "RACE":
+        color = "red";
+        break;
+      case "SPRINT":
+        color = "orange";
+        break;
+      case "WARM_UP":
+        color = "green";
+        break;
+    }
+    return <Tag color={color}>{sessionType}</Tag>;
+  };
 
   const handleSubmit = async () => {
     try {
@@ -86,7 +107,7 @@ const SessionDetailModal = ({
   if (viewOnly && session) {
     return (
       <Modal
-        title={modalTitle}
+        title={'Session Details'}
         open={visible}
         onCancel={onCancel}
         width={600}

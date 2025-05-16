@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, Descriptions, Modal, Spin } from "antd";
-import { formatDate, formatTime } from "../../../utils/formatters";
+import {Button, Descriptions, Modal, Spin} from "antd";
+import {formatDate, formatTime} from "../../../utils/formatters";
 
-const ResultDetailModal = ({ result, visible, onClose, loading = false }) => {
+const ResultDetailModal = ({result, visible, onClose, loading = false}) => {
   if (!result) return null;
 
   return (
@@ -20,15 +20,7 @@ const ResultDetailModal = ({ result, visible, onClose, loading = false }) => {
       <Spin spinning={loading}>
         <Descriptions bordered column={1}>
           <Descriptions.Item label="Session">
-            {result.session?.event?.name ? (
-              <>
-                {result.session.event.name} - {result.session.sessionType}
-                {result.session.category &&
-                  ` (${result.session.category.name})`}
-              </>
-            ) : (
-              "N/A"
-            )}
+            {result?.sessionId}
           </Descriptions.Item>
 
           <Descriptions.Item label="Rider">
@@ -59,10 +51,6 @@ const ResultDetailModal = ({ result, visible, onClose, loading = false }) => {
 
           <Descriptions.Item label="Laps">
             {result.laps || "N/A"}
-          </Descriptions.Item>
-
-          <Descriptions.Item label="Points">
-            {result.points || "0"}
           </Descriptions.Item>
 
           <Descriptions.Item label="Status">

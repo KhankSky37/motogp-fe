@@ -2,10 +2,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Button, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import TeamService from "../../../services/TeamService.jsx";
-import { useNavigate } from "react-router-dom";
 import TeamTable from "../../../components/admin/team/TeamTable.jsx";
 import TeamDetailModal from "../../../components/admin/team/TeamDetailModal.jsx";
 import TeamSearchForm from "../../../components/admin/team/TeamSearchForm.jsx";
+import { useNavigate } from "react-router-dom";
+import ManufacturerService from "../../../services/ManufacturerService.jsx";
 
 const AdminTeam = () => {
   const [teams, setTeams] = useState([]);
@@ -18,31 +19,49 @@ const AdminTeam = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
-  const [searchParams, setSearchParams] = useState({});
+  const [manufacturers, setManufacturers] = useState([]);
 
   const navigate = useNavigate();
+  const fetchTeams = useCallback(
+    async (keyword = "", manufacturerId = null) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = {
+          keyword: keyword,
+          manufacturerId: manufacturerId,
+        };
 
-  const fetchTeams = useCallback(async (params = {}) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await TeamService.getAllTeams(params);
-      setTeams(response.data);
-      console.log("Fetched teams:", response);
-    } catch (err) {
-      console.error("Error fetching teams:", err);
-      setError("Failed to load team data. Please try again.");
-      setTeams([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+        const response = await TeamService.getAllTeams(params);
+        setTeams(response.data);
+        console.log("Fetched teams:", response);
+      } catch (err) {
+        console.error("Error fetching teams:", err);
+        setError("Failed to load team data. Please try again.");
+        setTeams([]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
-    fetchTeams(searchParams);
-  }, [fetchTeams, searchParams]);
+    fetchTeams();
+    // Fetch manufacturers for the search form
+    const fetchManufacturers = async () => {
+      try {
+        const response = await ManufacturerService.getAllManufacturers();
+        setManufacturers(response.data || []);
+      } catch (error) {
+        console.error("Failed to fetch manufacturers:", error);
+      }
+    };
+    fetchManufacturers();
+  }, [fetchTeams]);
 
-  const handleTableChange = (newPagination) => {
+  const handleTableChange = (newPagination, filters, sorter) => {
+    console.log("Table changed:", newPagination, filters, sorter);
     const { current, pageSize } = newPagination;
     setPagination((prev) => ({
       ...prev,
@@ -52,6 +71,7 @@ const AdminTeam = () => {
   };
 
   const handleAdd = () => {
+    console.log("Add team clicked");
     navigate("/admin/teams/create");
   };
 
@@ -62,35 +82,16 @@ const AdminTeam = () => {
   const handleDelete = async (teamId) => {
     try {
       await TeamService.deleteTeam(teamId);
-      messageApi.success("Team deleted successfully!");
-      fetchTeams(searchParams); // Refresh the list
+      messageApi.success("Delete team successfully!");
+      setTeams((prev) => prev.filter((team) => team.id !== teamId));
     } catch (error) {
       console.error("Error deleting team:", error);
-
-      // More specific error messages for delete operation
-      if (error.response) {
-        if (error.response.status === 404) {
-          messageApi.error("Team not found. It may have been already deleted.");
-        } else if (error.response.status === 409) {
-          messageApi.error(
-            "This team cannot be deleted because it is referenced by other data."
-          );
-        } else {
-          messageApi.error(
-            `Failed to delete team: ${
-              error.response.data?.message || "Unknown error"
-            }`
-          );
-        }
-      } else {
-        messageApi.error(
-          "Failed to delete team. Please check your network connection."
-        );
-      }
+      messageApi.error("Failed to delete team. Please try again.");
     }
   };
 
   const handleView = (record) => {
+    console.log("View team clicked:", record);
     setSelectedTeam(record);
     setIsModalVisible(true);
   };
@@ -98,10 +99,6 @@ const AdminTeam = () => {
   const handleModalClose = () => {
     setIsModalVisible(false);
     setSelectedTeam(null);
-  };
-
-  const handleSearch = (values) => {
-    setSearchParams(values);
   };
 
   if (error) {
@@ -117,6 +114,11 @@ const AdminTeam = () => {
     );
   }
 
+  const onSearchFinish = (values) => {
+    console.log("Search values:", values);
+    fetchTeams(values.keyword, values.manufacturerId);
+  };
+
   return (
     <div>
       {contextHolder}
@@ -131,8 +133,7 @@ const AdminTeam = () => {
           Add Team
         </Button>
       </div>
-
-      <TeamSearchForm onFinish={handleSearch} />
+      <TeamSearchForm manufacturers={manufacturers} onFinish={onSearchFinish} />
 
       <TeamTable
         dataSource={teams}

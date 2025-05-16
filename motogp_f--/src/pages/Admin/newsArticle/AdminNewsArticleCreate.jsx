@@ -1,17 +1,35 @@
-import React, {useCallback, useState} from "react";
-import {Button, Card, DatePicker, Form, Input, message, Select, Spin, Typography,} from "antd";
-import {ArrowLeftOutlined} from "@ant-design/icons";
-import {useNavigate} from "react-router-dom";
+import React, { useCallback, useState } from "react";
+import {
+  Button,
+  Card,
+  DatePicker,
+  Form,
+  Input,
+  message,
+  Select,
+  Spin,
+  Typography,
+} from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import NewsArticleService from "../../../services/NewsArticleService.jsx";
 import ImageUploadField from "../../../components/admin/shared/ImageUploadField.jsx"; // Import ImageUploadField
 
-const {Title} = Typography;
+const { Title } = Typography;
+const { Option } = Select;
 
 const AdminNewsArticleCreate = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const [articleTypes] = useState([
+    "Latest MotoGP™ News",
+    "News by GP",
+    "MotoGP™ Grand Prix and Test reports",
+    "Latest Moto2™ & Moto3™ News",
+    "Official Communications",
+  ]);
 
   const onFinish = useCallback(
     async (values) => {
@@ -36,7 +54,7 @@ const AdminNewsArticleCreate = () => {
         messageApi.success("News article created successfully!");
         form.resetFields();
         navigate("/admin/news-articles", {
-          state: {successMessage: "News article created successfully!"},
+          state: { successMessage: "News article created successfully!" },
         });
       } catch (error) {
         console.error("Failed to create news article:", error);
@@ -63,7 +81,7 @@ const AdminNewsArticleCreate = () => {
           <div className="flex items-center">
             <Button
               type="text"
-              icon={<ArrowLeftOutlined/>}
+              icon={<ArrowLeftOutlined />}
               onClick={handleCancel}
               className="mr-2"
               aria-label="Back"
@@ -86,30 +104,30 @@ const AdminNewsArticleCreate = () => {
             name="photo"
             label="Article Image"
             rules={[
-              {required: true, message: "Please upload an article image!"},
+              { required: true, message: "Please upload an article image!" },
             ]}
           >
-            <ImageUploadField/>
+            <ImageUploadField />
           </Form.Item>
 
           <Form.Item
             name="title"
             label="Title"
-            rules={[{required: true, message: "Please input the title!"}]}
+            rules={[{ required: true, message: "Please input the title!" }]}
           >
-            <Input placeholder="Enter article title"/>
+            <Input placeholder="Enter article title" />
           </Form.Item>
 
           <Form.Item
             name="publishDate"
             label="Publish Date"
             rules={[
-              {required: true, message: "Please select the publish date!"},
+              { required: true, message: "Please select the publish date!" },
             ]}
           >
             <DatePicker
               showTime
-              style={{width: "100%"}}
+              style={{ width: "100%" }}
               format="YYYY-MM-DD HH:mm:ss"
             />
           </Form.Item>
@@ -118,31 +136,33 @@ const AdminNewsArticleCreate = () => {
             name="articleLink"
             label="Article Link"
             rules={[
-              {required: true, message: "Please input the article link!"},
-              {type: "url", message: "Please enter a valid URL!"},
+              { required: true, message: "Please input the article link!" },
+              { type: "url", message: "Please enter a valid URL!" },
             ]}
           >
-            <Input placeholder="Enter URL to the full article"/>
+            <Input placeholder="Enter URL to the full article" />
           </Form.Item>
 
           <Form.Item
             name="articleType"
             label="Article Type"
             rules={[
-              {required: true, message: "Please select the article type!"},
+              { required: true, message: "Please select the article type!" },
             ]}
           >
             <Select placeholder="Select article type">
-              <Option value="latest motogp news">Latest MotoGP News</Option>
-              <Option value="news by gp">News by GP</Option>
-              <Option value="motogp grand prix and test reports">MotoGP™ Grand Prix and Test reports</Option>
-              <Option value="latest moto2 & moto3 news">Latest Moto2™ & Moto3™ News</Option>
-              <Option value="official communications">Official Communications</Option>
+              {articleTypes.map((type) => (
+                <Option key={type} value={type}>
+                  {type}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
 
-
-          <Form.Item wrapperCol={{ offset: 6, span: 18 }} className={"border-t pt-4 mt-4"}>
+          <Form.Item
+            wrapperCol={{ offset: 6, span: 18 }}
+            className={"border-t pt-4 mt-4"}
+          >
             <div
               style={{
                 display: "flex",

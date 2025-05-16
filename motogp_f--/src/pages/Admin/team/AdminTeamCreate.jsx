@@ -4,7 +4,6 @@ import {
   Card,
   Form,
   Input,
-  InputNumber,
   Select,
   message,
   Spin,
@@ -16,7 +15,6 @@ import ManufacturerService from "../../../services/ManufacturerService.jsx";
 import ImageUploadField from "../../../components/admin/shared/ImageUploadField.jsx";
 
 const { Option } = Select;
-const { TextArea } = Input;
 
 const AdminTeamCreate = () => {
   const [form] = Form.useForm();
@@ -54,7 +52,6 @@ const AdminTeamCreate = () => {
         manufacturer: values.manufacturerId
           ? { id: values.manufacturerId }
           : null,
-        description: values.description,
       };
 
       try {
@@ -138,14 +135,6 @@ const AdminTeamCreate = () => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="description"
-            label="Description"
-            rules={[{ required: false }]}
-          >
-            <TextArea rows={4} placeholder="Enter team description" />
           </Form.Item>
 
           <Form.Item
