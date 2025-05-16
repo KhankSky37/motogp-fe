@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Form, Input, DatePicker, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
@@ -12,7 +12,6 @@ const EventSearchForm = ({
   loading = false,
 }) => {
   const [form] = Form.useForm();
-  const [expandForm, setExpandForm] = useState(false);
 
   const handleFinish = (values) => {
     const formattedValues = { ...values };
@@ -25,10 +24,6 @@ const EventSearchForm = ({
     }
 
     onSearch(formattedValues);
-  };
-
-  const toggleForm = () => {
-    setExpandForm(!expandForm);
   };
 
   const resetForm = () => {
@@ -44,7 +39,7 @@ const EventSearchForm = ({
       className="mb-4 bg-white p-4 rounded shadow-sm"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Form.Item name="keyword" >
+        <Form.Item name="keyword">
           <Input
             placeholder="Search by name or official name"
             allowClear
@@ -52,72 +47,61 @@ const EventSearchForm = ({
           />
         </Form.Item>
 
-        {expandForm && (
-          <>
-            <Form.Item name="seasonId" >
-              <Select
-                placeholder="Select season"
-                allowClear
-                loading={loading}
-                showSearch
-                filterOption={(input, option) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-              >
-                {seasons.map((season) => (
-                  <Option key={season.id} value={season.id}>
-                    {season.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
+        <Form.Item name="seasonId">
+          <Select
+            placeholder="Select season"
+            allowClear
+            loading={loading}
+            showSearch
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            {seasons.map((season) => (
+              <Option key={season.id} value={season.id}>
+                {season.name}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-            <Form.Item name="circuitId" >
-              <Select
-                placeholder="Select circuit"
-                allowClear
-                loading={loading}
-                showSearch
-                filterOption={(input, option) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-              >
-                {circuits.map((circuit) => (
-                  <Option key={circuit.id} value={circuit.id}>
-                    {circuit.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
+        <Form.Item name="circuitId">
+          <Select
+            placeholder="Select circuit"
+            allowClear
+            loading={loading}
+            showSearch
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            {circuits.map((circuit) => (
+              <Option key={circuit.id} value={circuit.id}>
+                {circuit.name}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-            <Form.Item name="eventType">
-              <Select allowClear placeholder="Select event type">
-                <Option value="RACE">Race</Option>
-                <Option value="TEST">Test</Option>
-              </Select>
-            </Form.Item>
+        <Form.Item name="eventType">
+          <Select allowClear placeholder="Select event type">
+            <Option value="RACE">Race</Option>
+            <Option value="TEST">Test</Option>
+          </Select>
+        </Form.Item>
 
-            <Form.Item name="dateRange" >
-              <RangePicker className="w-full" format="YYYY-MM-DD" />
-            </Form.Item>
-          </>
-        )}
+        <Form.Item name="dateRange" className="lg:col-span-2">
+          <RangePicker className="w-full" format="YYYY-MM-DD" />
+        </Form.Item>
       </div>
 
-      <div className="flex justify-between mt-2">
-        <Button type="link" onClick={toggleForm}>
-          {expandForm ? "Simple Search" : "Advanced Search"}
+      <div className="flex justify-end mt-2">
+        <Button onClick={resetForm} className="mr-2">
+          Reset
         </Button>
-        <div>
-          <Button onClick={resetForm} className="mr-2">
-            Reset
-          </Button>
-          <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>
-            Search
-          </Button>
-        </div>
+        <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>
+          Search
+        </Button>
       </div>
     </Form>
   );

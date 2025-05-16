@@ -133,23 +133,55 @@ const AdminManufacturer = () => {
 
   const handleDelete = async (manufacturerId) => {
     try {
+      console.log("Attempting to delete manufacturer with ID:", manufacturerId);
+
       const response = await ManufacturerService.deleteManufacturer(
         manufacturerId
       );
 
-      if (response.status === 204 || response.status === 200) {
-        messageApi.success("Manufacturer deleted successfully!");
-        setManufacturers((prev) =>
-          prev.filter((manufacturer) => manufacturer.id !== manufacturerId)
-        );
-      } else {
-        throw new Error(
-          `Failed to delete manufacturer: ${response.statusText}`
-        );
-      }
+      console.log("Delete response:", response);
+
+      // Success - show message and update UI
+      messageApi.success("Manufacturer deleted successfully!");
+
+      // Refresh the entire list to ensure we have the latest data
+      fetchManufacturers(searchParams);
     } catch (error) {
       console.error("Error deleting manufacturer:", error);
-      messageApi.error("Failed to delete manufacturer. Please try again.");
+
+      // Detailed error information
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Error response data:", error.response.data);
+        console.error("Error response status:", error.response.status);
+
+        if (error.response.status === 404) {
+          messageApi.error(
+            "Manufacturer not found. It may have been already deleted."
+          );
+        } else if (error.response.status === 500) {
+          messageApi.error(
+            "Server error while deleting. The manufacturer might be referenced by other records."
+          );
+        } else {
+          messageApi.error(
+            `Failed to delete manufacturer: ${
+              error.response.data || error.message
+            }`
+          );
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Error request:", error.request);
+        messageApi.error(
+          "No response received from server. Please check your network connection."
+        );
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error message:", error.message);
+        messageApi.error("Failed to delete manufacturer. Please try again.");
+      }
     }
   };
 

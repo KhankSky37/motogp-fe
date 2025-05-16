@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Button, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import EventService from "../../../services/EventService.jsx";
+import SeasonService from "../../../services/SeasonService.jsx";
+import CircuitService from "../../../services/CircuitService.jsx";
 import { useNavigate } from "react-router-dom";
 import EventTable from "../../../components/admin/event/EventTable.jsx";
 import EventDetailModal from "../../../components/admin/event/EventDetailModal.jsx";
@@ -9,7 +11,10 @@ import EventSearchForm from "../../../components/admin/event/EventSearchForm.jsx
 
 const AdminEvent = () => {
   const [events, setEvents] = useState([]);
+  const [seasons, setSeasons] = useState([]);
+  const [circuits, setCircuits] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [formLoading, setFormLoading] = useState(false);
   const [error, setError] = useState(null);
   const [pagination, setPagination] = useState({
     current: 1,
@@ -22,13 +27,36 @@ const AdminEvent = () => {
 
   const navigate = useNavigate();
 
+  // Fetch dropdown data for search form
+  useEffect(() => {
+    const fetchFormData = async () => {
+      try {
+        setFormLoading(true);
+        const [seasonsResponse, circuitsResponse] = await Promise.all([
+          SeasonService.getAllSeasons(),
+          CircuitService.getAllCircuits(),
+        ]);
+        setSeasons(seasonsResponse.data);
+        setCircuits(circuitsResponse.data);
+      } catch (error) {
+        console.error("Failed to fetch form data:", error);
+        messageApi.error(
+          "Failed to load filter data. Some search features may be limited."
+        );
+      } finally {
+        setFormLoading(false);
+      }
+    };
+
+    fetchFormData();
+  }, [messageApi]);
+
   const fetchEvents = useCallback(async (params = {}) => {
     setLoading(true);
     setError(null);
     try {
       const response = await EventService.getAllEvents(params);
       setEvents(response.data);
-      console.log("Fetched events:", response);
     } catch (err) {
       console.error("Error fetching events:", err);
       setError("Failed to load event data. Please try again.");
@@ -134,7 +162,12 @@ const AdminEvent = () => {
         </Button>
       </div>
 
-      <EventSearchForm onSearch={handleSearch} />
+      <EventSearchForm
+        onSearch={handleSearch}
+        seasons={seasons}
+        circuits={circuits}
+        loading={formLoading}
+      />
 
       <EventTable
         events={events}
