@@ -1,25 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  InputNumber,
-  Select,
-  message,
-  Spin,
-  Typography,
-} from "antd";
+import { Button, Card, Form, Input, Select, message, Spin } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import ManufacturerService from "../../../services/ManufacturerService.jsx";
 import { COUNTRIES } from "../../../constants/Countries.jsx";
-import ImageUploadField from "../../../components/admin/shared/ImageUploadField.jsx";
-import { getImageUrl } from "../../../utils/urlHelpers.jsx";
 
 const { Option } = Select;
-const { TextArea } = Input;
-const { Text } = Typography;
 
 const AdminManufacturerUpdate = () => {
   const { id } = useParams();
@@ -29,7 +15,6 @@ const AdminManufacturerUpdate = () => {
   const [fetchLoading, setFetchLoading] = useState(true);
   const [manufacturer, setManufacturer] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
-  const [logoUrl, setLogoUrl] = useState(null);
 
   useEffect(() => {
     const fetchManufacturer = async () => {
@@ -38,18 +23,11 @@ const AdminManufacturerUpdate = () => {
         const response = await ManufacturerService.getManufacturerById(id);
         const manufacturerData = response.data;
         setManufacturer(manufacturerData);
-        setLogoUrl(
-          manufacturerData.logoUrl
-            ? getImageUrl(manufacturerData.logoUrl)
-            : null
-        );
 
         // Set form values
         form.setFieldsValue({
           name: manufacturerData.name,
-          country: manufacturerData.country,
-          foundedYear: manufacturerData.foundedYear,
-          description: manufacturerData.description,
+          country: manufacturerData.locationCountry, // Match the database field name
         });
       } catch (error) {
         console.error("Failed to fetch manufacturer details:", error);
@@ -74,17 +52,11 @@ const AdminManufacturerUpdate = () => {
       const manufacturerDto = {
         id: id,
         name: values.name,
-        country: values.country,
-        foundedYear: values.foundedYear,
-        description: values.description,
+        locationCountry: values.country, // Match the database field name
       };
 
       try {
-        await ManufacturerService.updateManufacturer(
-          id,
-          manufacturerDto,
-          values.logo
-        );
+        await ManufacturerService.updateManufacturer(id, manufacturerDto);
         messageApi.success("Manufacturer updated successfully!");
         navigate("/admin/manufacturers");
       } catch (error) {
@@ -103,8 +75,6 @@ const AdminManufacturerUpdate = () => {
   const handleCancel = useCallback(() => {
     navigate("/admin/manufacturers");
   }, [navigate]);
-
-  const currentYear = new Date().getFullYear();
 
   if (fetchLoading) {
     return (
@@ -141,13 +111,6 @@ const AdminManufacturerUpdate = () => {
           onFinish={onFinish}
           autoComplete="off"
         >
-          <Form.Item name="logo" label="Manufacturer Logo">
-            <ImageUploadField initialImageUrl={logoUrl} />
-            <Text type="secondary" className="mt-1 block">
-              Upload a new logo, or leave empty to keep the current one.
-            </Text>
-          </Form.Item>
-
           <Form.Item
             name="name"
             label="Manufacturer Name"
@@ -180,29 +143,6 @@ const AdminManufacturerUpdate = () => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="foundedYear"
-            label="Founded Year"
-            rules={[
-              { required: true, message: "Please enter the founded year!" },
-              {
-                type: "number",
-                min: 1800,
-                max: currentYear,
-                message: `Year must be between 1800 and ${currentYear}!`,
-              },
-            ]}
-          >
-            <InputNumber
-              placeholder="Enter founded year"
-              style={{ width: "100%" }}
-            />
-          </Form.Item>
-
-          <Form.Item name="description" label="Description">
-            <TextArea rows={4} placeholder="Enter manufacturer description" />
           </Form.Item>
 
           <Form.Item

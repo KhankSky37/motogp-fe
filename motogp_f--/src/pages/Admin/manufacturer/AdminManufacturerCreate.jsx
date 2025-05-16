@@ -30,7 +30,7 @@ const AdminManufacturerCreate = () => {
 
       const manufacturerDto = {
         name: values.name,
-        country: values.country, // Frontend vẫn dùng country, service sẽ chuyển đổi sang locationCountry
+        locationCountry: values.country, // Use locationCountry to match the field in database
       };
 
       try {
@@ -74,8 +74,6 @@ const AdminManufacturerCreate = () => {
   const handleCancel = useCallback(() => {
     navigate("/admin/manufacturers");
   }, [navigate]);
-
-
 
   return (
     <Spin spinning={loading}>

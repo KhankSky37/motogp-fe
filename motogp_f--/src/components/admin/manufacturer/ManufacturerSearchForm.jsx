@@ -8,8 +8,14 @@ const { Option } = Select;
 const ManufacturerSearchForm = ({ onFinish }) => {
   const [form] = Form.useForm();
 
+  const handleFinish = (values) => {
+    // Pass the values as they are - the backend controller will handle
+    // mapping 'country' to 'locationCountry'
+    onFinish(values);
+  };
+
   return (
-    <Form form={form} layout="inline" onFinish={onFinish} className="mb-4">
+    <Form form={form} layout="inline" onFinish={handleFinish} className="mb-4">
       <Form.Item name="keyword">
         <Input
           placeholder="Search by Name"

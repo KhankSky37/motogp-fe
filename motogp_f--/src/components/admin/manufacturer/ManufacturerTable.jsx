@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { Button, Popconfirm, Space, Table, Tag } from "antd";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { Button, Popconfirm, Space, Table, Tag, message, Tooltip } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
 import { formatDate } from "../../../utils/formatters";
 
 import { COUNTRIES } from "../../../constants/Countries";
@@ -15,11 +20,15 @@ const ManufacturerTable = ({
   onDelete,
 }) => {
   const [confirmLoading, setConfirmLoading] = useState({});
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handleDelete = async (id) => {
     setConfirmLoading((prev) => ({ ...prev, [id]: true }));
     try {
       await onDelete(id);
+    } catch (error) {
+      console.error("Error deleting manufacturer:", error);
+      messageApi.error("Failed to delete manufacturer. Please try again.");
     } finally {
       setConfirmLoading((prev) => ({ ...prev, [id]: false }));
     }
@@ -69,30 +78,38 @@ const ManufacturerTable = ({
       key: "actions",
       render: (_, record) => (
         <Space size="small">
-          <Button
-            type="text"
-            icon={<EyeOutlined />}
-            onClick={() => onView(record)}
-            aria-label="View"
-          />
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => onEdit(record.id)}
-            aria-label="Edit"
-          />
+          {onView && (
+            <Tooltip title="View">
+              <Button
+                type="default"
+                icon={<EyeOutlined />}
+                onClick={() => onView(record)}
+                size="small"
+              />
+            </Tooltip>
+          )}
+          <Tooltip title="Edit">
+            <Button
+              type="primary"
+              ghost
+              icon={<EditOutlined />}
+              onClick={() => onEdit(record.id)}
+              size="small"
+            />
+          </Tooltip>
           <Popconfirm
-            title="Are you sure you want to delete this manufacturer?"
+            title="Delete this manufacturer?"
+            description="This action cannot be undone."
             onConfirm={() => handleDelete(record.id)}
             okText="Yes"
             cancelText="No"
-            okButtonProps={{ loading: confirmLoading[record.id] }}
+            icon={<QuestionCircleOutlined style={{ color: "red" }} />}
           >
             <Button
-              type="text"
+              type="primary"
               danger
               icon={<DeleteOutlined />}
-              aria-label="Delete"
+              size="small"
             />
           </Popconfirm>
         </Space>
@@ -101,15 +118,18 @@ const ManufacturerTable = ({
   ];
 
   return (
-    <Table
-      rowKey="id"
-      columns={columns}
-      dataSource={dataSource}
-      loading={loading}
-      pagination={pagination}
-      onChange={onTableChange}
-      scroll={{ x: "max-content" }}
-    />
+    <>
+      {contextHolder}
+      <Table
+        rowKey="id"
+        columns={columns}
+        dataSource={dataSource}
+        loading={loading}
+        pagination={pagination}
+        onChange={onTableChange}
+        scroll={{ x: "max-content" }}
+      />
+    </>
   );
 };
 
