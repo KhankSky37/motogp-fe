@@ -21,6 +21,8 @@ const ManufacturerTable = ({
 }) => {
   const [confirmLoading, setConfirmLoading] = useState({});
   const [messageApi, contextHolder] = message.useMessage();
+ 
+  
 
   const handleDelete = async (id) => {
     setConfirmLoading((prev) => ({ ...prev, [id]: true }));
@@ -70,7 +72,18 @@ const ManufacturerTable = ({
       dataIndex: "createdDate",
       key: "createdDate",
       render: (text) => formatDate(text),
-      sorter: (a, b) => new Date(a.createdDate) - new Date(b.createdDate),
+      sorter: (a, b) => {
+        // Handle null, undefined, or invalid date values
+        if (!a.createdDate) return -1;
+        if (!b.createdDate) return 1;
+
+        try {
+          return new Date(a.createdDate) - new Date(b.createdDate);
+        } catch (error) {
+          console.error("Error sorting dates:", error);
+          return 0;
+        }
+      },
       responsive: ["lg"],
     },
     {
@@ -110,6 +123,7 @@ const ManufacturerTable = ({
               danger
               icon={<DeleteOutlined />}
               size="small"
+              loading={confirmLoading[record.id]}
             />
           </Popconfirm>
         </Space>
