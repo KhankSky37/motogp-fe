@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {ConfigProvider, Form, message, Tabs,} from "antd";
-import SeasonService from "../../services/SeasonService.jsx";
-import EventService from "../../services/EventService.jsx";
-import SessionService from "../../services/SessionService.jsx";
-import ResultsHeader from "../../components/user/result/ResultsHeader.jsx";
-import SearchForm from "../../components/user/result/SearchForm.jsx";
-import EventBanner from "../../components/user/result/EventBanner.jsx";
-import ResultsTable from "../../components/user/result/ResultsTable.jsx";
-import PDFResultsTable from "../../components/user/result/PDFResultsTable.jsx";
+import {Form, message,} from "antd";
+import SeasonService from "../../../services/SeasonService.jsx";
+import EventService from "../../../services/EventService.jsx";
+import SessionService from "../../../services/SessionService.jsx";
+import SearchForm from "../../../components/user/result/SearchForm.jsx";
+import EventBanner from "../../../components/user/result/EventBanner.jsx";
+import ResultsTable from "../../../components/user/result/ResultsTable.jsx";
+import PDFResultsTable from "../../../components/user/result/PDFResultsTable.jsx";
 
 const Result = () => {
   const [form] = Form.useForm();
@@ -23,20 +22,6 @@ const Result = () => {
   const watchedEventId = Form.useWatch("event", form);
   const availableCategories = selectedEventDetails?.categoryIds ? Array.from(selectedEventDetails.categoryIds) : [];
   const availableSessions = selectedEventDetails?.sessionTypes ? Array.from(selectedEventDetails.sessionTypes) : [];
-  const items = [
-    {
-      key: "1",
-      label: <span className="font-semibold text-lg">RESULTS</span>,
-    },
-    {
-      key: "2",
-      label: <span className="font-semibold text-lg">STANDINGS</span>,
-    },
-    {
-      key: "3",
-      label: <span className="font-semibold text-lg">RECORDS</span>,
-    },
-  ];
 
   useEffect(() => {
     const fetchSeasonYears = async () => {
@@ -179,26 +164,11 @@ const Result = () => {
 
   return (
     <>
-      <ResultsHeader/>
+      {/*<ResultsHeader/>*/}
 
       <div className={"px-12 relative bg-[#c80502]"}>
         <div className="absolute inset-0 bg-black opacity-85"></div>
         <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-l to-black from-transparent"></div>
-        <ConfigProvider
-          theme={{
-            components: {
-              Tabs: {
-                itemColor: "#ffffff",
-                itemSelectedColor: "#ffffff",
-                itemHoverColor: "#ffffff",
-                inkBarColor: "#ffffff",
-              },
-            },
-          }}
-        >
-          <Tabs defaultActiveKey="1" items={items} rootClassName={"relative"}/>
-          ;
-        </ConfigProvider>
         <SearchForm
           form={form}
           seasonYears={seasonYears}
