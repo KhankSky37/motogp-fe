@@ -46,7 +46,7 @@ export const MENU_ADMIN = [
   },
   {
     key: "teams",
-    label: "Teams",
+    label: "Team",
     path: "/admin/teams",
   },
   {

@@ -36,7 +36,7 @@ const TeamSearchForm = ({ onFinish }) => {
   };
 
   return (
-    <Card title="Search Teams" className="mb-4">
+    <Card title="Search Team" className="mb-4">
       <Form form={form} layout="vertical" onFinish={handleSearch}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Form.Item name="keyword">

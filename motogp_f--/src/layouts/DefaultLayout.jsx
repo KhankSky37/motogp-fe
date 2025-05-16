@@ -30,8 +30,8 @@ const DefaultLayout = () => {
       label: "Results & Standings",
     },
     {
-      key: "Riders&Teams",
-      label: "Riders & Teams",
+      key: "Riders&Team",
+      label: "Riders & Team",
     },
     {
       key: "VideoPass",
@@ -52,6 +52,9 @@ const DefaultLayout = () => {
       navigate("/sessions");
     } else if (e.key === 'Results&Standings') {
       navigate('/gp-results')
+    }
+    else if (e.key === "Riders&Team") {
+      navigate("/Riders");
     }
   };
 
