@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Typography, Button, Popconfirm, Space, Tag } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { COUNTRIES } from "../../../constants/Countries.jsx";
 import { COUNTRY_CODE_TO_FLAG_EMOJI } from "../../../constants/Countries.jsx";
 
 const { Title, Text } = Typography;
@@ -63,10 +64,13 @@ const CircuitCard = ({ circuit, onEdit, onDelete }) => {
     >
       <Title level={4}>{circuit.name}</Title>
       <Space direction="vertical" size="small">
+        {" "}
         <Space>
           <Text strong>Location:</Text>
           <Text>
-            {flagEmoji} {circuit.locationCity}, {circuit.locationCountry}
+            {flagEmoji} {circuit.locationCity},{" "}
+            {COUNTRIES.find((c) => c.code === circuit.locationCountry)?.name ||
+              circuit.locationCountry}
           </Text>
         </Space>
         <Space>
