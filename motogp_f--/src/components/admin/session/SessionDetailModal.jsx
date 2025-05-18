@@ -7,11 +7,12 @@ import {
   Select,
   Spin,
   Descriptions,
+  Tag,
 } from "antd";
 import moment from "moment";
-import {formatDateTime} from "../../../utils/formatters";
+import { formatDateTime } from "../../../utils/formatters";
 
-const {Option} = Select;
+const { Option } = Select;
 
 const SessionDetailModal = ({
   visible,
@@ -23,19 +24,13 @@ const SessionDetailModal = ({
   categories = [],
   eventsLoading = false,
   categoriesLoading = false,
-  viewOnly = false,
+  viewOnly = true,
 }) => {
   const [form] = Form.useForm();
   const isEdit = !!session?.id;
-
   useEffect(() => {
     if (visible && session && !viewOnly) {
-      // Handle both cases - when event exists or is undefined
-      let eventId = null;
-      if (session.event) {
-        eventId = session.event.id;
-      }
-
+      // Handle the form data setup for existing session
       form.setFieldsValue({
         ...session,
         categoryId: session.category?.id,
@@ -47,7 +42,7 @@ const SessionDetailModal = ({
       form.resetFields();
     }
   }, [visible, session, form, viewOnly]);
-
+  // Helper function to render session type with appropriate color
   const renderSessionTypeTag = (sessionType) => {
     let color = "default";
     switch (sessionType) {
@@ -107,7 +102,7 @@ const SessionDetailModal = ({
   if (viewOnly && session) {
     return (
       <Modal
-        title={'Session Details'}
+        title={"Session Details"}
         open={visible}
         onCancel={onCancel}
         width={600}
@@ -126,11 +121,16 @@ const SessionDetailModal = ({
               {session.category?.name || "N/A"}
             </Descriptions.Item>
             <Descriptions.Item label="Session Type">
-              {session.sessionType || "N/A"}
+              {session.sessionType
+                ? renderSessionTypeTag(session.sessionType)
+                : "N/A"} 
             </Descriptions.Item>
             <Descriptions.Item label="Date & Time">
               {formatDateTime(session.sessionDatetime) || "N/A"}
             </Descriptions.Item>
+            <Descriptions.Item label="Created By">{session.createUser || 'N/A'}</Descriptions.Item>
+            <Descriptions.Item label="Modified Date">{formatDateTime(session.modifiedDate)}</Descriptions.Item>
+            <Descriptions.Item label="Modified By">{session.modifiedUser || 'N/A'}</Descriptions.Item>
           </Descriptions>
         </Spin>
       </Modal>
@@ -175,8 +175,7 @@ const SessionDetailModal = ({
                 </Option>
               ))}
             </Select>
-          </Form.Item>
-
+          </Form.Item>{" "}
           <Form.Item
             name="categoryId"
             label="Category"
@@ -194,7 +193,6 @@ const SessionDetailModal = ({
               ))}
             </Select>
           </Form.Item>
-
           <Form.Item
             name="sessionType"
             label="Session Type"
@@ -210,7 +208,6 @@ const SessionDetailModal = ({
               <Option value="WARM_UP">Warm Up</Option>
             </Select>
           </Form.Item>
-
           <Form.Item
             name="sessionDatetime"
             label="Date & Time"

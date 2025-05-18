@@ -1,17 +1,17 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Button, Card, Form, Input, InputNumber, message, Spin} from 'antd';
-import {ArrowLeftOutlined} from '@ant-design/icons';
-import {useNavigate, useParams} from 'react-router-dom';
-import SeasonService from '../../../services/SeasonService.jsx';
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, Card, Form, Input, InputNumber, message, Spin } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useNavigate, useParams } from "react-router-dom";
+import SeasonService from "../../../services/SeasonService.jsx";
 
 const AdminSeasonUpdate = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const {seasonId} = useParams();
+  const { seasonId } = useParams();
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
-  
+
   // Fetch season data on component mount
   useEffect(() => {
     const fetchSeasonData = async () => {
@@ -22,9 +22,9 @@ const AdminSeasonUpdate = () => {
         const seasonData = response.data;
         form.setFieldsValue(seasonData);
       } catch (error) {
-        console.error('Failed to fetch season data:', error);
-        messageApi.error('Failed to load season data. Please try again.');
-        navigate('/admin/seasons');
+        console.error("Failed to fetch season data:", error);
+        messageApi.error("Failed to load season data. Please try again.");
+        navigate("/admin/seasons");
       } finally {
         setInitialLoading(false);
       }
@@ -32,76 +32,118 @@ const AdminSeasonUpdate = () => {
 
     fetchSeasonData();
   }, [seasonId, form, messageApi, navigate]);
+  const onFinish = useCallback(
+    async (values) => {
+      setLoading(true);
 
-  const onFinish = useCallback(async (values) => {
-    setLoading(true);
+      try {
+        // Fetch current season data to preserve other fields like createdDate, createUser
+        const currentSeasonResponse = await SeasonService.getSeasonById(
+          seasonId
+        );
+        const currentSeasonData = currentSeasonResponse.data;
 
-    const seasonDto = {
-      id: values.id,
-      name: values.name,
-    };
+        // Create a complete DTO that preserves all fields
+        const seasonDto = {
+          ...currentSeasonData, // Keep all existing data
+          id: values.id, // Update with form values
+          name: values.name,
+        };
 
-    try {
-      await SeasonService.updateSeason(seasonId, seasonDto);
-      messageApi.success('Season updated successfully!');
-      navigate('/admin/seasons');
-    } catch (error) {
-      console.error('Failed to update season:', error);
-      const errorMsg = error.response?.data?.message || 'Failed to update season. Please try again.';
-      messageApi.error(errorMsg);
-    } finally {
-      setLoading(false);
-    }
-  }, [seasonId, messageApi, navigate]);
+        await SeasonService.updateSeason(seasonId, seasonDto);
+        messageApi.success("Cập nhật mùa giải thành công!");
+        navigate("/admin/seasons");
+      } catch (error) {
+        console.error("Failed to update season:", error);
+        const errorMsg =
+          error.response?.data?.message ||
+          "Cập nhật mùa giải thất bại. Vui lòng thử lại.";
+        messageApi.error(errorMsg);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [seasonId, messageApi, navigate]
+  );
 
   const handleCancel = useCallback(() => {
-    navigate('/admin/seasons');
+    navigate("/admin/seasons");
   }, [navigate]);
 
   if (initialLoading) {
-    return <Spin spinning={true} tip="Loading season data..." className="flex justify-center items-center h-64"/>;
+    return (
+      <Spin
+        spinning={true}
+        tip="Loading season data..."
+        className="flex justify-center items-center h-64"
+      />
+    );
   }
 
   return (
     <Spin spinning={loading}>
       {contextHolder}
-      <Card title={
-        <div className="flex items-center">
-          <Button type="text" icon={<ArrowLeftOutlined/>} onClick={handleCancel} className="mr-2" aria-label="Back"/>
-          Update Season (ID: {seasonId})
-        </div>
-      }>
+      <Card
+        title={
+          <div className="flex items-center">
+            <Button
+              type="text"
+              icon={<ArrowLeftOutlined />}
+              onClick={handleCancel}
+              className="mr-2"
+              aria-label="Back"
+            />
+            Update Season (ID: {seasonId})
+          </div>
+        }
+      >
         <Form
           form={form}
           layout="horizontal"
           labelAlign="left"
           requiredMark="optional"
-          labelCol={{span: 6}}
-          wrapperCol={{span: 18}}
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 18 }}
           onFinish={onFinish}
           autoComplete="off"
         >
+          {" "}
           <Form.Item
             name="id"
             label="Season ID"
             rules={[
-              { required: true, message: 'Please input the Season ID!' },
-              { type: 'number', message: 'Season ID must be a number!' }
+              { required: true, message: "Please input the Season ID!" },
+              { type: "number", message: "Season ID must be a number!" },
             ]}
           >
-            <InputNumber placeholder="Enter Season ID (e.g., 2025)" style={{ width: '100%' }} />
+            <InputNumber
+              placeholder="Enter Season ID (e.g., 2025)"
+              style={{ width: "100%" }}
+              disabled
+              className="bg-gray-100"
+              tooltip="Season ID cannot be changed"
+            />
           </Form.Item>
-
           <Form.Item
             name="name"
             label="Season Name"
-            rules={[{required: true, message: 'Please input the season name!'}]}
+            rules={[
+              { required: true, message: "Please input the season name!" },
+            ]}
           >
             <Input placeholder="Enter season name (e.g., Season 2025)" />
           </Form.Item>
-
-          <Form.Item wrapperCol={{offset: 6, span: 18}} className={"border-t pt-4 mt-4"}>
-            <div style={{display: 'flex', justifyContent: 'flex-end', gap: '8px'}}>
+          <Form.Item
+            wrapperCol={{ offset: 6, span: 18 }}
+            className={"border-t pt-4 mt-4"}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: "8px",
+              }}
+            >
               <Button onClick={handleCancel} disabled={loading}>
                 Cancel
               </Button>

@@ -44,7 +44,6 @@ const AdminSessionCreate = () => {
 
     fetchData();
   }, [messageApi]);
-
   const onFinish = useCallback(
     async (values) => {
       setLoading(true);
@@ -56,7 +55,6 @@ const AdminSessionCreate = () => {
           event: { id: values.eventId },
           category: { categoryId: values.categoryId },
         };
-
 
         await SessionService.createSession(formattedValues);
         messageApi.success("Session created successfully!");
@@ -130,7 +128,6 @@ const AdminSessionCreate = () => {
               ))}
             </Select>
           </Form.Item>
-
           {selectedEvent && (
             <div className="mb-4 bg-gray-50 p-3 rounded-md ml-[25%]">
               <p>
@@ -141,7 +138,6 @@ const AdminSessionCreate = () => {
               </p>
             </div>
           )}
-
           <Form.Item
             name="categoryId"
             label="Category"
@@ -155,7 +151,6 @@ const AdminSessionCreate = () => {
               ))}
             </Select>
           </Form.Item>
-
           <Form.Item
             name="sessionType"
             label="Session Type"
@@ -170,8 +165,7 @@ const AdminSessionCreate = () => {
               <Option value="SPRINT">Sprint</Option>
               <Option value="WARM_UP">Warm Up</Option>
             </Select>
-          </Form.Item>
-
+          </Form.Item>{" "}
           <Form.Item
             name="sessionDatetime"
             label="Date & Time"
@@ -186,7 +180,6 @@ const AdminSessionCreate = () => {
               style={{ width: "100%" }}
             />
           </Form.Item>
-
           <Form.Item
             wrapperCol={{ offset: 6, span: 18 }}
             className="border-t pt-4 mt-4"
