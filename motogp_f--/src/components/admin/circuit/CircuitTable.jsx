@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import { formatDate } from "../../../utils/formatters";
 import { getImageUrl } from "../../../utils/urlHelpers";
+import { COUNTRIES } from "../../../constants/Countries.jsx";
 
 const safeStringSorter = (field) => (a, b) => {
   const valA = a[field] || "";
@@ -63,6 +64,10 @@ const CircuitTable = ({
       dataIndex: "locationCountry",
       key: "locationCountry",
       sorter: safeStringSorter("locationCountry"),
+      render: (code) => {
+        const country = COUNTRIES.find((c) => c.code === code);
+        return country ? country.name : code;
+      },
     },
     {
       title: "City",

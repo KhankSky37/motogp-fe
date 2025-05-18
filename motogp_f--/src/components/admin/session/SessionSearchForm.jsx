@@ -3,17 +3,22 @@ import { SearchOutlined, UndoOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
-const SessionSearchForm = ({ onSearch, categories = [], loading = false }) => {
+const SessionSearchForm = ({
+  onSearch,
+  categories = [],
+  events = [],
+  loading = false,
+}) => {
   const [form] = Form.useForm();
 
   const handleReset = () => {
     form.resetFields();
     onSearch({});
   };
-
   const handleSearch = (values) => {
     // Ensure we're sending proper values even if fields are empty
     const formattedValues = {
+      eventId: values.eventId || undefined,
       categoryId: values.categoryId || undefined,
       sessionType: values.sessionType || undefined,
       dateFrom: values.dateFrom
@@ -31,6 +36,15 @@ const SessionSearchForm = ({ onSearch, categories = [], loading = false }) => {
     <Card title="Search Sessions" className="mb-4">
       <Form form={form} layout="vertical" onFinish={handleSearch}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Form.Item name="eventId">
+            <Select allowClear placeholder="Select event" loading={loading}>
+              {events.map((event) => (
+                <Option key={event.id} value={event.id}>
+                  {event.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
           <Form.Item name="categoryId">
             <Select allowClear placeholder="Select category" loading={loading}>
               {categories.map((category) => (
@@ -39,8 +53,7 @@ const SessionSearchForm = ({ onSearch, categories = [], loading = false }) => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
-
+          </Form.Item>{" "}
           <Form.Item name="sessionType">
             <Select allowClear placeholder="Select session type">
               <Option value="PRACTICE">Practice</Option>
@@ -50,7 +63,6 @@ const SessionSearchForm = ({ onSearch, categories = [], loading = false }) => {
               <Option value="WARM_UP">Warm Up</Option>
             </Select>
           </Form.Item>
-
           <Form.Item name="dateFrom">
             <DatePicker
               className="w-full"
@@ -59,7 +71,6 @@ const SessionSearchForm = ({ onSearch, categories = [], loading = false }) => {
               placeholder="From date"
             />
           </Form.Item>
-
           <Form.Item name="dateTo">
             <DatePicker
               className="w-full"

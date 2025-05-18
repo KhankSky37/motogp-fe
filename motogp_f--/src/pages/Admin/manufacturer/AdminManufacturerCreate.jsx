@@ -128,9 +128,10 @@ const AdminManufacturerCreate = () => {
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
             >
+              {" "}
               {COUNTRIES.map((country) => (
                 <Option key={country.code} value={country.code}>
-                  {country.name} ({country.code})
+                  {`${country.name} (${country.code})`}
                 </Option>
               ))}
             </Select>

@@ -16,7 +16,6 @@ import CircuitService from "../../../services/CircuitService.jsx";
 import { COUNTRIES } from "../../../constants/Countries.jsx";
 import ImageUploadField from "../../../components/admin/shared/ImageUploadField.jsx";
 
-
 const { Option } = Select;
 const { Text } = Typography;
 
@@ -103,7 +102,7 @@ const AdminCircuitUpdate = () => {
         const errorMsg =
           error.response?.data?.message ||
           "Failed to update circuit. Please try again.";
-        messageApi.error(errorMsg);
+        messageApi.error(errorMsg); 
       } finally {
         setLoading(false);
       }
@@ -192,9 +191,10 @@ const AdminCircuitUpdate = () => {
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
             >
+              {" "}
               {COUNTRIES.map((country) => (
                 <Option key={country.code} value={country.code}>
-                  {country.name} ({country.code})
+                  {`${country.name} (${country.code})`}
                 </Option>
               ))}
             </Select>

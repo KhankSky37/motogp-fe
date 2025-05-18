@@ -20,6 +20,7 @@ const AdminSessionUpdate = () => {
   const [eventsLoading, setEventsLoading] = useState(false);
   const [categoriesLoading, setCategoriesLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const [originalSession, setOriginalSession] = useState(null);
 
   // Fetch session data and options for dropdowns
   useEffect(() => {
@@ -43,6 +44,10 @@ const AdminSessionUpdate = () => {
 
         // Set form values from session data
         const sessionData = sessionResponse.data;
+        console.log("Fetched session data:", sessionData);
+
+        // Lưu session gốc để cập nhật
+        setOriginalSession(sessionData);
 
         // Handle both cases - when event exists or is undefined
         let eventId = null;
@@ -50,9 +55,13 @@ const AdminSessionUpdate = () => {
           eventId = sessionData.event.id;
         }
 
+        // Lấy categoryId thay vì id để khớp với dữ liệu của category
+        const categoryId = sessionData.category?.categoryId;
+        console.log("Extracted category ID:", categoryId);
+
         form.setFieldsValue({
           eventId: eventId,
-          categoryId: sessionData.category?.id,
+          categoryId: categoryId,
           sessionType: sessionData.sessionType,
           sessionDatetime: sessionData.sessionDatetime
             ? moment(sessionData.sessionDatetime)
@@ -80,11 +89,21 @@ const AdminSessionUpdate = () => {
       try {
         // Format the datetime to ISO string
         const formattedValues = {
+          id: sessionId, // Thêm id để đảm bảo cập nhật đúng record
           ...values,
           sessionDatetime: values.sessionDatetime.toISOString(),
           event: { id: values.eventId },
-          category: { id: values.categoryId },
+          category: { categoryId: values.categoryId },
         };
+
+        // Ghi đè các trường khác từ session gốc để đảm bảo không mất thông tin
+        if (originalSession) {
+          // Giữ lại các trường quan trọng khác từ session gốc
+          formattedValues.createUser = originalSession.createUser;
+          formattedValues.createdDate = originalSession.createdDate;
+        }
+
+        console.log("Updating session with data:", formattedValues);
 
         // Remove separate IDs as they're now in nested objects
         delete formattedValues.eventId;
@@ -103,7 +122,7 @@ const AdminSessionUpdate = () => {
         setLoading(false);
       }
     },
-    [sessionId, form, messageApi, navigate]
+    [sessionId, messageApi, navigate, originalSession]
   );
 
   const handleCancel = useCallback(() => {
@@ -162,7 +181,6 @@ const AdminSessionUpdate = () => {
               ))}
             </Select>
           </Form.Item>
-
           {selectedEvent && (
             <div className="mb-4 bg-gray-50 p-3 rounded-md ml-[25%]">
               <p>
@@ -172,22 +190,27 @@ const AdminSessionUpdate = () => {
                 <strong>Season:</strong> {selectedEvent.season?.name || "N/A"}
               </p>
             </div>
-          )}
-
+          )}{" "}
           <Form.Item
             name="categoryId"
             label="Category"
             rules={[{ required: true, message: "Please select a category!" }]}
           >
-            <Select placeholder="Select category" loading={categoriesLoading}>
+            <Select
+              placeholder="Select category"
+              loading={categoriesLoading}
+              showSearch
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
               {categories.map((category) => (
-                <Option key={category.id} value={category.id}>
+                <Option key={category.categoryId} value={category.categoryId}>
                   {category.name}
                 </Option>
               ))}
             </Select>
           </Form.Item>
-
           <Form.Item
             name="sessionType"
             label="Session Type"
@@ -202,8 +225,7 @@ const AdminSessionUpdate = () => {
               <Option value="SPRINT">Sprint</Option>
               <Option value="WARM_UP">Warm Up</Option>
             </Select>
-          </Form.Item>
-
+          </Form.Item>{" "}
           <Form.Item
             name="sessionDatetime"
             label="Date & Time"
@@ -218,7 +240,6 @@ const AdminSessionUpdate = () => {
               style={{ width: "100%" }}
             />
           </Form.Item>
-
           <Form.Item
             wrapperCol={{ offset: 6, span: 18 }}
             className="border-t pt-4 mt-4"
