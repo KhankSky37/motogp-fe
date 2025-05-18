@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, Button, Descriptions, Image } from "antd";
 import { formatDate } from "../../../utils/formatters";
 import { getImageUrl } from "../../../utils/urlHelpers";
+import { COUNTRIES } from "../../../constants/Countries.jsx";
 
 const CircuitDetailModal = ({ circuit, visible, onClose }) => {
   if (!circuit) return null; // Don't render if no circuit data
@@ -31,12 +32,15 @@ const CircuitDetailModal = ({ circuit, visible, onClose }) => {
         </Descriptions.Item>
         <Descriptions.Item label="Name">
           {circuit.name || "N/A"}
-        </Descriptions.Item>
+        </Descriptions.Item>{" "}
         <Descriptions.Item label="City">
           {circuit.locationCity || "N/A"}
-        </Descriptions.Item>
+        </Descriptions.Item>{" "}
         <Descriptions.Item label="Country">
-          {circuit.locationCountry || "N/A"}
+          {circuit.locationCountry
+            ? COUNTRIES.find((c) => c.code === circuit.locationCountry)?.name ||
+              circuit.locationCountry
+            : "N/A"}
         </Descriptions.Item>
         <Descriptions.Item label="Length (km)">
           {circuit.lengthKm || "N/A"}

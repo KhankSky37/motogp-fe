@@ -27,9 +27,10 @@ const ManufacturerSearchForm = ({ onFinish }) => {
 
       <Form.Item name="country">
         <Select placeholder="Select Country" allowClear style={{ width: 180 }}>
+          {" "}
           {COUNTRIES.map((country) => (
             <Option key={country.code} value={country.code}>
-              {country.name}
+              {`${country.name}`}
             </Option>
           ))}
         </Select>

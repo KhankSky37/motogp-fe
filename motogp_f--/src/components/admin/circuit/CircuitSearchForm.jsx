@@ -20,7 +20,16 @@ const CircuitSearchForm = ({ onFinish }) => {
       </Form.Item>
 
       <Form.Item name="country">
-        <Select placeholder="Select Country" allowClear style={{ width: 180 }}>
+        <Select
+          placeholder="Select Country"
+          allowClear
+          style={{ width: 180 }}
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+        >
           {COUNTRIES.map((country) => (
             <Option key={country.code} value={country.code}>
               {country.name}

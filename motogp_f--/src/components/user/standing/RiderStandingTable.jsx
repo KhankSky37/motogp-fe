@@ -1,0 +1,85 @@
+import React from 'react';
+import {Table} from "antd";
+import {getImageUrl} from "../../../utils/urlHelpers.jsx";
+import ReactCountryFlag from "react-country-flag";
+
+const RiderStandingTable = ({riderStandings}) => {
+  const columns = [
+    {
+      title: "Pos.",
+      dataIndex: "position",
+      key: "position",
+      align: "center",
+      width: "100px",
+      render: (_, record, index) => <span className={"font-extrabold text-3xl"}>{index + 1}</span>
+    },
+    {
+      title: "Rider",
+      key: "rider",
+      align: "center",
+      width: 400,
+      render: (_, record) => {
+        const riderName = `${record.firstName || ""} ${record.lastName || ""}`;
+        const photoUrl = record.photoUrl;
+        const countryCode = record.nationality;
+
+        return (
+          <div className="flex items-center">
+            {/* Ảnh tay đua */}
+            <div className="h-20 w-2/5 overflow-hidden mr-4">
+              <img
+                src={getImageUrl(photoUrl)}
+                className="w-full h-full object-cover object-top"
+                alt={riderName}
+              />
+            </div>
+
+            <div className={"w-3/5"}>
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-xl">{riderName}</span>
+                {countryCode && (
+                  <ReactCountryFlag
+                    countryCode={countryCode}
+                    svg
+                    style={{
+                      width: "26px",
+                      height: "auto",
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      title: "Team",
+      dataIndex: "teamName",
+      key: "teamName",
+      render: (text) => (
+        <span className={"font-semibold text-gray-400 text-xl"}>{text}</span>
+      ),
+    },
+    {
+      title: "Points",
+      dataIndex: "points",
+      key: "points",
+      align: "center",
+      width: "100px",
+      render: (text) => <span className={"font-extrabold text-3xl"}>{text}</span>
+    },
+  ];
+
+  return (
+    <div>
+      <Table
+        columns={columns}
+        dataSource={riderStandings}
+        pagination={false}
+      />
+    </div>
+  );
+};
+
+export default RiderStandingTable;

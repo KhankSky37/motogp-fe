@@ -6,6 +6,7 @@ import CircuitTable from "../../../components/admin/circuit/CircuitTable.jsx";
 import CircuitDetailModal from "../../../components/admin/circuit/CircuitDetailModal.jsx";
 import CircuitSearchForm from "../../../components/admin/circuit/CircuitSearchForm.jsx";
 import { useNavigate } from "react-router-dom";
+import { COUNTRIES } from "../../../constants/Countries.jsx";
 
 const AdminCircuit = () => {
   const [circuits, setCircuits] = useState([]);
@@ -29,7 +30,10 @@ const AdminCircuit = () => {
         country: country,
       };
 
+      console.log("Search params:", params);
+
       const response = await CircuitService.getAllCircuits(params);
+      console.log("Search response:", response.data);
       setCircuits(response.data);
     } catch (err) {
       console.error("Error fetching circuits:", err);
@@ -95,9 +99,10 @@ const AdminCircuit = () => {
       />
     );
   }
-
   const onSearchFinish = (values) => {
-    fetchCircuits(values.keyword, values.country);
+    // Chỉ lấy country nếu là code hợp lệ trong COUNTRIES hoặc nếu có values.country
+    const country = values.country || null;
+    fetchCircuits(values.keyword, country);
   };
 
   return (

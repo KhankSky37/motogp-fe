@@ -5,11 +5,15 @@ const CircuitService = {
   getAllCircuits: (params) => {
     // Process the params to handle the country to locationCountry conversion
     const adjustedParams = { ...params };
+    console.log("Original params:", params);
+
+    // Keep the country parameter as is - backend expects locationCountry directly
     if (adjustedParams.country) {
       adjustedParams.locationCountry = adjustedParams.country;
       delete adjustedParams.country;
     }
 
+    console.log("Adjusted params:", adjustedParams);
     return httpClient.get(API.CIRCUITS, { params: adjustedParams });
   },
 

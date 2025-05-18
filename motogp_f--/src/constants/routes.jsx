@@ -27,7 +27,7 @@ import AdminManufacturerCreate from "../pages/Admin/manufacturer/AdminManufactur
 import AdminManufacturerUpdate from "../pages/Admin/manufacturer/AdminManufacturerUpdate.jsx";
 import AdminResultCreate from "../pages/Admin/result/AdminResultCreate.jsx";
 import AdminResultUpdate from "../pages/Admin/result/AdminResultUpdate.jsx";
-import Result from "../pages/user/Result.jsx";
+import Result from "../pages/user/resultStanding/Result.jsx";
 import AdminTeam from "../pages/Admin/team/AdminTeam.jsx";
 import AdminTeamCreate from "../pages/Admin/team/AdminTeamCreate.jsx";
 import AdminTeamUpdate from "../pages/Admin/team/AdminTeamUpdate.jsx";
@@ -42,6 +42,8 @@ import Riders from "../pages/user/Riders.jsx";
 import Teams from "../pages/user/Teams.jsx";
 import Calendar from "../pages/user/Calendar.jsx";
 import Legends from "../pages/user/Legends.jsx";
+import ResultStanding from "../pages/user/resultStanding/ResultStanding.jsx";
+import Standing from "../pages/user/resultStanding/Standing.jsx";
 
 
 export const routes = [
@@ -54,25 +56,36 @@ export const routes = [
         element: <Home/>,
       },
       {
-        path: "/gp-results",
-        element: <Result/>,
+        path: "/",
+        element: <ResultStanding/>,
+        children: [
+          {
+            // index: true,
+            path: 'gp-results',
+            element: <Result/>,
+          },
+          {
+            path: "standings",
+            element: <Standing/>
+          }
+        ],
       },
       // Add News route
       {
         path: "/news",
-        element: <NewsPage />,
+        element: <NewsPage/>,
       },
       {
         path: "riders",
-        element: <Riders />,
+        element: <Riders/>,
       },
       {
         path: "teams", // thêm dòng này
-        element: <Teams />,
+        element: <Teams/>,
       },
       {
         path: "legends", // thêm dòng này
-        element: <Legends />,
+        element: <Legends/>,
       },
       {
         path: "calendar",
@@ -223,7 +236,7 @@ export const routes = [
       },
       { // Add Contract Route
         path: "contracts",
-        element: <AdminContract />,
+        element: <AdminContract/>,
       },
     ],
   },

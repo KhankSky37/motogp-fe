@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'; // Bỏ useCallback, useState, message
-import { Modal, Form, Input, Select, Spin } from 'antd';
-// Bỏ import các Service (TeamService, RiderService, SeasonService, CategoryService)
+import React, {useEffect} from 'react'; // Bỏ useCallback, useState, message
+import {Form, Input, Modal, Select, Spin} from 'antd';
 
-const { Option } = Select;
+const {Option} = Select;
 
 const ContractFormModal = ({
                              visible,
@@ -67,56 +66,64 @@ const ContractFormModal = ({
           {/* Khi edit, hiển thị ID nhưng không cho sửa */}
           {mode === 'edit' && initialData && (
             <Form.Item label="Contract ID">
-              <Input value={initialData.id} disabled />
+              <Input value={initialData.id} disabled/>
             </Form.Item>
           )}
           <Form.Item
             name="teamId"
             label="Team"
-            rules={[{ required: true, message: 'Please select a team!' }]}
+            rules={[{required: true, message: 'Please select a team!'}]}
           >
-            <Select placeholder="Select team" loading={dataLoading} showSearch filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
-              {teamsData.map(team => <Option key={team.id} value={team.id} label={`${team.name} (${team.id})`}>{team.name} ({team.id})</Option>)}
+            <Select placeholder="Select team" loading={dataLoading} showSearch
+                    filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
+              {teamsData.map(team => <Option key={team.id} value={team.id}
+                                             label={`${team.name} (${team.id})`}>{team.name} ({team.id})</Option>)}
             </Select>
           </Form.Item>
           <Form.Item
             name="riderId"
             label="Rider"
-            rules={[{ required: true, message: 'Please select a rider!' }]}
+            rules={[{required: true, message: 'Please select a rider!'}]}
           >
-            <Select placeholder="Select rider" loading={dataLoading} showSearch filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
-              {ridersData.map(rider => <Option key={rider.riderId} value={rider.riderId} label={`${rider.firstName} ${rider.lastName} (${rider.riderId})`}>{rider.firstName} {rider.lastName} ({rider.riderId})</Option>)}
+            <Select placeholder="Select rider" loading={dataLoading} showSearch
+                    filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
+              {ridersData.map(rider => <Option key={rider.riderId} value={rider.riderId}
+                                               label={`${rider.firstName} ${rider.lastName} (${rider.riderId})`}>{rider.firstName} {rider.lastName} ({rider.riderId})</Option>)}
             </Select>
           </Form.Item>
           <Form.Item
             name="seasonId"
             label="Season"
-            rules={[{ required: true, message: 'Please select a season!' }]}
+            rules={[{required: true, message: 'Please select a season!'}]}
           >
-            <Select placeholder="Select season" loading={dataLoading} showSearch filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
-              {seasonsData.map(season => <Option key={season.id} value={season.id} label={`${season.name} (${season.id})`}>{season.name} ({season.id})</Option>)}
+            <Select placeholder="Select season" loading={dataLoading} showSearch
+                    filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
+              {seasonsData.map(season => <Option key={season.id} value={season.id}
+                                                 label={`${season.name} (${season.id})`}>{season.name} ({season.id})</Option>)}
             </Select>
           </Form.Item>
           <Form.Item
             name="categoryId"
             label="Category"
-            rules={[{ required: true, message: 'Please select a category!' }]}
+            rules={[{required: true, message: 'Please select a category!'}]}
           >
-            <Select placeholder="Select category" loading={dataLoading} showSearch filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
-              {categoriesData.map(category => <Option key={category.categoryId} value={category.categoryId} label={`${category.name} (${category.categoryId})`}>{category.name} ({category.categoryId})</Option>)}
+            <Select placeholder="Select category" loading={dataLoading} showSearch
+                    filterOption={(input, option) => String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())}>
+              {categoriesData.map(category =>
+                <Option key={category.categoryId} value={category.categoryId}
+                        label={`${category.name} (${category.categoryId})`}>{category.name} ({category.categoryId})</Option>)}
             </Select>
           </Form.Item>
           <Form.Item
             name="riderRole"
             label="Rider Role"
-            rules={[{ required: true, message: 'Please select the rider role!'}]}
+            rules={[{required: true, message: 'Please select the rider role!'}]}
           >
             <Select placeholder="Select rider role">
-              <Option value="Factory Rider">Factory Rider</Option>
-              <Option value="Satellite Rider">Satellite Rider</Option>
-              <Option value="Test Rider">Test Rider</Option>
-              <Option value="Replacement Rider">Replacement Rider</Option>
-              <Option value="Wildcard Rider">Wildcard Rider</Option>
+              <Option value="offical">Official</Option>
+              <Option value="wildcard">Wildcard</Option>
+              <Option value="substitute">Substitute</Option>
+              <Option value="test">Test</Option>
             </Select>
           </Form.Item>
         </Form>
