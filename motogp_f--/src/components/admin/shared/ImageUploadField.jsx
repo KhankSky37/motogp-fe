@@ -15,7 +15,7 @@ const ImageUploadField = ({
   value = null,
   onChange,
   maxSizeMB = 2,
-  acceptedTypes = ["image/jpeg", "image/png", "image/webp"],
+  acceptedTypes = ["image/jpeg", "image/png", "image/webp","image/svg+xml"],
 }) => {
   const [previewImageUrl, setPreviewImageUrl] = useState("");
   const [uploadError, setUploadError] = useState("");

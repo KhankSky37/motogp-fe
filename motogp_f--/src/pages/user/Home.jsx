@@ -53,7 +53,7 @@ const Home = () => {
         <h2 className="text-2xl font-bold mb-4 px-6">
           Tin tức mới nhất (Ẩn slider)
         </h2>
-        <NewsSection showOverflow={false} />
+        <NewsSection showOverflow={true} />
       </div>
 
       {/* Phiên bản hiển thị các slide bên ngoài khung */}

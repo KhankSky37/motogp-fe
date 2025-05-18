@@ -108,18 +108,26 @@ const Rider = () => {
                             <h2 className="text-2xl font-extrabold text-blue-800 mb-4">{role}</h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                                 {contractsInRole.length > 0 ? (
-                                    contractsInRole.map((contract) => {
-                                        const rider = findRiderById(contract.riderId);
-                                        if (!rider) return null;
+                                    [...contractsInRole]
+                                        .sort((a, b) => {
+                                            const getNumber = (riderId) => {
+                                                const match = riderId.match(/\d+$/); // Tìm số ở cuối
+                                                return match ? parseInt(match[0], 10) : 0;
+                                            };
+                                            return getNumber(a.riderId) - getNumber(b.riderId);
+                                        })
+                                        .map((contract) => {
+                                            const rider = findRiderById(contract.riderId);
+                                            if (!rider) return null;
 
-                                        return (
-                                            <RiderCard
-                                                key={rider.riderId || rider.id}
-                                                rider={rider}
-                                                teamName={teams[contract.teamId]?.name || "Unknown Team"}
-                                            />
-                                        );
-                                    })
+                                            return (
+                                                <RiderCard
+                                                    key={rider.riderId || rider.id}
+                                                    rider={rider}
+                                                    teamName={teams[contract.teamId]?.name || "Unknown Team"}
+                                                />
+                                            );
+                                        })
                                 ) : (
                                     <div className="text-gray-500">Không có rider nào cho vai trò này</div>
                                 )}

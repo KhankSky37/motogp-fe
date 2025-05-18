@@ -58,6 +58,9 @@ const DefaultLayout = () => {
     else if (e.key === "Riders&Team") {
       navigate("/Riders");
     }
+    else if (e.key === "calendar") {
+      navigate("/calendar");
+    }
   };
 
   return (

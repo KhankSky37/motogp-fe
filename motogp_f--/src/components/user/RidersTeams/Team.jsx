@@ -92,7 +92,7 @@ const Team = () => {
                     };
                 })
                 .filter(Boolean)
-                .slice(0, 2);
+                .sort((a, b) => a.name.localeCompare(b.name)); // Sắp xếp rider trong team theo ABC
 
             return {
                 id: team.id,
@@ -102,7 +102,8 @@ const Team = () => {
                 riders: teamRiders,
             };
         })
-        .filter((team) => team.riders.length === 2);
+        .filter((team) => team.riders.length > 0)
+        .sort((a, b) => a.name.localeCompare(b.name)); // ✅ Sắp xếp các team theo tên team
 
     return (
         <div className="p-4">

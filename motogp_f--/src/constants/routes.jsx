@@ -36,10 +36,11 @@ import AdminUserUpdate from "../pages/Admin/userAdmin/AdminUserUpdate.jsx";
 import AdminNewsArticle from "../pages/Admin/newsArticle/AdminNewsArticle.jsx";
 import AdminNewsArticleCreate from "../pages/Admin/newsArticle/AdminNewsArticleCreate.jsx";
 import AdminNewsArticleUpdate from "../pages/Admin/newsArticle/AdminNewsArticleUpdate.jsx";
-// Import News page component
+
 import NewsPage from "../pages/user/news/NewsPage.jsx";
 import Riders from "../pages/user/Riders.jsx";
 import Teams from "../pages/user/Teams.jsx";
+import Calendar from "../pages/user/Calendar.jsx";
 import Legends from "../pages/user/Legends.jsx";
 
 
@@ -73,6 +74,10 @@ export const routes = [
         path: "legends", // thêm dòng này
         element: <Legends />,
       },
+      {
+        path: "calendar",
+        element: <Calendar />
+      }
     ],
   },
   {
