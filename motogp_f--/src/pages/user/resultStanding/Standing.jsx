@@ -1,101 +1,19 @@
 import React, {useEffect} from 'react';
 import SearchForm from "../../../components/user/standing/SearchForm.jsx";
-import {Form, message, Select, Table} from "antd";
+import {Form, message, Select} from "antd";
 import SeasonService from "../../../services/SeasonService.jsx";
 import StandingBanner from "../../../components/user/standing/StandingBanner.jsx";
-import {getImageUrl} from "../../../utils/urlHelpers.jsx";
-import ReactCountryFlag from "react-country-flag";
+import StandingService from "../../../services/StandingService.jsx";
+import RiderStandingTable from "../../../components/user/standing/RiderStandingTable.jsx";
+import TeamStandingTable from "../../../components/user/standing/TeamStandingTable.jsx";
 
 const Standing = () => {
   const [form] = Form.useForm();
   const [seasonYears, setSeasonYears] = React.useState([]);
   const watchedType = Form.useWatch('type', form);
-
-  const columns = [
-    {
-      title: "Pos.",
-      dataIndex: "position",
-      key: "position",
-      align: "center",
-      width: "100px",
-      render: (text) => (
-        <span className={"font-extrabold text-3xl"}>{text}</span>
-      ),
-    },
-    {
-      title: "Rider",
-      key: "rider",
-      align: "center",
-      width: 400,
-      render: (_, record) => {
-        const riderName =
-          record.rider?.name ||
-          `${record.rider?.firstName || ""} ${record.rider?.lastName || ""}`;
-        const photoUrl = record.rider?.photoUrl;
-        const countryCode = record.rider?.nationality;
-
-        return (
-          <div className="flex items-center">
-            {/* Ảnh tay đua */}
-            <div className="h-20 w-2/5 overflow-hidden mr-4">
-              <img
-                src={getImageUrl(photoUrl)}
-                className="w-full h-full object-cover object-top"
-                alt={riderName}
-              />
-            </div>
-
-            <div className={"w-3/5"}>
-              <div className="flex items-center justify-between">
-                <span className="font-medium text-xl">{riderName}</span>
-                {countryCode && (
-                  <ReactCountryFlag
-                    countryCode={countryCode}
-                    svg
-                    style={{
-                      width: "26px",
-                      height: "auto",
-                    }}
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      },
-    },
-    {
-      title: "Team",
-      dataIndex: ["team", "name"],
-      key: "teamName",
-      render: (text) => (
-        <span className={"font-semibold text-gray-400 text-xl"}>{text}</span>
-      ),
-    },
-    {
-      title: "Points",
-      dataIndex: "points",
-      key: "points",
-      align: "center",
-      width: "100px",
-    // },
-    // {
-    //   title: "Time",
-    //   dataIndex: "timeMillis",
-    //   key: "timeMillis",
-    //   align: "center",
-    //   render: (text) => {
-    //     const formattedTime = formatTime(text);
-    //     return (
-    //       <span className={"text-lg"}>
-    //         {formattedTime}
-    //       </span>
-    //     );
-    //   }
-    },
-  ];
-
-
+  const [riderStandings, setRiderStandings] = React.useState([]);
+  const [teamStandings, setTeamStandings] = React.useState([]);
+  const [selectedCategory, setSelectedCategory] = React.useState("motogp");
   useEffect(() => {
     const fetchSeasonYears = async () => {
       try {
@@ -122,6 +40,24 @@ const Standing = () => {
     fetchSeasonYears();
   }, [form]);
 
+  useEffect(() => {
+    const fetchStanding = async () => {
+      const currentYear = form.getFieldValue("year");
+      const currentType = form.getFieldValue("type");
+      try {
+        const response = await StandingService.getStandings(currentYear, selectedCategory, currentType);
+        if (currentType === "team") {
+          setTeamStandings(response.data);
+        } else if (currentType === "rider") {
+          setRiderStandings(response.data)
+        }
+      } catch (error) {
+        console.error("Failed to fetch rider standings:", error);
+      }
+    }
+    fetchStanding();
+  }, [form.getFieldValue("year"), form.getFieldValue("type")]);
+
   return (
     <div>
       <div className={"px-12 relative bg-[#c80502]"}>
@@ -133,16 +69,19 @@ const Standing = () => {
 
 
       <div className="mx-14 mt-14 mb-7">
-        <Select className={'w-72 mb-2'} size={'large'} defaultValue={"motogp"}>
+        <Select className={'w-72 mb-2'} size={'large'} defaultValue={"motogp"}
+                onChange={(value) => setSelectedCategory(value)}>
           <Select.Option value="motogp">MotoGP</Select.Option>
           <Select.Option value="moto2">Moto2</Select.Option>
           <Select.Option value="moto3">Moto3</Select.Option>
           <Select.Option value="motoe">MotoE</Select.Option>
         </Select>
-        <Table
-          columns={columns}
-          className={""}
-        />
+        {watchedType === "team" && (
+          <TeamStandingTable teamStandings={teamStandings}/>
+        )}
+        {watchedType === "rider" &&
+          <RiderStandingTable riderStandings={riderStandings}/>
+        }
       </div>
     </div>
   );
