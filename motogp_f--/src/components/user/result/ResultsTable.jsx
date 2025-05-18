@@ -22,34 +22,14 @@ const ResultsTable = ({loading, resultData, sessionType}) => {
       key: "points",
       align: "center",
       width: "100px",
-      render: (_, record) => {
-        let pointsValue = "-"; // Giá trị mặc định
-
+      render: (points, record) => {
         if (
           record.status &&
           ["DNF", "DNS", "DSQ", "RET"].includes(record.status.toUpperCase())
         ) {
-          pointsValue = "-";
-        } else if (
-          !record.status ||
-          record.status.toUpperCase() === "FINISHED"
-        ) {
-          const position = parseInt(record.position, 10);
-
-          if (!isNaN(position)) {
-            if (sessionType === "RACE") {
-              const pointsSystem = [
-                25, 20, 16, 13, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
-              ];
-              pointsValue = position <= 15 ? pointsSystem[position - 1] : "-";
-            } else if (sessionType === "SPR") {
-              const sprintPointsSystem = [12, 9, 7, 6, 5, 4, 3, 2, 1];
-              pointsValue =
-                position <= 9 ? sprintPointsSystem[position - 1] : "-";
-            }
-          }
+          points = "-";
         }
-        return <span className={"text-gray-400 text-3xl"}>{pointsValue}</span>;
+        return <span className={"text-gray-400 text-3xl"}>{points}</span>;
       },
     },
     {
@@ -118,14 +98,12 @@ const ResultsTable = ({loading, resultData, sessionType}) => {
     },
   ];
 
-  // Chỉ hiển thị cột Pts nếu sessionType là RACE hoặc SPR
   const shouldShowPointsColumn =
-    sessionType === "RACE" || sessionType === "SPR";
+    sessionType === "RACE" || sessionType === "SPRINT";
 
   if (!shouldShowPointsColumn) {
     columns.splice(1, 1);
   }
-  // Helper function to format time values
   const formatTime = (milliseconds) => {
     if (!milliseconds) return "-";
 
@@ -141,33 +119,33 @@ const ResultsTable = ({loading, resultData, sessionType}) => {
 
   const sortedData = useMemo(() => {
     if (!resultData || !Array.isArray(resultData)) return [];
-    
+
     return [...resultData].sort((a, b) => {
       // Xử lý trường hợp đặc biệt cho các trạng thái như DNF, DNS
       const statusA = a.status?.toUpperCase();
       const statusB = b.status?.toUpperCase();
-      
+
       // Các trường hợp đặc biệt sẽ được xếp sau các vị trí thông thường
       const specialStatusA = ["DNF", "DNS", "DSQ", "RET"].includes(statusA);
       const specialStatusB = ["DNF", "DNS", "DSQ", "RET"].includes(statusB);
-      
+
       if (specialStatusA && !specialStatusB) return 1;
       if (!specialStatusA && specialStatusB) return -1;
-      
+
       // Nếu cả hai đều là trạng thái đặc biệt, sắp xếp theo position
       if (specialStatusA && specialStatusB) {
         const posA = parseInt(a.position, 10);
         const posB = parseInt(b.position, 10);
         return isNaN(posA) || isNaN(posB) ? 0 : posA - posB;
       }
-      
+
       // Sắp xếp theo position (trường hợp thông thường)
       const posA = parseInt(a.position, 10);
       const posB = parseInt(b.position, 10);
-      
+
       if (isNaN(posA)) return 1;
       if (isNaN(posB)) return -1;
-      
+
       return posA - posB;
     });
   }, [resultData]);

@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ResultsHeader from "../../../components/user/result/ResultsHeader.jsx";
 import {ConfigProvider, Tabs} from "antd";
-import {Outlet, useNavigate} from "react-router-dom";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
 
 const ResultStanding = () => {
   const [title, setTitle] = React.useState("RESULTS");
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const [activeTabKey, setActiveTabKey] = useState("RESULTS");
+
 
   const items = [
     {
@@ -21,6 +25,25 @@ const ResultStanding = () => {
       label: <span className="font-semibold text-lg">RECORDS</span>,
     },
   ];
+
+  useEffect(() => {
+    const pathSnippets = location.pathname.split("/").filter((i) => i);
+    let currentKey = pathSnippets.length > 0 ? pathSnippets[0].toUpperCase() : "RESULTS";
+
+    if (currentKey === "GP-RESULTS") {
+      currentKey = "RESULTS";
+    }
+
+    const validKeys = items.map(item => item.key);
+    if (validKeys.includes(currentKey)) {
+      setActiveTabKey(currentKey);
+      setTitle(currentKey);
+    } else {
+      setActiveTabKey("RESULTS");
+      setTitle("RESULTS");
+    }
+  }, [location.pathname]);
+
 
   const onChange = key => {
     setTitle(key);
@@ -48,7 +71,7 @@ const ResultStanding = () => {
             },
           }}
         >
-          <Tabs defaultActiveKey="1" items={items} rootClassName={"relative"} onChange={onChange}/>
+          <Tabs activeKey={activeTabKey} items={items} rootClassName={"relative"} onChange={onChange}/>
         </ConfigProvider>
       </div>
       <Outlet/>
