@@ -22,10 +22,6 @@ const DefaultLayout = () => {
       label: "Calendar",
     },
     {
-      key: "sessions",
-      label: "Sessions",
-    },
-    {
       key: "Results&Standings",
       label: "Results & Standings",
     },
@@ -83,7 +79,7 @@ const DefaultLayout = () => {
           theme={{
             components: {
               Menu: {
-                darkItemSelectedBg: "#8c8c8c",
+                darkItemSelectedBg: "bg-black",
               },
             },
           }}

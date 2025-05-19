@@ -67,16 +67,22 @@ const RiderStandingTable = ({riderStandings}) => {
       key: "points",
       align: "center",
       width: "100px",
-      render: (text) => <span className={"font-extrabold text-3xl"}>{text}</span>
+      render: (text) => <span className={"font-extrabold text-3xl "}>{text}</span>
     },
   ];
-
+  const getRowClassName = (record, index) => {
+    if (index === 0) {
+      return 'bg-[#c80502] hover:text-black transition text-white inset-y-0 left-0 w-full bg-gradient-to-l to-black from-transparent';
+    }
+    return '';
+  };
   return (
     <div>
       <Table
         columns={columns}
         dataSource={riderStandings}
         pagination={false}
+        rowClassName={getRowClassName}
       />
     </div>
   );
