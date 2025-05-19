@@ -6,6 +6,7 @@ import StandingBanner from "../../../components/user/standing/StandingBanner.jsx
 import StandingService from "../../../services/StandingService.jsx";
 import RiderStandingTable from "../../../components/user/standing/RiderStandingTable.jsx";
 import TeamStandingTable from "../../../components/user/standing/TeamStandingTable.jsx";
+import CategoryService from "../../../services/CategoryService.jsx";
 
 const Standing = () => {
   const [form] = Form.useForm();
@@ -13,11 +14,14 @@ const Standing = () => {
   const watchedType = Form.useWatch('type', form);
   const [riderStandings, setRiderStandings] = React.useState([]);
   const [teamStandings, setTeamStandings] = React.useState([]);
-  const [selectedCategory, setSelectedCategory] = React.useState("motogp");
+  const [selectedCategory, setSelectedCategory] = React.useState(null);
+  const [categories, setCategories] = React.useState([]);
   useEffect(() => {
     const fetchSeasonYears = async () => {
       try {
         const response = await SeasonService.getAllSeasons();
+        const categoryData = await CategoryService.getAllCategories();
+        setCategories(categoryData.data)
         if (response && response.data) {
           const yearsData = response.data
             .map((season) => String(season.id))
@@ -56,7 +60,7 @@ const Standing = () => {
       }
     }
     fetchStanding();
-  }, [form.getFieldValue("year"), form.getFieldValue("type")]);
+  }, [form.getFieldValue("year"), form.getFieldValue("type"), selectedCategory]);
 
   return (
     <div>
@@ -71,11 +75,13 @@ const Standing = () => {
       <div className="mx-14 mt-14 mb-7">
         <Select className={'w-72 mb-2'} size={'large'} defaultValue={"motogp"}
                 onChange={(value) => setSelectedCategory(value)}>
-          <Select.Option value="motogp">MotoGP</Select.Option>
-          <Select.Option value="moto2">Moto2</Select.Option>
-          <Select.Option value="moto3">Moto3</Select.Option>
-          <Select.Option value="motoe">MotoE</Select.Option>
+          {categories?.map((category) => (
+            <Select.Option key={category.categoryId} value={category.categoryId}>
+              {category.name}
+            </Select.Option>
+          ))}
         </Select>
+
         {watchedType === "team" && (
           <TeamStandingTable teamStandings={teamStandings}/>
         )}
