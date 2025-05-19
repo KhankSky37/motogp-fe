@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Tabs, ConfigProvider } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import GPGrid from "./GPGrid.jsx";
-import GPList from "./GPList.jsx"; // Thêm GPList
+import GPListAllEvents from "./GPListAllEvents.jsx";
 
 const ModeTabs = () => {
     const navigate = useNavigate();
@@ -63,7 +63,7 @@ const ModeTabs = () => {
             </div>
 
             {/* Hiển thị danh sách GP tương ứng */}
-            {viewMode === "grid" ? <GPGrid /> : <GPList />}
+            {viewMode === "grid" ? <GPGrid /> : <GPListAllEvents />}
         </div>
     );
 
