@@ -31,7 +31,7 @@ const EventBanner = ({ selectedEvent, fallbackName }) => {
             <img
               src={`https://photos.motogp.com/countries/flags/iso2/${countryCode}.svg`}
               alt={`${countryCode.toUpperCase()} flag`}
-              className="w-6 border border-white"
+              className="w-6"
             />
             <div className="divide-x flex">
               {cityName && <div className="pr-2">{cityName}</div>}
