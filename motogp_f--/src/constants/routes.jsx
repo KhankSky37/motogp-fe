@@ -44,6 +44,8 @@ import Calendar from "../pages/user/Calendar.jsx";
 import Legends from "../pages/user/Legends.jsx";
 import ResultStanding from "../pages/user/resultStanding/ResultStanding.jsx";
 import Standing from "../pages/user/resultStanding/Standing.jsx";
+import VideoPass from "../pages/user/VideoPass.jsx";
+import Videos from "../pages/user/Videos.jsx";
 
 
 export const routes = [
@@ -74,6 +76,14 @@ export const routes = [
       {
         path: "/news",
         element: <NewsPage/>,
+      },
+      {
+        path: "/videopass",
+        element: <VideoPass/>,
+      },
+      {
+        path: "/videos",
+        element: <Videos/>,
       },
       {
         path: "riders",
