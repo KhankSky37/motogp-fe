@@ -20,10 +20,6 @@ const ResultStanding = () => {
       key: "STANDINGS",
       label: <span className="font-semibold text-lg">STANDINGS</span>,
     },
-    {
-      key: "RECORDS",
-      label: <span className="font-semibold text-lg">RECORDS</span>,
-    },
   ];
 
   useEffect(() => {

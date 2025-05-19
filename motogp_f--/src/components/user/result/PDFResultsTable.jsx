@@ -1,50 +1,104 @@
-import React, { useState } from 'react';
-import { FileTextOutlined } from '@ant-design/icons';
-import {Button} from "antd";
+import React, {useState} from 'react';
+import {ExportOutlined, FilePdfOutlined} from '@ant-design/icons';
 
 const PDFResultsTable = () => {
-  const [activeTab, setActiveTab] = useState('event'); // 'session', 'championship', 'event'
+  const [activeTab, setActiveTab] = useState('session');
 
-  const sessionData = [
-    { name: 'analysis', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/Analysis.pdf' },
-    { name: 'analysis by lap', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/analysisbylap.pdf' },
-    { name: 'average speed', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/AverageSpeed.pdf' },
-    { name: 'classification', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/Classification.pdf' },
-    { name: 'fast lap rider', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/FastLapRider.pdf' },
-    { name: 'fast lap sequence', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/FastLapSequence.pdf' },
-    { name: 'grid', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/Grid.pdf' },
-    { name: 'lap chart', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/LapChart.pdf' },
-    { name: 'session', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/Session.pdf' },
-    { name: 'world standing', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/worldstanding.pdf' }
+  const sessionItems = [
+    'analysis',
+    'analysis by lap',
+    'average speed',
+    'classification',
+    'fast lap rider',
+    'fast lap sequence',
+    'grid',
+    'lap chart',
+    'session',
+    'world standing'
   ];
 
-  const championshipData = [
-    { name: 'entry', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/Entry.pdf' },
-    { name: 'entry biographical', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/EntryBiographical.pdf' },
-    { name: 'event maximum speed', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/EventMaximumSpeed.pdf' },
-    { name: 'independent team rider', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/IndependentTeam.pdf' },
-    { name: 'riders all time', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/table5.pdf' },
-    { name: 'riders performance', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RidersPerformance.pdf' },
-    { name: 'rookie of the year', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/rookieirtacup.pdf' },
-    { name: 'season statistics', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/table1.pdf' },
-    { name: 'world standing', url: 'https://resources.motogp.com/files/results/2025/FRA/MotoGP/RAC/worldstanding.pdf' }
+  const championshipItems = [
+    'entry',
+    'entry biographical',
+    'event maximum speed',
+    'independent team rider',
+    'riders all time',
+    'riders performance',
+    'rookie of the year',
+    'season statistics',
+    'world standing'
   ];
 
-  const eventData = [
-    { name: 'circuit information', url: 'https://resources.motogp.com/files/results/2025/FRA/CircuitInformation.pdf' },
-    { name: 'nations statistics', url: 'https://resources.motogp.com/files/results/2025/FRA/table2.pdf' },
-    { name: 'podiums', url: 'https://resources.motogp.com/files/results/2025/FRA/Podiums.pdf' },
-    { name: 'pole positions', url: 'https://resources.motogp.com/files/results/2025/FRA/PolePositions.pdf' },
-    { name: 'riders all time', url: 'https://resources.motogp.com/files/results/2025/FRA/table4.pdf' }
+  const eventItems = [
+    'circuit information',
+    'nations statistics',
+    'podiums',
+    'pole positions',
+    'riders all time'
   ];
+
+  const getItemsForTab = (tab) => {
+    switch (tab) {
+      case 'session':
+        return sessionItems;
+      case 'championship':
+        return championshipItems;
+      case 'event':
+        return eventItems;
+      default:
+        return [];
+    }
+  };
+
+  const currentItems = getItemsForTab(activeTab);
+  const half = Math.ceil(currentItems.length / 2);
+  const firstColumnItems = currentItems.slice(0, half);
+  const secondColumnItems = currentItems.slice(half);
+
+  const renderItem = (item, index) => (
+    <div key={index}
+         className="flex items-center space-x-2 px-2 py-3 cursor-pointer justify-between hover:text-red-600">
+      <div className={'flex items-center space-x-2'}>
+        <FilePdfOutlined/>
+        <span className="uppercase text-xs font-semibold">{item}</span>
+      </div>
+      <ExportOutlined/>
+    </div>
+  );
 
   return (
     <section className="mx-14 mb-7">
-      <div className={'flex space-x-2'}>
-        <Button className={'border px-6 rounded-2xl !bg-red-600 text-white'} color='danger' variant='solid'>Session Results</Button>
-        <Button className={'border px-6 rounded-2xl !bg-red-600 text-white'} color='danger' variant='solid'>Championship Results</Button>
-        <Button className={'border px-6 rounded-2xl !bg-red-600 text-white'} color='danger' variant='solid'>Event Results</Button>
+      <div className={'flex space-x-2 mb-4'}>
+        <button
+          className={`border px-6 py-1 rounded-2xl ${activeTab === 'session' ? '!bg-red-700 text-white' : 'bg-gray-200 text-black'}`}
+          onClick={() => setActiveTab('session')}
+        >
+          Session Results
+        </button>
+        <button
+          className={`border px-6 py-1 rounded-2xl ${activeTab === 'championship' ? '!bg-red-700 text-white' : 'bg-gray-200 text-black'}`}
+          onClick={() => setActiveTab('championship')}
+        >
+          Championship Results
+        </button>
+        <button
+          className={`border px-6 py-1 rounded-2xl ${activeTab === 'event' ? '!bg-red-700 text-white' : 'bg-gray-200 text-black'}`}
+          onClick={() => setActiveTab('event')}
+        >
+          Event Results
+        </button>
       </div>
+
+      {currentItems.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+          <div className={"bg-white divide-y"}>
+            {firstColumnItems.map(renderItem)}
+          </div>
+          <div className={"bg-white divide-y"}>
+            {secondColumnItems.map(renderItem)}
+          </div>
+        </div>
+      )}
     </section>
   );
 };

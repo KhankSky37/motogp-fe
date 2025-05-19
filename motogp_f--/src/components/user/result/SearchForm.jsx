@@ -8,10 +8,10 @@ const SearchForm = ({form, seasonYears, eventsList, availableCategories, availab
         algorithm: theme.darkAlgorithm,
       }}
     >
-      <Form form={form} name="motogp_search" layout="vertical">
+      <Form form={form} name="motogp_search" layout="vertical" size={'large'}>
         <Row gutter={16}>
-          <Col md={24} lg={4}>
-            <Form.Item name="year">
+          <Col md={24} lg={5}>
+            <Form.Item name="year" label={"Year"}>
               <Select placeholder="Select Year">
                 {seasonYears.map((year) => (
                   <Option key={year} value={year}>
@@ -22,8 +22,8 @@ const SearchForm = ({form, seasonYears, eventsList, availableCategories, availab
             </Form.Item>
           </Col>
 
-          <Col md={24} lg={4}>
-            <Form.Item name="type">
+          <Col md={24} lg={5}>
+            <Form.Item name="type" label={"Event type"}>
               <Select placeholder="Select Type" defaultValue={"ALL"}>
                 <Option key="ALL" value="ALL">
                   All Events
@@ -35,8 +35,8 @@ const SearchForm = ({form, seasonYears, eventsList, availableCategories, availab
             </Form.Item>
           </Col>
 
-          <Col md={24} lg={4}>
-            <Form.Item name="event">
+          <Col md={24} lg={6}>
+            <Form.Item name="event" label={"Event"}>
               <Select
                 placeholder="Select Event"
                 showSearch
@@ -56,7 +56,7 @@ const SearchForm = ({form, seasonYears, eventsList, availableCategories, availab
           </Col>
 
           <Col md={24} lg={4}>
-            <Form.Item name="category">
+            <Form.Item name="category" label={"Category"}>
               <Select placeholder="Select Category">
                 {availableCategories.map((category) => (
                   <Option key={category} value={category}>
@@ -68,7 +68,7 @@ const SearchForm = ({form, seasonYears, eventsList, availableCategories, availab
           </Col>
 
           <Col md={24} lg={4}>
-            <Form.Item name="session">
+            <Form.Item name="session" label={"Session type"}>
               <Select placeholder="Select Session">
                 {availableSessions.map((session) => (
                   <Option key={session} value={session}>

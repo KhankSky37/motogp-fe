@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Button, Card, Form, InputNumber, Select, Spin, message } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import React, {useCallback, useEffect, useState} from "react";
+import {Button, Card, Form, InputNumber, message, Select, Spin} from "antd";
+import {ArrowLeftOutlined} from "@ant-design/icons";
+import {useNavigate} from "react-router-dom";
 import ResultService from "../../../services/ResultService.jsx";
 import SessionService from "../../../services/SessionService.jsx";
 import RiderService from "../../../services/RiderService.jsx";
 import TeamService from "../../../services/TeamService.jsx";
 import ManufacturerService from "../../../services/ManufacturerService.jsx";
 
-const { Option } = Select;
+const {Option} = Select;
 
 const AdminResultCreate = () => {
   const [form] = Form.useForm();
@@ -69,9 +69,9 @@ const AdminResultCreate = () => {
       try {
         const resultData = {
           ...values,
-          rider: { riderId: values.riderId },
-          team: { id: values.teamId },
-          manufacturer: { id: values.manufacturerId },
+          rider: {riderId: values.riderId},
+          team: {id: values.teamId},
+          manufacturer: {id: values.manufacturerId},
         };
 
         await ResultService.createResult(resultData);
@@ -103,7 +103,7 @@ const AdminResultCreate = () => {
           <div className="flex items-center">
             <Button
               type="text"
-              icon={<ArrowLeftOutlined />}
+              icon={<ArrowLeftOutlined/>}
               onClick={handleCancel}
               className="mr-2"
               aria-label="Back"
@@ -117,15 +117,15 @@ const AdminResultCreate = () => {
           layout="horizontal"
           labelAlign="left"
           requiredMark="optional"
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 18 }}
+          labelCol={{span: 6}}
+          wrapperCol={{span: 18}}
           onFinish={onFinish}
           autoComplete="off"
         >
           <Form.Item
             name="sessionId"
             label="Session"
-            rules={[{ required: true, message: "Please select a session!" }]}
+            rules={[{required: true, message: "Please select a session!"}]}
           >
             <Select
               placeholder="Select session"
@@ -148,18 +148,23 @@ const AdminResultCreate = () => {
           <Form.Item
             name="riderId"
             label="Rider"
-            rules={[{ required: true, message: "Please select a rider!" }]}
+            rules={[{required: true, message: "Please select a rider!"}]}
           >
             <Select
               placeholder="Select rider"
               loading={ridersLoading}
               showSearch
+              optionLabelProp="label"
               filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                option.label.toLowerCase().includes(input.toLowerCase())
               }
             >
               {riders.map((rider) => (
-                <Option key={rider.riderId} value={rider.riderId}>
+                <Option
+                  key={rider.riderId}
+                  value={rider.riderId}
+                  label={`${rider.firstName} ${rider.lastName}`}
+                >
                   {rider.firstName} {rider.lastName}
                 </Option>
               ))}
@@ -169,7 +174,7 @@ const AdminResultCreate = () => {
           <Form.Item
             name="teamId"
             label="Team"
-            rules={[{ required: true, message: "Please select a team!" }]}
+            rules={[{required: true, message: "Please select a team!"}]}
           >
             <Select
               placeholder="Select team"
@@ -191,7 +196,7 @@ const AdminResultCreate = () => {
             name="manufacturerId"
             label="Manufacturer"
             rules={[
-              { required: true, message: "Please select a manufacturer!" },
+              {required: true, message: "Please select a manufacturer!"},
             ]}
           >
             <Select
@@ -214,7 +219,7 @@ const AdminResultCreate = () => {
             name="position"
             label="Position"
             rules={[
-              { required: true, message: "Please enter the position!" },
+              {required: true, message: "Please enter the position!"},
               {
                 type: "number",
                 min: 1,
@@ -224,7 +229,7 @@ const AdminResultCreate = () => {
           >
             <InputNumber
               placeholder="Enter position"
-              style={{ width: "100%" }}
+              style={{width: "100%"}}
             />
           </Form.Item>
 
@@ -245,7 +250,7 @@ const AdminResultCreate = () => {
           >
             <InputNumber
               placeholder="Enter time in milliseconds"
-              style={{ width: "100%" }}
+              style={{width: "100%"}}
             />
           </Form.Item>
 
@@ -262,7 +267,7 @@ const AdminResultCreate = () => {
           >
             <InputNumber
               placeholder="Enter gap in milliseconds"
-              style={{ width: "100%" }}
+              style={{width: "100%"}}
             />
           </Form.Item>
 
@@ -270,7 +275,7 @@ const AdminResultCreate = () => {
             name="laps"
             label="Laps"
             rules={[
-              { required: true, message: "Please enter the number of laps!" },
+              {required: true, message: "Please enter the number of laps!"},
               {
                 type: "number",
                 min: 0,
@@ -280,14 +285,14 @@ const AdminResultCreate = () => {
           >
             <InputNumber
               placeholder="Enter number of laps"
-              style={{ width: "100%" }}
+              style={{width: "100%"}}
             />
           </Form.Item>
 
           <Form.Item
             name="status"
             label="Status"
-            rules={[{ required: true, message: "Please select a status!" }]}
+            rules={[{required: true, message: "Please select a status!"}]}
           >
             <Select placeholder="Select status">
               <Option value="FINISHED">Finished</Option>
@@ -298,7 +303,7 @@ const AdminResultCreate = () => {
           </Form.Item>
 
           <Form.Item
-            wrapperCol={{ offset: 6, span: 18 }}
+            wrapperCol={{offset: 6, span: 18}}
             className="border-t pt-4 mt-4"
           >
             <div
