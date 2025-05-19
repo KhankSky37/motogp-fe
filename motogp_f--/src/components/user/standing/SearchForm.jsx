@@ -8,7 +8,7 @@ const SearchForm = ({form, seasonYears}) => {
         algorithm: theme.darkAlgorithm,
       }}
     >
-      <Form form={form} name="motogp_search" layout="vertical">
+      <Form form={form} name="motogp_search" layout="vertical" size={"large"}>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item name="year" label="Year">
