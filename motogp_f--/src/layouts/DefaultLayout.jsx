@@ -1,5 +1,5 @@
 import React from "react";
-import {ConfigProvider, Layout, Menu} from "antd";
+import {Button, ConfigProvider, Dropdown, Layout, Menu, Space} from "antd";
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import motogp from "../assets/motogp1.jpg";
 import bwm from "../assets/BMW-M_logo.webp";
@@ -10,6 +10,7 @@ import sponsor from "../assets/sponsor-qatar.webp";
 import tissot from "../assets/Tissot_Main_Sponsor.webp";
 import app_store from "../assets/app-store.webp";
 import play_store from "../assets/play-store.webp";
+import {DownOutlined, MenuOutlined} from "@ant-design/icons";
 
 const {Header, Content, Footer} = Layout;
 
@@ -52,15 +53,53 @@ const DefaultLayout = () => {
       navigate("/news");
     } else if (e.key === "Riders&Team") {
       navigate("/Riders");
-    }else if (e.key === "VideoPass") {
+    } else if (e.key === "VideoPass") {
       navigate("/videopass");
-    }else if (e.key === "Videos") {
+    } else if (e.key === "Videos") {
       navigate("/videos");
     }
   };
 
+  const languageMenu = (
+    <Menu>
+      <Menu.Item key="en">ENG</Menu.Item>
+      <Menu.Item key="vn">VN</Menu.Item>
+    </Menu>
+  );
+
   return (
     <Layout>
+      <div
+        className="bg-black text-gray-300 px-4 sm:px-8 py-2 flex justify-end text-xs sm:text-sm border-b border-white">
+        <div className="flex items-center space-x-3 sm:space-x-4 overflow-x-auto">
+          <span className="hover:text-white whitespace-nowrap cursor-pointer">Tickets</span>
+          <span className="hover:text-white whitespace-nowrap cursor-pointer">Hospitality</span>
+          <span className="hover:text-white whitespace-nowrap cursor-pointer">Experiences</span>
+          <span className="hover:text-white whitespace-nowrap cursor-pointer">Store</span>
+          <span className="hover:text-white whitespace-nowrap cursor-pointer">Authentics</span>
+          <span className="hover:text-white whitespace-nowrap font-semibold cursor-pointer">
+            <span className="italic font-bold text-red-600">M</span>GP <span className="text-red-600">TIMINGPASS</span>
+          </span>
+          <span className="hover:text-white whitespace-nowrap font-semibold cursor-pointer">
+            <span className="italic font-bold text-red-600">M</span>GP <span className="text-red-600">VIDEOPASS</span>
+          </span>
+          <Button type="primary" danger
+                  className="!bg-red-700 py-1 hover:bg-red-700 border-red-600 hover:border-red-700 h-8 sm:h-auto text-xs sm:text-sm px-3 sm:px-4 rounded-xl">
+            SUBSCRIBE
+          </Button>
+          <Dropdown overlay={languageMenu} className={"px-4"}>
+            <a onClick={(e) => e.preventDefault()} className="hover:text-white flex items-center cursor-pointer">
+              <Space>
+                ENG
+                <DownOutlined style={{fontSize: '10px'}}/>
+              </Space>
+            </a>
+          </Dropdown>
+          <span className="hover:text-white cursor-pointer">
+            <span className="italic font-extrabold text-lg">FIM</span>
+          </span>
+        </div>
+      </div>
       <Header
         style={{
           position: "sticky",
@@ -72,6 +111,7 @@ const DefaultLayout = () => {
         }}
         className={"bg-black"}
       >
+        <MenuOutlined className={'text-white mr-4'}/>
         <Link to="/">
           <img
             src={motogp}
