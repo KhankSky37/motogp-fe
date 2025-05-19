@@ -46,6 +46,8 @@ import ResultStanding from "../pages/user/resultStanding/ResultStanding.jsx";
 import Standing from "../pages/user/resultStanding/Standing.jsx";
 import VideoPass from "../pages/user/VideoPass.jsx";
 import Videos from "../pages/user/Videos.jsx";
+import Register from "../pages/auth/Register.jsx";
+import ProtectedRoute from "../components/admin/ProtectedRoute.jsx";
 
 
 export const routes = [
@@ -105,154 +107,164 @@ export const routes = [
   },
   {
     path: "/admin",
-    element: <AdminLayout/>,
+    element: <ProtectedRoute allowedRoles={['ADMIN']} />, // Use ProtectedRoute here
     children: [
       {
-        index: true,
-        element: <AdminCategory/>,
-      },
-      {
-        path: "categories",
-        element: <AdminCategory/>,
-      },
-      {
-        path: "circuits",
-        element: <AdminCircuit/>,
-      },
-      {
-        path: "circuits/create",
-        element: <AdminCircuitCreate/>,
-      },
-      {
-        path: "circuits/update/:id",
-        element: <AdminCircuitUpdate/>,
-      },
-      {
-        path: "events",
-        element: <AdminEvent/>,
-      },
-      {
-        path: "events/create",
-        element: <AdminEventCreate/>,
-      },
-      {
-        path: "events/update/:eventId",
-        element: <AdminEventUpdate/>,
-      },
-      {
-        path: "manufacturers",
-        element: <AdminManufacturer/>,
-      },
-      {
-        path: "manufacturers/create",
-        element: <AdminManufacturerCreate/>,
-      },
-      {
-        path: "manufacturers/update/:id",
-        element: <AdminManufacturerUpdate/>,
-      },
-      {
-        path: "news",
-        element: <AdminNewsArticle/>,
-      },
-      {
-        path: "results",
-        element: <AdminResult/>,
-      },
-      {
-        path: "results/create",
-        element: <AdminResultCreate/>,
-      },
-      {
-        path: "results/update/:resultId",
-        element: <AdminResultUpdate/>,
-      },
-      {
-        path: "riders",
-        element: <AdminRider/>,
-      },
-      {
-        path: "riders/create",
-        element: <AdminRiderCreate/>,
-      },
-      {
-        path: "riders/update/:riderId",
-        element: <AdminRiderUpdate/>,
-      },
-      {
-        path: "seasons",
-        element: <AdminSeason/>,
-      },
-      {
-        path: "seasons/create",
-        element: <AdminSeasonCreate/>,
-      },
-      {
-        path: "seasons/update/:seasonId",
-        element: <AdminSeasonUpdate/>,
-      },
-      {
-        path: "sessions",
-        element: <AdminSession/>,
-      },
-      {
-        path: "sessions/create",
-        element: <AdminSessionCreate/>,
-      },
-      {
-        path: "sessions/update/:sessionId",
-        element: <AdminSessionUpdate/>,
-      },
-      {
-        path: "teams",
-        element: <AdminTeam/>,
-      },
-      {
-        path: "teams/create",
-        element: <AdminTeamCreate/>,
-      },
-      {
-        path: "teams/update/:id",
-        element: <AdminTeamUpdate/>,
-      },
-      {
-        path: "users",
-        element: <AdminUser/>,
-      },
-      {
-        path: "users/create", // Trang tạo user mới
-        element: <AdminUserCreate/>
-      },
-      {
-        path: "users/update/:id", // Route mới cho trang cập nhật user
-        element: <AdminUserUpdate/>
-      },
-      {
-        path: "contracts",
-        element: <AdminContract/>,
-      },
+        element: <AdminLayout />, // AdminLayout now wraps all admin children
+        children: [
+          {
+            index: true,
+            element: <AdminCategory/>,
+          },
+          {
+            path: "categories",
+            element: <AdminCategory/>,
+          },
+          {
+            path: "circuits",
+            element: <AdminCircuit/>,
+          },
+          {
+            path: "circuits/create",
+            element: <AdminCircuitCreate/>,
+          },
+          {
+            path: "circuits/update/:id",
+            element: <AdminCircuitUpdate/>,
+          },
+          {
+            path: "events",
+            element: <AdminEvent/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/update/:eventId",
+            element: <AdminEventUpdate/>,
+          },
+          {
+            path: "manufacturers",
+            element: <AdminManufacturer/>,
+          },
+          {
+            path: "manufacturers/create",
+            element: <AdminManufacturerCreate/>,
+          },
+          {
+            path: "manufacturers/update/:id",
+            element: <AdminManufacturerUpdate/>,
+          },
+          {
+            path: "news",
+            element: <AdminNewsArticle/>,
+          },
+          {
+            path: "results",
+            element: <AdminResult/>,
+          },
+          {
+            path: "results/create",
+            element: <AdminResultCreate/>,
+          },
+          {
+            path: "results/update/:resultId",
+            element: <AdminResultUpdate/>,
+          },
+          {
+            path: "riders",
+            element: <AdminRider/>,
+          },
+          {
+            path: "riders/create",
+            element: <AdminRiderCreate/>,
+          },
+          {
+            path: "riders/update/:riderId",
+            element: <AdminRiderUpdate/>,
+          },
+          {
+            path: "seasons",
+            element: <AdminSeason/>,
+          },
+          {
+            path: "seasons/create",
+            element: <AdminSeasonCreate/>,
+          },
+          {
+            path: "seasons/update/:seasonId",
+            element: <AdminSeasonUpdate/>,
+          },
+          {
+            path: "sessions",
+            element: <AdminSession/>,
+          },
+          {
+            path: "sessions/create",
+            element: <AdminSessionCreate/>,
+          },
+          {
+            path: "sessions/update/:sessionId",
+            element: <AdminSessionUpdate/>,
+          },
+          {
+            path: "teams",
+            element: <AdminTeam/>,
+          },
+          {
+            path: "teams/create",
+            element: <AdminTeamCreate/>,
+          },
+          {
+            path: "teams/update/:id",
+            element: <AdminTeamUpdate/>,
+          },
+          {
+            path: "users",
+            element: <AdminUser/>,
+          },
+          {
+            path: "users/create", // Trang tạo user mới
+            element: <AdminUserCreate/>
+          },
+          {
+            path: "users/update/:id", // Route mới cho trang cập nhật user
+            element: <AdminUserUpdate/>
+          },
+          {
+            path: "contracts",
+            element: <AdminContract/>,
+          },
 
-      {
-        path: "news-articles", // Hoặc tên route bạn muốn
-        element: <AdminNewsArticle/>
-      },
-      {
-        path: "news-articles/create", // Trang tạo bài viết mới
-        element: <AdminNewsArticleCreate/>
-      },
-      {
-        path: "news-articles/update/:id", // Route mới cho trang cập nhật
-        element: <AdminNewsArticleUpdate/>
-      },
-      { // Add Contract Route
-        path: "contracts",
-        element: <AdminContract/>,
-      },
+          {
+            path: "news-articles", // Hoặc tên route bạn muốn
+            element: <AdminNewsArticle/>
+          },
+          {
+            path: "news-articles/create", // Trang tạo bài viết mới
+            element: <AdminNewsArticleCreate/>
+          },
+          {
+            path: "news-articles/update/:id", // Route mới cho trang cập nhật
+            element: <AdminNewsArticleUpdate/>
+          },
+          { // Add Contract Route
+            path: "contracts",
+            element: <AdminContract/>,
+          },
+        ],
+      }
     ],
+
   },
   {
     path: "/login",
     element: <Login/>,
+  },
+  {
+    path: "/register",
+    element: <Register/>,
   },
   {
     path: "*",
