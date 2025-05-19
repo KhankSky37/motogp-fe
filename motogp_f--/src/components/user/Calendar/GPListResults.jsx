@@ -5,13 +5,13 @@ import dayjs from "dayjs";
 import countries from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
 
-// Cấu hình tên quốc gia
+// Đăng ký locale quốc gia
 countries.registerLocale(enLocale);
 
 const formatDate = (date) => dayjs(date).format("DD MMM").toUpperCase();
 const getCountryCode = (name) => countries.getAlpha2Code(name, "en") || "";
 
-// Format tên tay đua
+// Format tên tay đua (viết tắt)
 const formatName = (full) => {
     const parts = full.trim().split(/\s+/);
     if (parts.length === 0) return "";
@@ -22,7 +22,7 @@ const formatName = (full) => {
     return `${firstInitial} ${lastName.charAt(0).toUpperCase()}${lastName.slice(1).toLowerCase()}`;
 };
 
-// Podium card cho rider
+// Suffix hạng
 const getOrdinalSuffix = (rank) => {
     if (rank === 1) return "st";
     if (rank === 2) return "nd";
@@ -30,19 +30,17 @@ const getOrdinalSuffix = (rank) => {
     return "th";
 };
 
-// Các bộ màu gradient khác nhau cho mỗi event index
+// Bộ gradient màu cho podium
 const gradientSets = [
-    { 1: "from-black to-red-800",    2: "from-black to-gray-400",  3: "from-black to-red-900"   }, // màu đỏ & xám
-    { 1: "from-black to-blue-800",   2: "from-black to-yellow-600", 3: "from-black to-blue-900"  }, // màu xanh dương & vàng
-    { 1: "from-black to-red-900",    2: "from-black to-gray-500",  3: "from-black to-red-800"   }, // màu đỏ đậm & xám
-    { 1: "from-black to-blue-900",   2: "from-black to-yellow-600", 3: "from-black to-blue-800"  }, // xanh dương & vàng
-    { 1: "from-black to-red-800",    2: "from-black to-gray-400",  3: "from-black to-red-900"   }, // màu đỏ & xám
+    { 1: "from-black to-red-800", 2: "from-black to-gray-400", 3: "from-black to-red-900" },
+    { 1: "from-black to-blue-800", 2: "from-black to-yellow-600", 3: "from-black to-blue-900" },
+    { 1: "from-black to-red-900", 2: "from-black to-gray-500", 3: "from-black to-red-800" },
+    { 1: "from-black to-blue-900", 2: "from-black to-yellow-600", 3: "from-black to-blue-800" },
+    { 1: "from-black to-red-800", 2: "from-black to-gray-400", 3: "from-black to-red-900" },
 ];
-
 
 const PodiumCard = ({ rider, gradients }) => {
     const heightMap = { 1: "h-[120px]", 2: "h-[110px]", 3: "h-[100px]" };
-    // Nếu không truyền gradients thì dùng bộ mặc định
     const gradientMap = gradients || gradientSets[0];
     const width = "w-[130px]";
 
@@ -54,6 +52,7 @@ const PodiumCard = ({ rider, gradients }) => {
                 width,
                 heightMap[rider.rank]
             )}
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
         >
             {rider.photoUrl && (
                 <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-white absolute -top-6 bg-black">
@@ -66,12 +65,12 @@ const PodiumCard = ({ rider, gradients }) => {
                 </div>
             )}
 
-            {/* Container hạng + tên đặt absolute cách đáy 10px */}
+            {/* Container hạng + tên */}
             <div
                 className="flex flex-col items-center absolute left-1/2"
                 style={{ bottom: "10px", transform: "translateX(-50%)" }}
             >
-                <div className="flex items-baseline gap-1">
+                <div className="flex items-baseline gap-1" style={{ fontFamily: "'Orbitron', sans-serif" }}>
                     <span className="text-4xl font-extrabold">{rider.rank}</span>
                     <span className="text-base font-semibold">{getOrdinalSuffix(rider.rank)}</span>
                 </div>
@@ -87,8 +86,6 @@ const GPListResults = ({ index, eventName, officialName, startDate, endDate, rid
     const [isHovered, setIsHovered] = useState(false);
 
     const countryCode = getCountryCode(eventName);
-
-    // Lấy bộ màu tương ứng với index (để mỗi sự kiện có màu Podium khác)
     const gradients = gradientSets[index % gradientSets.length];
 
     return (
@@ -97,13 +94,14 @@ const GPListResults = ({ index, eventName, officialName, startDate, endDate, rid
             style={{
                 backgroundColor: "#ffffff",
                 boxShadow: isHovered ? "0 0 1rem rgba(0,0,0,0.25)" : "0 2px 26px rgba(0,0,0,0.05)",
+                fontFamily: "'Montserrat', sans-serif",
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             {/* LEFT: Thông tin GP */}
             <div className="flex flex-col gap-1 w-2/3 relative">
-                {/* Flag + name */}
+                {/* Flag + date */}
                 <div className="flex items-center gap-1">
                     <ReactCountryFlag
                         countryCode={countryCode}
@@ -122,9 +120,14 @@ const GPListResults = ({ index, eventName, officialName, startDate, endDate, rid
                     </div>
                 </div>
 
-                {/* Event Name with index */}
+                {/* Event Name + index */}
                 <div className="text-[40px] font-extrabold uppercase text-black flex items-center gap-1">
-                    <span className="text-gray-500 font-bold">{index + 1}</span>
+          <span
+              className="text-gray-500 font-bold"
+              style={{ fontFamily: "'Orbitron', sans-serif" }}
+          >
+            {index + 1}
+          </span>
                     <span className="tracking-wide">{eventName}</span>
                 </div>
 

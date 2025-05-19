@@ -30,8 +30,6 @@ const GPGridCard = ({ event, index, isUpNext }) => {
 
     const statusText = status === "finished" ? "FINISHED" : status === "upcoming" ? "UP NEXT" : null;
 
-    const statusBgColor = status === "finished" ? "#000000" : status === "upcoming" ? "#262626" : "transparent";
-
     const countryCode = getCountryCode(event.name);
 
     // Màu chữ khi background tối
@@ -40,8 +38,9 @@ const GPGridCard = ({ event, index, isUpNext }) => {
 
     return (
         <div
-            className={`relative w-full rounded-xl bg-white p-3 font-sans overflow-hidden`}
+            className="relative w-full rounded-xl p-3 overflow-hidden"
             style={{
+                fontFamily: "'Montserrat', 'Orbitron', sans-serif",
                 boxShadow: isHovered
                     ? "0 0 1rem 0 rgba(0, 0, 0, .25)"
                     : "0 2px 26px 0 rgba(0, 0, 0, 0.05)",
@@ -64,6 +63,7 @@ const GPGridCard = ({ event, index, isUpNext }) => {
                         width: "110px",
                         textAlign: "center",
                         whiteSpace: "nowrap",
+                        fontFamily: "'Orbitron', sans-serif",
                     }}
                 >
                     {statusText}
@@ -78,24 +78,35 @@ const GPGridCard = ({ event, index, isUpNext }) => {
                     style={{
                         width: "23px",
                         height: "16px",
-                        filter: "contrast(1.2) saturate(1.3)" // tăng tương phản và bão hòa
+                        filter: "contrast(1.2) saturate(1.3)"
                     }}
                     title={event.name}
                 />
             </div>
 
             {/* Ngày tháng */}
-            <div className={`text-sm font-bold tracking-wide mb-2 ${status === "upcoming" ? "text-gray-300" : "text-gray-500"}`}>
+            <div
+                className={`text-sm font-semibold tracking-wide mb-2 ${
+                    status === "upcoming" ? "text-gray-300" : "text-gray-500"
+                }`}
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
                 {start} - {end}
             </div>
 
             {/* STT + tên quốc gia */}
-            <div className={`text-xl font-extrabold uppercase mb-2 ${textColor}`}>
+            <div
+                className={`text-xl font-extrabold uppercase mb-2 ${textColor}`}
+                style={{ fontFamily: "'Orbitron', sans-serif" }}
+            >
                 {index + 1} <span className="tracking-wide">{event.name}</span>
             </div>
 
             {/* Tên chính thức */}
-            <div className={`text-sm font-medium leading-snug ${subTextColor}`}>
+            <div
+                className={`text-sm font-medium leading-snug ${subTextColor}`}
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
                 {event.officialName}
             </div>
         </div>
