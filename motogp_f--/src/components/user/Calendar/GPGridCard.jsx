@@ -9,6 +9,9 @@ const formatDate = (date) => dayjs(date).format("DD MMM").toUpperCase();
 const GPGridCard = ({ event, index, isUpNext }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  // 👉 Chỉ hiển thị nếu là sự kiện RACE
+  if (event.eventType !== "RACE") return null;
+
   const now = new Date();
   const start = formatDate(event.startDate);
   const end = formatDate(event.endDate);
@@ -20,12 +23,15 @@ const GPGridCard = ({ event, index, isUpNext }) => {
     status = "upcoming";
   }
 
-  const statusText = status === "finished" ? "FINISHED" : status === "upcoming" ? "UP NEXT" : null;
+  const statusText =
+    status === "finished"
+      ? "FINISHED"
+      : status === "upcoming"
+        ? "UP NEXT"
+        : null;
 
-  // Lấy mã quốc gia từ event.circuit.locationCountry (mã alpha-2 chuẩn)
   const countryCode = event.circuit?.locationCountry || "";
 
-  // Màu chữ khi background tối
   const textColor = status === "upcoming" ? "text-white" : "text-black";
   const subTextColor = status === "upcoming" ? "text-gray-300" : "text-gray-400";
 
@@ -73,7 +79,7 @@ const GPGridCard = ({ event, index, isUpNext }) => {
             height: "16px",
             filter: "contrast(1.2) saturate(1.3)",
           }}
-          title={event.circuit?.locationCountry || ""}
+          title={countryCode}
         />
       </div>
 
@@ -107,3 +113,4 @@ const GPGridCard = ({ event, index, isUpNext }) => {
 };
 
 export default GPGridCard;
+``
