@@ -13,6 +13,7 @@ const Standing = () => {
   const [seasonYears, setSeasonYears] = React.useState([]);
   const watchedType = Form.useWatch('type', form);
   const [riderStandings, setRiderStandings] = React.useState([]);
+  const [riderBMWStandings, setRiderBMWStandings] = React.useState([]);
   const [teamStandings, setTeamStandings] = React.useState([]);
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const [categories, setCategories] = React.useState([]);
@@ -54,6 +55,8 @@ const Standing = () => {
           setTeamStandings(response.data);
         } else if (currentType === "rider") {
           setRiderStandings(response.data)
+        } else if (currentType === "BMW") {
+          setRiderBMWStandings(response.data)
         }
       } catch (error) {
         console.error("Failed to fetch rider standings:", error);
@@ -73,14 +76,16 @@ const Standing = () => {
 
 
       <div className="mx-14 mt-14 mb-7">
-        <Select className={'w-72 mb-2'} size={'large'} defaultValue={"motogp"}
-                onChange={(value) => setSelectedCategory(value)}>
-          {categories?.map((category) => (
-            <Select.Option key={category.categoryId} value={category.categoryId}>
-              {category.name}
-            </Select.Option>
-          ))}
-        </Select>
+        {watchedType !== "BMW" &&
+          <Select className={'w-72 mb-2'} size={'large'} defaultValue={"motogp"}
+                  onChange={(value) => setSelectedCategory(value)}>
+            {categories?.map((category) => (
+              <Select.Option key={category.categoryId} value={category.categoryId}>
+                {category.name}
+              </Select.Option>
+            ))}
+          </Select>
+        }
 
         {watchedType === "team" && (
           <TeamStandingTable teamStandings={teamStandings}/>
@@ -88,6 +93,10 @@ const Standing = () => {
         {watchedType === "rider" &&
           <RiderStandingTable riderStandings={riderStandings}/>
         }
+        {watchedType === "BMW" &&
+          <RiderStandingTable riderStandings={riderBMWStandings}/>
+        }
+
       </div>
     </div>
   );
