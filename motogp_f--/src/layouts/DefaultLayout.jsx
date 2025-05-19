@@ -52,6 +52,10 @@ const DefaultLayout = () => {
       navigate("/news");
     } else if (e.key === "Riders&Team") {
       navigate("/Riders");
+    }else if (e.key === "VideoPass") {
+      navigate("/videopass");
+    }else if (e.key === "Videos") {
+      navigate("/videos");
     }
   };
 
