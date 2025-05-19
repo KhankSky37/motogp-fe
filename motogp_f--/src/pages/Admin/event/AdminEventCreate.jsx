@@ -57,11 +57,15 @@ const AdminEventCreate = () => {
   const onFinish = useCallback(
     async (values) => {
       setLoading(true);
-
       try {
         // Format the date values
         const formattedValues = {
           ...values,
+          // Format dates to ISO strings to avoid timezone issues
+          startDate: values.startDate
+            ? values.startDate.format("YYYY-MM-DD")
+            : null,
+          endDate: values.endDate ? values.endDate.format("YYYY-MM-DD") : null,
           season: { id: values.seasonId },
           circuit: { id: values.circuitId },
         };
