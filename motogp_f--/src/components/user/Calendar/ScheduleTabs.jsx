@@ -28,35 +28,45 @@ const ScheduleTabs = ({ schedule }) => {
               </div>
             }
           >
-            <div className="mt-4 space-y-4">
+            <div className="mt-4">
               {schedule[date].length === 0 ? (
                 <div className="text-gray-500 italic">No sessions</div>
               ) : (
                 schedule[date].map((session) => (
                   <div
                     key={session.id}
-                    className="relative flex justify-between items-center border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100 transition h-[86px]"
+                    className="grid [grid-template-columns:230px_auto_260px_1fr_auto] items-center border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100 transition h-[86px] overflow-hidden gap-12"
                   >
-                    {/* FINISHED label */}
-                    <div className="absolute left-0 top-0 h-full">
-                      <div className="finished-label w-[230px] h-full flex items-center pl-[60px] text-white text-xs font-extrabold">
-                        FINISHED
+                    {/* Column 1: FINISHED label & time */}
+                    <div className="relative h-full flex flex-col justify-center">
+                      {/* FINISHED label - nằm bên dưới */}
+                      <div className="absolute inset-0 z-0">
+                        <div className="flex flex-col justify-center finished-label w-full h-full pl-[60px] text-white text-xs font-extrabold">
+                          <div className="font-bold text-white">
+                            {dayjs(session.sessionDatetime).format("HH:mm")}
+                          </div>
+                          <div>PINISHED</div>
+                        </div>
                       </div>
+
+                      {/* Time - nằm bên trên */}
                     </div>
 
-                    <div className="text-gray-700 font-medium">
-                      <div>
-                        🕒 <b>{dayjs(session.sessionDatetime).format("HH:mm")}</b>
-                      </div>
-                      <div>
-                        🏁 <b>{session.category.categoryId}</b>
-                      </div>
-                      <div>
-                        📌 <b>{session.sessionType}</b>
-                      </div>
+                    {/* Column 2: Category */}
+                    <div className="text-start text-gray-700 font-medium">
+                      {session.category.categoryId}
                     </div>
 
-                    <div className="space-x-2">
+                    {/* Column 3: Session Type */}
+                    <div className="text-start text-gray-700 font-medium px-12">
+                      {session.sessionType}
+                    </div>
+
+                    {/* Column 4: Empty */}
+                    <div></div>
+
+                    {/* Column 5: Action Buttons */}
+                    <div className="flex justify-center space-x-2">
                       <button className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
                         RESULTS
                       </button>
