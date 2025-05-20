@@ -5,6 +5,7 @@ import RiderService from "../../../services/RiderService.jsx";
 import CategoryService from "../../../services/CategoryService.jsx";
 import TeamCard from "./TeamCard";
 import { Spin, Alert } from "antd";
+import {Link} from "react-router-dom";
 
 const Team = () => {
     const [teamRidersData, setTeamRidersData] = useState([]);
@@ -67,7 +68,7 @@ const Team = () => {
     const { teams = [], riders = [] } = teamRidersData;
 
     const filteredContracts = allContracts.filter(
-        (c) => c.categoryId === activeCategory && c.riderRole === "Factory Rider"
+        (c) => c.categoryId === activeCategory && c.riderRole === "offical"
     );
 
     const teamRidersMap = {};
@@ -127,7 +128,9 @@ const Team = () => {
             {/* Danh sách đội đua */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {visibleTeams.map((team) => (
+                  <Link to={`${team.id}`}>
                     <TeamCard key={team.id} team={team} />
+                  </Link>
                 ))}
             </div>
         </div>

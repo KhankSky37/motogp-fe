@@ -39,7 +39,7 @@ import AdminNewsArticleUpdate from "../pages/Admin/newsArticle/AdminNewsArticleU
 
 import NewsPage from "../pages/user/news/NewsPage.jsx";
 import Riders from "../pages/user/riderTeam/Riders.jsx";
-import Teams from "../pages/user/Teams.jsx";
+import Teams from "../pages/user/riderTeam/Teams.jsx";
 import Calendar from "../pages/user/Calendar.jsx";
 import Legends from "../pages/user/Legends.jsx";
 import ResultStanding from "../pages/user/resultStanding/ResultStanding.jsx";
@@ -50,6 +50,7 @@ import Register from "../pages/auth/Register.jsx";
 import ProtectedRoute from "../components/admin/ProtectedRoute.jsx";
 import UserProfile from "../pages/user/UserProfile.jsx";
 import RiderDetail from "../pages/user/riderTeam/RiderDetail.jsx";
+import TeamDetail from "../pages/user/riderTeam/TeamDetail.jsx";
 
 
 export const routes = [
@@ -100,6 +101,10 @@ export const routes = [
       {
         path: "teams", // thêm dòng này
         element: <Teams/>,
+      },
+      {
+        path: "teams/:teamId", // thêm dòng này
+        element: <TeamDetail/>,
       },
       {
         path: "legends", // thêm dòng này

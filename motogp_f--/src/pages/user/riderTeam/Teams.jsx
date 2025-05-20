@@ -1,6 +1,6 @@
 // Rider.jsx
-import RidersTeamsMenu from "../../layouts/RidersTeamsMenu.jsx";
-import Team from "../../components/user/RidersTeams/Team.jsx";
+import RidersTeamsMenu from "../../../layouts/RidersTeamsMenu.jsx";
+import Team from "../../../components/user/RidersTeams/Team.jsx";
 
 const Teams = () => {
     return (
