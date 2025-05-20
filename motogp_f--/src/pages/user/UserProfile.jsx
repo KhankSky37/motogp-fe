@@ -133,8 +133,9 @@ const UserProfile = () => {
 
     switch (selectedKey) {
       case 'personal-details':
+        // marginTop: '-40px',zIndex: 10}
         return (
-          <Card title="Personal details" bordered={false}>
+          <Card title="Personal details" bordered={false} className={"mt-[-65px] z-10"}>
             <Text type="secondary" style={{display: 'block', marginBottom: 24}}>
               Basic information, such as name, birthday and country, for your Dorna account
             </Text>
@@ -176,7 +177,7 @@ const UserProfile = () => {
         );
       case 'change-password':
         return (
-          <Card title="Change Password" bordered={false}>
+          <Card title="Change Password" className={"mt-[-65px] z-10"}>
             <Form form={passwordForm} layout="vertical" onFinish={onChangePassword}>
               <Form.Item
                 name="currentPassword"
@@ -224,12 +225,9 @@ const UserProfile = () => {
           </Card>
         );
       // Add cases for other menu items here
-      case 'account-overview':
-        return <Card title="Account Overview" bordered={false}><Text>Welcome, {currentUser.name || currentUser.nickname}!
-          Here's an overview of your account.</Text></Card>;
       default:
         return <Card title={menuItems.find(item => item.key === selectedKey)?.label || "Section"}
-                     bordered={false}><Text>Content for {selectedKey} coming soon.</Text></Card>;
+                     className={"mt-[-65px] z-10"}><Text>Content for {selectedKey} coming soon.</Text></Card>;
     }
   };
 
@@ -240,7 +238,7 @@ const UserProfile = () => {
         minHeight: 'calc(100vh - 64px)',
         background: '#f0f2f5'
       }}>
-        <div style={{background: '#303236', padding: '20px 0', height: '200px'}}
+        <div style={{background: '#2b2d30', padding: '20px 0', height: '200px'}}
              className={"flex flex-col justify-center"}> {/* Removed space-y-4 */}
           <div className='mx-11 flex space-x-4 mb-4'>
             <img src={motogp} className={'h-6'}/>
@@ -249,19 +247,20 @@ const UserProfile = () => {
           <Title level={2} style={{color: 'white', textAlign: 'center', margin: 0}} className={"mt-4"}>MY ACCOUNT</Title>
         </div>
         <Layout>
-          <Sider width={280} theme="light" style={{borderRight: '1px solid #e8e8e8'}}>
+          <Sider width={280} theme="light" style={{borderRight: '1px solid #e8e8e8',marginTop: '-40px',zIndex: 10}} className={'rounded-r-lg'}>
             {loading && !currentUser ? (
               <div className="flex justify-center items-center h-40"><Spin/></div>
             ) : currentUser && (
-              <div style={{padding: '24px', textAlign: 'center', borderBottom: '1px solid #e8e8e8'}}>
-                <Avatar size={64} icon={<UserOutlined/>}
-                        src={currentUser.photoUrl ? getImageUrl(currentUser.photoUrl) : null}/>
+              <div style={{textAlign: 'center', borderBottom: '1px solid #e8e8e8'}} className={'flex space-x-2 px-6 py-4'}>
+                <Avatar size={84} icon={<UserOutlined/>}
+                        src={currentUser.photoUrl ? getImageUrl(currentUser.photoUrl) : null} className={'border-[10px] border-gray-300'}/>
                 <Title level={5} style={{
                   marginTop: 12,
                   marginBottom: 4
-                }}>{currentUser.name || currentUser.nickname || 'User'}</Title>
+                }}>Hello {currentUser.name || currentUser.nickname || 'User'}<br/>
+                  <span className={'text-gray-400'}>{new Date().toDateString()}</span>
+                </Title>
                 <Text type="secondary" style={{fontSize: '12px'}}>
-                  {/*Fan since {currentUser.createdDate ? formatDate(currentUser.createdDate, 'MMM DD, YYYY') : 'N/A'}*/}
                 </Text>
               </div>
             )}
@@ -270,7 +269,7 @@ const UserProfile = () => {
               selectedKeys={[selectedKey]}
               onClick={({key}) => {
                 if (key === 'logout') {
-                  handleLogout(); // Special handling for logout
+                  handleLogout();
                 } else {
                   setSelectedKey(key);
                 }
@@ -279,7 +278,7 @@ const UserProfile = () => {
               style={{borderRight: 0, paddingTop: 10}}
             />
           </Sider>
-          <Content style={{padding: '24px 48px', background: '#fff'}}>
+          <Content style={{padding: '24px 48px', background: '#f5f5f5'}}>
             {renderContent()}
           </Content>
         </Layout>
