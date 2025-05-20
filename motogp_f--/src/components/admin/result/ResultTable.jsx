@@ -19,12 +19,14 @@ const ResultTable = ({
 }) => {
   const columns = [
     {
-      title: "Position",
-      dataIndex: "position",
-      key: "position",
-      sorter: (a, b) => a.position - b.position,
-      width: 100,
+     title: "No.",
+      dataIndex: "number",
+      key: "number",
+      render: (text, record, index) => index + 1,
+      width: 50,
+
     },
+ 
     {
       title: "Rider",
       dataIndex: ["rider"],
@@ -67,6 +69,13 @@ const ResultTable = ({
       dataIndex: "laps",
       key: "laps",
       sorter: (a, b) => a.laps - b.laps,
+    },
+       {
+      title: "Position",
+      dataIndex: "position",
+      key: "position",
+      sorter: (a, b) => a.position - b.position,
+      width: 100,
     },
     {
       title: "Points",
