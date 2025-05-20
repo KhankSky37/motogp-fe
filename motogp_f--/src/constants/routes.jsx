@@ -3,8 +3,6 @@ import Home from "../pages/user/Home.jsx";
 import Login from "../pages/auth/Login.jsx";
 import AdminLayout from "../layouts/AdminLayout.jsx";
 import NotFound from "../pages/NotFound.jsx";
-import AdminCategory from "../pages/Admin/category/AdminCategory.jsx";
-import AdminEvent from "../pages/Admin/event/AdminEvent.jsx";
 import AdminResult from "../pages/Admin/result/AdminResult.jsx";
 import AdminContract from "../pages/Admin/contract/AdminContract.jsx";
 import AdminRider from "../pages/Admin/rider/AdminRider.jsx";
@@ -18,9 +16,6 @@ import AdminSessionCreate from "../pages/Admin/session/AdminSessionCreate.jsx";
 import AdminSessionUpdate from "../pages/Admin/session/AdminSessionUpdate.jsx";
 import AdminEventCreate from "../pages/Admin/event/AdminEventCreate.jsx";
 import AdminEventUpdate from "../pages/Admin/event/AdminEventUpdate.jsx";
-import AdminCircuit from "../pages/Admin/circuit/AdminCircuit.jsx";
-import AdminCircuitCreate from "../pages/Admin/circuit/AdminCircuitCreate.jsx";
-import AdminCircuitUpdate from "../pages/Admin/circuit/AdminCircuitUpdate.jsx";
 import AdminManufacturer from "../pages/Admin/manufacturer/AdminManufacturer.jsx";
 import AdminManufacturerCreate from "../pages/Admin/manufacturer/AdminManufacturerCreate.jsx";
 import AdminManufacturerUpdate from "../pages/Admin/manufacturer/AdminManufacturerUpdate.jsx";
@@ -32,11 +27,6 @@ import AdminNewsArticle from "../pages/Admin/newsArticle/AdminNewsArticle.jsx";
 import AdminNewsArticleCreate from "../pages/Admin/newsArticle/AdminNewsArticleCreate.jsx";
 import AdminNewsArticleUpdate from "../pages/Admin/newsArticle/AdminNewsArticleUpdate.jsx";
 
-import NewsPage from "../pages/user/news/NewsPage.jsx";
-import Riders from "../pages/user/Riders.jsx";
-import Teams from "../pages/user/Teams.jsx";
-import Calendar from "../pages/user/calendar/Calendar.jsx";
-import Legends from "../pages/user/Legends.jsx";
 import ResultStanding from "../pages/user/resultStanding/ResultStanding.jsx";
 import Standing from "../pages/user/resultStanding/Standing.jsx";
 import VideoPass from "../pages/user/VideoPass.jsx";
@@ -97,6 +87,22 @@ export const routes = [
         element: <Legends/>,
       },
       {
+        path: "legends",
+        element: <Legends/>,
+      }, {
+        path: "legends",
+        element: <Legends/>,
+      },
+      {
+        path: "legends",
+        element: <Legends/>,
+      },
+      {
+        path: "legends",
+        element: <Legends/>,
+      },
+
+      {
         path: "calendar",
         element: <Calendar/>
       },
@@ -106,6 +112,199 @@ export const routes = [
       }
     ],
   },
+  {
+    path: "/admin",
+    element: <ProtectedRoute allowedRoles={['ADMIN']}/>,
+    children: [
+      {
+        element: <AdminLayout/>, // AdminLayout now wraps all admin children
+        children: [
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          }, {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "riders/update/:riderId",
+            element: <AdminRiderUpdate/>,
+          },
+          {
+            path: "seasons",
+            element: <AdminSeason/>,
+          },
+          {
+            path: "seasons/create",
+            element: <AdminSeasonCreate/>,
+          },
+          {
+            path: "seasons/update/:seasonId",
+            element: <AdminSeasonUpdate/>,
+          },
+          {
+            path: "sessions",
+            element: <AdminSession/>,
+          },
+          {
+            path: "sessions/create",
+            element: <AdminSessionCreate/>,
+          },
+          {
+            path: "sessions/update/:sessionId",
+            element: <AdminSessionUpdate/>,
+          },
+          {
+            path: "users/update/:id", // Route mới cho trang cập nhật user
+            element: <AdminUserUpdate/>
+          },
+          {
+            path: "contracts",
+            element: <AdminContract/>,
+          },
+
+          {
+            path: "news-articles", // Hoặc tên route bạn muốn
+            element: <AdminNewsArticle/>
+          },
+          {
+            path: "news-articles/create", // Trang tạo bài viết mới
+            element: <AdminNewsArticleCreate/>
+          },
+          {
+            path: "news-articles/update/:id", // Route mới cho trang cập nhật
+            element: <AdminNewsArticleUpdate/>
+          },
+          { // Add Contract Route
+            path: "contracts",
+            element: <AdminContract/>,
+          },
+        ],
+      }
+    ],
+
+  },
+  {
+    path: "/admin",
+    element: <ProtectedRoute allowedRoles={['ADMIN']}/>,
+    children: [
+      {
+        element: <AdminLayout/>, // AdminLayout now wraps all admin children
+        children: [
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          }, {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "events/create",
+            element: <AdminEventCreate/>,
+          },
+          {
+            path: "riders/update/:riderId",
+            element: <AdminRiderUpdate/>,
+          },
+          {
+            path: "seasons",
+            element: <AdminSeason/>,
+          },
+          {
+            path: "seasons/create",
+            element: <AdminSeasonCreate/>,
+          },
+          {
+            path: "seasons/update/:seasonId",
+            element: <AdminSeasonUpdate/>,
+          },
+          {
+            path: "sessions",
+            element: <AdminSession/>,
+          },
+          {
+            path: "sessions/create",
+            element: <AdminSessionCreate/>,
+          },
+          {
+            path: "sessions/update/:sessionId",
+            element: <AdminSessionUpdate/>,
+          },
+          {
+            path: "users/update/:id", // Route mới cho trang cập nhật user
+            element: <AdminUserUpdate/>
+          },
+          {
+            path: "contracts",
+            element: <AdminContract/>,
+          },
+
+          {
+            path: "news-articles", // Hoặc tên route bạn muốn
+            element: <AdminNewsArticle/>
+          },
+          {
+            path: "news-articles/create", // Trang tạo bài viết mới
+            element: <AdminNewsArticleCreate/>
+          },
+          {
+            path: "news-articles/update/:id", // Route mới cho trang cập nhật
+            element: <AdminNewsArticleUpdate/>
+          },
+          { // Add Contract Route
+            path: "contracts",
+            element: <AdminContract/>,
+          },
+        ],
+      }
+    ],
+
+  },
+
   {
     path: "/profile",
     element: <UserProfile/>,
