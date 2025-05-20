@@ -39,10 +39,8 @@ import AdminNewsArticleUpdate from "../pages/Admin/newsArticle/AdminNewsArticleU
 
 import NewsPage from "../pages/user/news/NewsPage.jsx";
 import Riders from "../pages/user/riderTeam/Riders.jsx";
-import Teams from "../pages/user/Teams.jsx";
 import Calendar from "../pages/user/calendar/Calendar.jsx";
 import Teams from "../pages/user/riderTeam/Teams.jsx";
-import Calendar from "../pages/user/Calendar.jsx";
 import Legends from "../pages/user/Legends.jsx";
 import ResultStanding from "../pages/user/resultStanding/ResultStanding.jsx";
 import Standing from "../pages/user/resultStanding/Standing.jsx";
