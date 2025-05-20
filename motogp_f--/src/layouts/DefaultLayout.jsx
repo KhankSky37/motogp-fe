@@ -168,7 +168,8 @@ const DefaultLayout = () => {
               <Button type="link" onClick={handleLogout} className="!text-white hover:!text-red-400 px-3">
                 Logout
               </Button>
-              <span className={"px-3 font-bold"}>Welcome, {loggedInUser.name || loggedInUser.nickname || 'Rider'}</span>
+              <Link to={'/profile'}
+                    className={"px-3 font-bold"}>Welcome, {loggedInUser.name || loggedInUser.nickname || 'Rider'}</Link>
             </>
           ) : (
             <>

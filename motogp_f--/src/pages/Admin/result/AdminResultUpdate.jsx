@@ -179,26 +179,31 @@ const AdminResultUpdate = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item
-            name="riderId"
-            label="Rider"
-            rules={[{ required: true, message: "Please select a rider!" }]}
-          >
-            <Select
-              placeholder="Select rider"
-              loading={ridersLoading}
-              showSearch
-              filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-            >
-              {riders.map((rider) => (
-                <Option key={rider.riderId} value={rider.riderId}>
-                  {rider.firstName} {rider.lastName}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+            <Form.Item
+                      name="riderId"
+                      label="Rider"
+                      rules={[{required: true, message: "Please select a rider!"}]}
+                    >
+                      <Select
+                        placeholder="Select rider"
+                        loading={ridersLoading}
+                        showSearch
+                        optionLabelProp="label"
+                        filterOption={(input, option) =>
+                          option.label.toLowerCase().includes(input.toLowerCase())
+                        }
+                      >
+                        {riders.map((rider) => (
+                          <Option
+                            key={rider.riderId}
+                            value={rider.riderId}
+                            label={`${rider.firstName} ${rider.lastName}`}
+                          >
+                            {rider.firstName} {rider.lastName}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
 
           <Form.Item
             name="teamId"

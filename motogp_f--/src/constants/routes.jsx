@@ -48,6 +48,7 @@ import VideoPass from "../pages/user/VideoPass.jsx";
 import Videos from "../pages/user/Videos.jsx";
 import Register from "../pages/auth/Register.jsx";
 import ProtectedRoute from "../components/admin/ProtectedRoute.jsx";
+import UserProfile from "../pages/user/UserProfile.jsx";
 
 
 export const routes = [
@@ -101,16 +102,16 @@ export const routes = [
       },
       {
         path: "calendar",
-        element: <Calendar />
+        element: <Calendar/>
       }
     ],
   },
   {
     path: "/admin",
-    element: <ProtectedRoute allowedRoles={['ADMIN']} />, // Use ProtectedRoute here
+    element: <ProtectedRoute allowedRoles={['ADMIN']}/>, // Use ProtectedRoute here
     children: [
       {
-        element: <AdminLayout />, // AdminLayout now wraps all admin children
+        element: <AdminLayout/>, // AdminLayout now wraps all admin children
         children: [
           {
             index: true,
@@ -257,6 +258,10 @@ export const routes = [
       }
     ],
 
+  },
+  {
+    path: "/profile",
+    element: <UserProfile/>,
   },
   {
     path: "/login",
