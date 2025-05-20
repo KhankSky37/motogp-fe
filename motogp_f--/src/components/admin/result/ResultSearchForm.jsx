@@ -15,7 +15,7 @@ const ResultSearchForm = ({ onFinish, initialValues = {} }) => {
   const [teams, setTeams] = useState([]);
   const [manufacturers, setManufacturers] = useState([]);
   const [loading, setLoading] = useState(false);
-
+   
   useEffect(() => {
     const fetchFilterData = async () => {
       setLoading(true);
@@ -50,6 +50,7 @@ const ResultSearchForm = ({ onFinish, initialValues = {} }) => {
   const handleReset = () => {
     form.resetFields();
   };
+  console.log(sessions);
 
   const handleFinish = (values) => {
     onFinish(values);
@@ -64,48 +65,33 @@ const ResultSearchForm = ({ onFinish, initialValues = {} }) => {
         layout="vertical"
       >
         <Row gutter={16}>
-          <Col xs={24} sm={12} md={8} lg={6}>
-            <Form.Item name="sessionId" >
-              <Select
-                placeholder="Select session"
-                allowClear
-                loading={loading}
-                showSearch
-                filterOption={(input, option) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-              >
-                {sessions.map((session) => (
-                  <Option key={session.id} value={session.id}>
-                    {session.event?.name
-                      ? `${session.event.name} - ${session.sessionType}`
-                      : session.sessionType}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={12} md={8} lg={6}>
-            <Form.Item name="riderId" >
-              <Select
-                placeholder="Select rider"
-                allowClear
-                loading={loading}
-                showSearch
-                filterOption={(input, option) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-              >
-                {riders.map((rider) => (
-                  <Option key={rider.riderId} value={rider.riderId}>
-                    {rider.firstName} {rider.lastName}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
+        
+          <Col xs={2} sm={12} md={8} lg={6}>
+              <Form.Item
+            name="riderId"
+        
+            rules={[{required: true, message: "Please select a rider!"}]}
+          >
+            <Select
+              placeholder="Select rider"
+              loading={loading}
+              showSearch
+              optionLabelProp="label"
+              filterOption={(input, option) =>
+                option.label.toLowerCase().includes(input.toLowerCase())
+              }
+            >
+              {riders.map((rider) => (
+                <Option
+                  key={rider.riderId}
+                  value={rider.riderId}
+                  label={`${rider.firstName} ${rider.lastName}`}
+                >
+                  {rider.firstName} {rider.lastName}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
           </Col>
 
           <Col xs={24} sm={12} md={8} lg={6}>
