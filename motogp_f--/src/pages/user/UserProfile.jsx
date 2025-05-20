@@ -7,8 +7,7 @@ import dayjs from 'dayjs';
 import motogp from "../../assets/motogp1.jpg";
 import sbk from "../../assets/sbk-logo-landscape-white.svg";
 
-// import {formatDate} from '../../utils/formatters.js';
-import {getImageUrl} from "../../utils/urlHelpers.jsx"; // Assuming you have this
+import {getImageUrl} from "../../utils/urlHelpers.jsx";
 
 const {Sider, Content} = Layout;
 const {Title, Text, Link} = Typography;
@@ -95,11 +94,7 @@ const UserProfile = () => {
     }
     setPasswordChangeLoading(true);
     try {
-      const passwordDto = {
-        currentPassword: values.currentPassword,
-        newPassword: values.newPassword,
-      };
-      await UserService.changePassword(currentUser.id, passwordDto);
+      await UserService.changePassword(currentUser.id, values);
       messageApi.success("Password changed successfully!");
       passwordForm.resetFields();
     } catch (error) {
@@ -180,7 +175,7 @@ const UserProfile = () => {
           <Card title="Change Password" className={"mt-[-65px] z-10"}>
             <Form form={passwordForm} layout="vertical" onFinish={onChangePassword}>
               <Form.Item
-                name="currentPassword"
+                name="oldPassword"
                 label="Current Password"
                 rules={[{required: true, message: 'Please input your current password!'}]}
               >
@@ -244,16 +239,20 @@ const UserProfile = () => {
             <img src={motogp} className={'h-6'}/>
             <img src={sbk} className={'h-6'}/>
           </div>
-          <Title level={2} style={{color: 'white', textAlign: 'center', margin: 0}} className={"mt-4"}>MY ACCOUNT</Title>
+          <Title level={2} style={{color: 'white', textAlign: 'center', margin: 0}} className={"mt-4"}>MY
+            ACCOUNT</Title>
         </div>
         <Layout>
-          <Sider width={280} theme="light" style={{borderRight: '1px solid #e8e8e8',marginTop: '-40px',zIndex: 10}} className={'rounded-r-lg'}>
+          <Sider width={280} theme="light" style={{borderRight: '1px solid #e8e8e8', marginTop: '-40px', zIndex: 10}}
+                 className={'rounded-r-lg'}>
             {loading && !currentUser ? (
               <div className="flex justify-center items-center h-40"><Spin/></div>
             ) : currentUser && (
-              <div style={{textAlign: 'center', borderBottom: '1px solid #e8e8e8'}} className={'flex space-x-2 px-6 py-4'}>
+              <div style={{textAlign: 'center', borderBottom: '1px solid #e8e8e8'}}
+                   className={'flex space-x-2 px-6 py-4'}>
                 <Avatar size={84} icon={<UserOutlined/>}
-                        src={currentUser.photoUrl ? getImageUrl(currentUser.photoUrl) : null} className={'border-[10px] border-gray-300'}/>
+                        src={currentUser.photoUrl ? getImageUrl(currentUser.photoUrl) : null}
+                        className={'border-[10px] border-gray-300'}/>
                 <Title level={5} style={{
                   marginTop: 12,
                   marginBottom: 4
