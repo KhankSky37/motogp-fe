@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import EventService from "../../../services/EventService.jsx";
 import GPGridCard from "./GPGridCard.jsx";
-import TestCard from "./TestCard.jsx";
 import {Link} from "react-router-dom";
 
 const GPGrid = () => {
