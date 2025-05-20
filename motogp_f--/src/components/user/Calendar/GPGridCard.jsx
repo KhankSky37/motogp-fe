@@ -46,6 +46,7 @@ const GPGridCard = ({ event, index, isUpNext }) => {
         backgroundColor: status === "upcoming" ? "#262626" : "#ffffff",
         transition: "box-shadow 0.3s ease",
         cursor: "pointer",
+        height: "100%",
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
