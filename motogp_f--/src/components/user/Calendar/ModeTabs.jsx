@@ -3,6 +3,7 @@ import { Tabs, ConfigProvider } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import GPGrid from "./GPGrid.jsx";
 import GPListAllEvents from "./GPListAllEvents.jsx";
+import Test from "./Test.jsx";
 
 const ModeTabs = () => {
     const navigate = useNavigate();
@@ -68,8 +69,8 @@ const ModeTabs = () => {
     );
 
     const renderTestsContent = () => (
-        <div className="text-black text-center py-6">
-            <p className="text-sm">No Tests available yet.</p>
+        <div className="text-black py-6">
+            <Test />
         </div>
     );
 
