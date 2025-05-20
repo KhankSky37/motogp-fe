@@ -4,6 +4,7 @@ import RiderService from "../../../services/RiderService.jsx";
 import TeamService from "../../../services/TeamService.jsx"; // Thêm import này
 import RiderCard from "./RiderCard.jsx";
 import { Spin, Alert } from "antd";
+import {Link} from "react-router-dom";
 
 const Rider = () => {
     const [contracts, setContracts] = useState([]);
@@ -121,11 +122,13 @@ const Rider = () => {
                                             if (!rider) return null;
 
                                             return (
+                                              <Link to={`/riders/${rider.riderId}`}>
                                                 <RiderCard
                                                     key={rider.riderId || rider.id}
                                                     rider={rider}
                                                     teamName={teams[contract.teamId]?.name || "Unknown Team"}
                                                 />
+                                              </Link>
                                             );
                                         })
                                 ) : (
