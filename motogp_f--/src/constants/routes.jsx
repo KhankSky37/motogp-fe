@@ -6,7 +6,6 @@ import NotFound from "../pages/NotFound.jsx";
 import AdminCategory from "../pages/Admin/category/AdminCategory.jsx";
 import AdminEvent from "../pages/Admin/event/AdminEvent.jsx";
 import AdminResult from "../pages/Admin/result/AdminResult.jsx";
-import AdminUser from "../pages/Admin/userAdmin/AdminUser.jsx";
 import AdminContract from "../pages/Admin/contract/AdminContract.jsx";
 import AdminRider from "../pages/Admin/rider/AdminRider.jsx";
 import AdminRiderCreate from "../pages/Admin/rider/AdminRiderCreate.jsx";
@@ -28,10 +27,6 @@ import AdminManufacturerUpdate from "../pages/Admin/manufacturer/AdminManufactur
 import AdminResultCreate from "../pages/Admin/result/AdminResultCreate.jsx";
 import AdminResultUpdate from "../pages/Admin/result/AdminResultUpdate.jsx";
 import Result from "../pages/user/resultStanding/Result.jsx";
-import AdminTeam from "../pages/Admin/team/AdminTeam.jsx";
-import AdminTeamCreate from "../pages/Admin/team/AdminTeamCreate.jsx";
-import AdminTeamUpdate from "../pages/Admin/team/AdminTeamUpdate.jsx";
-import AdminUserCreate from "../pages/Admin/userAdmin/AdminUserCreate.jsx";
 import AdminUserUpdate from "../pages/Admin/userAdmin/AdminUserUpdate.jsx";
 import AdminNewsArticle from "../pages/Admin/newsArticle/AdminNewsArticle.jsx";
 import AdminNewsArticleCreate from "../pages/Admin/newsArticle/AdminNewsArticleCreate.jsx";
@@ -189,26 +184,6 @@ export const routes = [
           {
             path: "sessions/update/:sessionId",
             element: <AdminSessionUpdate/>,
-          },
-          {
-            path: "teams",
-            element: <AdminTeam/>,
-          },
-          {
-            path: "teams/create",
-            element: <AdminTeamCreate/>,
-          },
-          {
-            path: "teams/update/:id",
-            element: <AdminTeamUpdate/>,
-          },
-          {
-            path: "users",
-            element: <AdminUser/>,
-          },
-          {
-            path: "users/create", // Trang tạo user mới
-            element: <AdminUserCreate/>
           },
           {
             path: "users/update/:id", // Route mới cho trang cập nhật user
