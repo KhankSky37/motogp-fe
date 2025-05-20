@@ -98,7 +98,7 @@ export const routes = [
         element: <Teams/>,
       },
       {
-        path: "legends", // thêm dòng này
+        path: "legends",
         element: <Legends/>,
       },
       {
@@ -113,35 +113,11 @@ export const routes = [
   },
   {
     path: "/admin",
-    element: <ProtectedRoute allowedRoles={['ADMIN']}/>, // Use ProtectedRoute here
+    element: <ProtectedRoute allowedRoles={['ADMIN']}/>,
     children: [
       {
         element: <AdminLayout/>, // AdminLayout now wraps all admin children
         children: [
-          {
-            index: true,
-            element: <AdminCategory/>,
-          },
-          {
-            path: "categories",
-            element: <AdminCategory/>,
-          },
-          {
-            path: "circuits",
-            element: <AdminCircuit/>,
-          },
-          {
-            path: "circuits/create",
-            element: <AdminCircuitCreate/>,
-          },
-          {
-            path: "circuits/update/:id",
-            element: <AdminCircuitUpdate/>,
-          },
-          {
-            path: "events",
-            element: <AdminEvent/>,
-          },
           {
             path: "events/create",
             element: <AdminEventCreate/>,
