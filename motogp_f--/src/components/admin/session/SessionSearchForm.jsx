@@ -61,6 +61,7 @@ const SessionSearchForm = ({
               <Option value="RACE">Race</Option>
               <Option value="SPRINT">Sprint</Option>
               <Option value="WARM_UP">Warm Up</Option>
+
             </Select>
           </Form.Item>
           <Form.Item name="dateFrom">

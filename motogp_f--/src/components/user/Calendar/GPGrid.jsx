@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import EventService from "../../../services/EventService.jsx";
 import GPGridCard from "./GPGridCard.jsx";
 import TestCard from "./TestCard.jsx";
+import {Link} from "react-router-dom";
 
 const GPGrid = () => {
   const [events, setEvents] = useState([]);
@@ -37,12 +38,14 @@ const GPGrid = () => {
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
         {raceEvents.map((event, index) => (
-          <GPGridCard
-            key={event.id}
-            event={event}
-            index={index}
-            isUpNext={upNextEvent && event.id === upNextEvent.id}
-          />
+          <Link to={`/calendar/${event.name}/${event.id}`}>
+            <GPGridCard
+              key={event.id}
+              event={event}
+              index={index}
+              isUpNext={upNextEvent && event.id === upNextEvent.id}
+            />
+          </Link>
         ))}
       </div>
     </div>

@@ -159,8 +159,12 @@ const AdminSessionCreate = () => {
             ]}
           >
             <Select placeholder="Select session type">
-              <Option value="PRACTICE">Practice</Option>
-              <Option value="QUALIFYING">Qualifying</Option>
+              <Option value="PRACTICE">Practice 1</Option>
+              <Option value="PRACTICE">Practice 2</Option>
+              <Option value="PRACTICE">Practice 3</Option>
+              <Option value="PRACTICE">Practice 4</Option>
+              <Option value="Q1">Qualifying 1</Option>
+              <Option value="Q2">Qualifying 2</Option>
               <Option value="RACE">Race</Option>
               <Option value="SPRINT">Sprint</Option>
               <Option value="WARM_UP">Warm Up</Option>

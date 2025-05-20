@@ -29,7 +29,7 @@ const GPListAllEvents = () => {
                 const eventMap = {};
 
                 sessions.forEach((session) => {
-                    if (session.sessionType === "RACE" && Array.isArray(session.results)) {
+                    if (session.sessionType === "RACE" && session.category.categoryId === "MotoGP™" && Array.isArray(session.results)) {
                         const event = session.event;
                         if (!event?.name || !event?.startDate) return;
 
