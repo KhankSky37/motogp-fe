@@ -1,7 +1,7 @@
 import React from "react";
 import { ConfigProvider, Tabs } from "antd";
 
-const CalendarTabs = ({ activeTab, onChangeTab }) => {
+const CalendarNavTabs = ({ activeTab, onChangeTab }) => {
 
   return (
     <div className="bg-gradient-to-b from-black to-[#1a0000]">
@@ -49,4 +49,4 @@ const CalendarTabs = ({ activeTab, onChangeTab }) => {
   );
 };
 
-export default CalendarTabs;
+export default CalendarNavTabs;

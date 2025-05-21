@@ -9,7 +9,7 @@ import GPGridView from "../../../components/user/Calendar/GPGridView.jsx";
 import GPListViewResults from "../../../components/user/Calendar/GPListViewResults.jsx";
 import GPListViewUP from "../../../components/user/Calendar/GPListViewUP.jsx";
 import TestView from "../../../components/user/Calendar/TestView.jsx";
-import CalendarTabs from "../../../components/user/Calendar/CalendarTabs.jsx";
+import CalendarNavTabs from "../../../components/user/Calendar/CalendarNavTabs.jsx";
 
 const formatMonthKey = (date) => dayjs(date).format("YYYY-MM");
 const formatMonthLabel = (date) => dayjs(date).format("MMMM").toUpperCase();
@@ -179,7 +179,7 @@ const Calendar = () => {
 
   return (
     <div className="text-white min-h-screen bg-white">
-      <CalendarTabs activeTab={activeTab} onChangeTab={onChangeTab} />
+      <CalendarNavTabs activeTab={activeTab} onChangeTab={onChangeTab} />
 
       <div className="bg-[#F4F4F4] px-12 py-6 text-black">
         {activeTab === "gps" ? (
