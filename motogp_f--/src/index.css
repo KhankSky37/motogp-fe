@@ -1,139 +1,139 @@
 /* MGPDisplay Font Faces */
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-Bold';
     src: url('public/fonts/Display/MGPDisplay-Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-BoldExpanded';
     src: url('public/fonts/Display/MGPDisplay-BoldExpanded.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-BoldNarrow';
     src: url('public/fonts/Display/MGPDisplay-BoldNarrow.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-BoldWide';
     src: url('public/fonts/Display/MGPDisplay-BoldWide.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-Light';
     src: url('public/fonts/Display/MGPDisplay-Light.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-LightExpanded';
     src: url('public/fonts/Display/MGPDisplay-LightExpanded.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-LightNarrow';
     src: url('public/fonts/Display/MGPDisplay-LightNarrow.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-LightWide';
     src: url('public/fonts/Display/MGPDisplay-LightWide.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-Medium';
     src: url('public/fonts/Display/MGPDisplay-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-MediumExpanded';
     src: url('public/fonts/Display/MGPDisplay-MediumExpanded.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-MediumNarrow';
     src: url('public/fonts/Display/MGPDisplay-MediumNarrow.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-MediumWide';
     src: url('public/fonts/Display/MGPDisplay-MediumWide.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-Regular';
     src: url('public/fonts/Display/MGPDisplay-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-RegularExpanded';
     src: url('public/fonts/Display/MGPDisplay-RegularExpanded.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-RegularNarrow';
     src: url('public/fonts/Display/MGPDisplay-RegularNarrow.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-RegularWide';
     src: url('public/fonts/Display/MGPDisplay-RegularWide.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-Thin';
     src: url('public/fonts/Display/MGPDisplay-Thin.otf') format('opentype');
     font-weight: 100;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-ThinExpanded';
     src: url('public/fonts/Display/MGPDisplay-ThinExpanded.otf') format('opentype');
     font-weight: 100;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-ThinNarrow';
     src: url('public/fonts/Display/MGPDisplay-ThinNarrow.otf') format('opentype');
     font-weight: 100;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPDisplay';
+    font-family: 'MGPDisplay-ThinWide';
     src: url('public/fonts/Display/MGPDisplay-ThinWide.otf') format('opentype');
     font-weight: 100;
     font-style: normal;
@@ -141,84 +141,84 @@
 
 /* MGPInline Font Faces */
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-Bold';
     src: url('public/fonts/Inline/MGPInline-Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-BoldExpanded';
     src: url('public/fonts/Inline/MGPInline-BoldExpanded.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-BoldNarrow';
     src: url('public/fonts/Inline/MGPInline-BoldNarrow.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-BoldWide';
     src: url('public/fonts/Inline/MGPInline-BoldWide.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-Medium';
     src: url('public/fonts/Inline/MGPInline-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-MediumExpanded';
     src: url('public/fonts/Inline/MGPInline-MediumExpanded.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-MediumNarrow';
     src: url('public/fonts/Inline/MGPInline-MediumNarrow.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-MediumWide';
     src: url('public/fonts/Inline/MGPInline-MediumWide.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-Regular';
     src: url('public/fonts/Inline/MGPInline-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-RegularExpanded';
     src: url('public/fonts/Inline/MGPInline-RegularExpanded.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-RegularNarrow';
     src: url('public/fonts/Inline/MGPInline-RegularNarrow.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInline';
+    font-family: 'MGPInline-RegularWide';
     src: url('public/fonts/Inline/MGPInline-RegularWide.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
@@ -227,73 +227,73 @@
 /* MGPText Font Faces */
 
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-Black';
     src: url('public/fonts/MGPText/MGPText-Black.ttf') format('truetype');
     font-weight: 900;
     font-style: normal;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-BlackItalic';
     src: url('public/fonts/MGPText/MGPText-BlackItalic.ttf') format('truetype');
     font-weight: 900;
     font-style: italic;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-Bold';
     src: url('public/fonts/MGPText/MGPText-Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-BoldItalic';
     src: url('public/fonts/MGPText/MGPText-BoldItalic.ttf') format('truetype');
     font-weight: bold;
     font-style: italic;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-CondensedBold';
     src: url('public/fonts/MGPText/MGPText-CondensedBold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-CondensedRegular';
     src: url('public/fonts/MGPText/MGPText-CondensedRegular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-Light';
     src: url('public/fonts/MGPText/MGPText-Light.ttf') format('truetype');
     font-weight: 300;
     font-style: normal;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-LightItalic';
     src: url('public/fonts/MGPText/MGPText-LightItalic.ttf') format('truetype');
     font-weight: 300;
     font-style: italic;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-Medium';
     src: url('public/fonts/MGPText/MGPText-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-MediumItalic';
     src: url('public/fonts/MGPText/MGPText-MediumItalic.ttf') format('truetype');
     font-weight: 500;
     font-style: italic;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-Regular';
     src: url('public/fonts/MGPText/MGPText-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    font-family: 'MGPText';
+    font-family: 'MGPText-RegularItalic';
     src: url('public/fonts/MGPText/MGPText-RegularItalic.ttf') format('truetype');
     font-weight: normal;
     font-style: italic;
@@ -302,14 +302,14 @@
 /* VF Font Faces */
 
 @font-face {
-    font-family: 'MGPDisplayVF';
+    font-family: 'MGPDisplay-VF';
     src: url('public/fonts/VF/MGPDisplay-VF.ttf') format('truetype');
     font-weight: 100 900;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'MGPInlineVF';
+    font-family: 'MGPInline-VF';
     src: url('public/fonts/VF/MGPInline-VF.ttf') format('truetype');
     font-weight: 100 900;
     font-style: normal;

@@ -87,7 +87,8 @@ const GPGridView = ({ event, index, isUpNext }) => {
 
       {/* Tên quốc gia (tiêu đề) */}
       <div
-        className={`text-xl font-[100] leading-none uppercase mb-1 ${textColor}`}
+        className={`text-lg font-bold leading-none uppercase mb-1 ${textColor}`}
+        style={{ fontFamily: "'MGPDisplay-bold', sans-serif" }}
       >
         {index + 1}
         <span className="ml-2 font-[500]">
