@@ -240,12 +240,100 @@
     font-stretch: condensed;
 }
 
+
 @font-face {
     font-family: 'MGPInline';
     src: url('public/fonts/Inline/MGPInline-RegularWide.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-stretch: ultra-expanded;
+}
+
+/* MGPText Font Faces */
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-CondensedBold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: condensed;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-CondensedRegular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: condensed;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MGPText';
+    src: url('public/fonts/MGPText/MGPText-RegularItalic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
 }
 
 /* Variable Font: MGPDisplay */
