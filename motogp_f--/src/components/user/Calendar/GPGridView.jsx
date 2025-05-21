@@ -3,13 +3,11 @@ import ReactCountryFlag from "react-country-flag";
 import dayjs from "dayjs";
 import classNames from "classnames";
 
-// Hàm format ngày
 const formatDate = (date) => dayjs(date).format("DD MMM").toUpperCase();
 
 const GPGridView = ({ event, index, isUpNext }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  // 👉 Chỉ hiển thị nếu là sự kiện RACE
   if (event.eventType !== "RACE") return null;
 
   const now = new Date();
@@ -24,22 +22,17 @@ const GPGridView = ({ event, index, isUpNext }) => {
   }
 
   const statusText =
-    status === "finished"
-      ? "FINISHED"
-      : status === "upcoming"
-        ? "UP NEXT"
-        : null;
+    status === "finished" ? "FINISHED" : status === "upcoming" ? "UP NEXT" : null;
 
   const countryCode = event.circuit?.locationCountry || "";
 
   const textColor = status === "upcoming" ? "text-white" : "text-black";
-  const subTextColor = status === "upcoming" ? "text-gray-300" : "text-gray-400";
+  const subTextColor = status === "upcoming" ? "text-gray-300" : "text-[#606060]";
 
   return (
     <div
       className="relative w-full rounded-xl p-3 overflow-hidden"
       style={{
-        fontFamily: "'Montserrat', 'Orbitron', sans-serif",
         boxShadow: isHovered
           ? "0 0 1rem 0 rgba(0, 0, 0, .25)"
           : "0 2px 26px 0 rgba(0, 0, 0, 0.05)",
@@ -51,7 +44,7 @@ const GPGridView = ({ event, index, isUpNext }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Góc phải: Tag trạng thái */}
+      {/* Tag trạng thái */}
       {status && (
         <div
           className={classNames(
@@ -63,7 +56,6 @@ const GPGridView = ({ event, index, isUpNext }) => {
             width: "110px",
             textAlign: "center",
             whiteSpace: "nowrap",
-            fontFamily: "'Orbitron', sans-serif",
           }}
         >
           {statusText}
@@ -86,26 +78,26 @@ const GPGridView = ({ event, index, isUpNext }) => {
 
       {/* Ngày tháng */}
       <div
-        className={`text-sm font-semibold tracking-wide mb-2 ${
+        className={`text-lg font-normal tracking-wide mb-2 ${
           status === "upcoming" ? "text-gray-300" : "text-gray-500"
         }`}
-        style={{ fontFamily: "'Montserrat', sans-serif" }}
       >
         {start} - {end}
       </div>
 
-      {/* STT + tên quốc gia */}
+      {/* Tên quốc gia (tiêu đề) */}
       <div
-        className={`text-xl font-extrabold uppercase mb-2 ${textColor}`}
-        style={{ fontFamily: "'Orbitron', sans-serif" }}
+        className={`text-xl font-[100] leading-none uppercase mb-1 ${textColor}`}
       >
-        {index + 1} <span className="tracking-wide">{event.name}</span>
+        {index + 1}
+        <span className="ml-2 font-[500]">
+          {event.name}
+        </span>
       </div>
 
       {/* Tên chính thức */}
       <div
-        className={`text-sm font-medium leading-snug ${subTextColor}`}
-        style={{ fontFamily: "'Montserrat', sans-serif" }}
+        className={`text-sm font-[300] leading-snug ${subTextColor}`}
       >
         {event.officialName}
       </div>
@@ -114,4 +106,3 @@ const GPGridView = ({ event, index, isUpNext }) => {
 };
 
 export default GPGridView;
-``
