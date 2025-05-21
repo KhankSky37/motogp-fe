@@ -6,7 +6,7 @@ import classNames from "classnames";
 // Hàm format ngày
 const formatDate = (date) => dayjs(date).format("DD MMM").toUpperCase();
 
-const GPGridCard = ({ event, index, isUpNext }) => {
+const GPGridView = ({ event, index, isUpNext }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   // 👉 Chỉ hiển thị nếu là sự kiện RACE
@@ -113,5 +113,5 @@ const GPGridCard = ({ event, index, isUpNext }) => {
   );
 };
 
-export default GPGridCard;
+export default GPGridView;
 ``

@@ -82,7 +82,7 @@ const PodiumCard = ({rider, gradients}) => {
   );
 };
 
-const GPListCardResults = ({index, eventName, officialName, startDate, endDate, riders = []}) => {
+const GPListViewResults = ({index, eventName, officialName, startDate, endDate, riders = []}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const countryCode = getCountryCode(eventName);
@@ -151,4 +151,4 @@ const GPListCardResults = ({index, eventName, officialName, startDate, endDate, 
   );
 };
 
-export default GPListCardResults;
+export default GPListViewResults;

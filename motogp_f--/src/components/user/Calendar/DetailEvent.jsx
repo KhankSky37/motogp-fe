@@ -22,7 +22,7 @@ import randomImg15 from "../../../assets/22 valencia.png";
 
 const { TabPane } = Tabs;
 
-const ScheduleTabs = ({ schedule, event }) => {
+const DetailEvent = ({ schedule, event }) => {
   const days = Object.keys(schedule);
   const [activeKey, setActiveKey] = useState("overview");
 
@@ -206,4 +206,4 @@ const ScheduleTabs = ({ schedule, event }) => {
   );
 };
 
-export default ScheduleTabs;
+export default DetailEvent;

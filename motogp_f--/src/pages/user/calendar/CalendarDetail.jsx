@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ScheduleTabs from "../../../components/user/Calendar/ScheduleTabs.jsx";
+import DetailEvent from "../../../components/user/Calendar/DetailEvent.jsx";
 import { useParams } from "react-router-dom";
 import EventService from "../../../services/EventService.jsx";
 import dayjs from "dayjs";
@@ -57,9 +57,9 @@ const CalendarDetail = () => {
 
   return (
     <div>
-      <ScheduleTabs schedule={groupedSessions} event={event} />
+      <DetailEvent schedule={groupedSessions} event={event} />
     </div>
   );
 };
-
+// đây là user/calendar/calendarDetail
 export default CalendarDetail;
