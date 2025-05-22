@@ -150,7 +150,7 @@ const AdminSessionCreate = () => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
+          </Form.Item>{" "}
           <Form.Item
             name="sessionType"
             label="Session Type"
@@ -159,12 +159,12 @@ const AdminSessionCreate = () => {
             ]}
           >
             <Select placeholder="Select session type">
-              <Option value="PRACTICE">Practice 1</Option>
-              <Option value="PRACTICE">Practice 2</Option>
-              <Option value="PRACTICE">Practice 3</Option>
-              <Option value="PRACTICE">Practice 4</Option>
-              <Option value="Qualifying 1">Qualifying 1</Option>
-              <Option value="Qualifying 2">Qualifying 2</Option>
+              <Option value="PRACTICE_1">Practice 1</Option>
+              <Option value="PRACTICE_2">Practice 2</Option>
+              <Option value="PRACTICE_3">Practice 3</Option>
+              <Option value="PRACTICE_4">Practice 4</Option>
+              <Option value="QUALIFYING_1">Qualifying 1</Option>
+              <Option value="QUALIFYING_2">Qualifying 2</Option>
               <Option value="RACE">Race</Option>
               <Option value="SPRINT">Sprint</Option>
               <Option value="WARM_UP">Warm Up</Option>

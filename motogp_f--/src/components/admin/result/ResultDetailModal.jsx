@@ -21,6 +21,7 @@ const ResultDetailModal = ({result, visible, onClose, loading = false}) => {
         <Descriptions bordered column={1}>
           <Descriptions.Item label="Session">
             {result?.sessionId}
+            
           </Descriptions.Item>
 
           <Descriptions.Item label="Rider">
