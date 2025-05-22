@@ -48,9 +48,9 @@ const RidersTeamsMenu = () => {
     };
 
     return (
-        <div className="bg-gradient-to-b from-black to-[#1a0000] text-white px-6">
+        <div className="bg-gradient-to-b from-black to-[#1a0000] text-white px-12 font-MGPDisplay">
             <div className="flex justify-between items-center h-24">
-                <h1 className="text-4xl font-extrabold tracking-wide uppercase">
+                <h1 className="text-[40px] font-extrabold tracking-wide uppercase">
                     Riders & Teams
                 </h1>
                 <div className="text-white text-xl">
@@ -80,7 +80,7 @@ const RidersTeamsMenu = () => {
                     }))}
                     tabBarGutter={40}
                     animated={{ inkBar: true }}
-                    className="riders-tabs uppercase font-semibold text-sm"
+                    className="riders-tabs uppercase font-MGPText font-bold"
                     tabBarStyle={{
                         borderBottom: "1px solid #374151",
                         height: 56,

@@ -354,6 +354,10 @@
     font-display: swap;
 }
 
+.riders-tabs .ant-tabs-tab-btn {
+    font-size: 18px !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
