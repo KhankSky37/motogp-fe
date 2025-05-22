@@ -1,8 +1,6 @@
 import React from 'react';
-import videopassImg from "../../assets/MotoGP-VIDEOPASS.webp";
 import {ConfigProvider, Tabs} from "antd";
 import videoBg from "../../assets/videoBg.webp";
-import SearchForm from "../../components/user/result/SearchForm.jsx"; // Example icons
 
 const Videos = () => {
   const items = [
@@ -28,7 +26,7 @@ const Videos = () => {
       <div className="px-12 pt-4 pb-10 relative bg-[#c80502]">
         <div className="absolute inset-0 bg-black opacity-85"></div>
         <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-l to-black from-transparent"></div>
-        <span className="relative text-5xl font-extrabold text-white">
+        <span className="relative text-5xl font-extrabold text-white font-MGPDisplay">
         VIDEOS
       </span>
       </div>
@@ -58,11 +56,11 @@ const Videos = () => {
         <div className="absolute inset-y-0 left-0 w-[30%] bg-gradient-to-l to-black from-transparent"></div>
 
         <div className="absolute inset-x-16 text-white top-1/2 w-[600px]">
-          <h1 className="mb-4">MotoGP™</h1>
-          <p className="text-4xl font-extrabold mb-8">
+          <h1 className="mb-4 font-MGPText">MotoGP™</h1>
+          <p className="text-4xl font-extrabold mb-8 font-MGPDisplay">
             More drama awaits as MotoGP gets set for Silverstone
           </p>
-          <button className={'bg-red-700 p-2 px-6 rounded-3xl'}>
+          <button className={'bg-red-700 p-2 px-6 rounded-3xl font-MGPText'}>
             Watch Now
           </button>
         </div>
