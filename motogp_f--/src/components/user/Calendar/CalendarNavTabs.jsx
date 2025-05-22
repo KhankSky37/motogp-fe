@@ -6,7 +6,7 @@ const CalendarNavTabs = ({ activeTab, onChangeTab }) => {
   return (
     <div className="bg-gradient-to-b from-black to-[#1a0000]">
       <div className="flex justify-between items-center h-24 px-12">
-        <h1 className="text-4xl font-extrabold tracking-wide uppercase">
+        <h1 className="text-[40px] font-MGPDisplay font-bold tracking-wide uppercase">
           2025 Calendar
         </h1>
         <div className="text-white text-xl">
@@ -32,12 +32,12 @@ const CalendarNavTabs = ({ activeTab, onChangeTab }) => {
             activeKey={activeTab}
             onChange={onChangeTab}
             items={[
-              { key: "gps", label: "GPs" },
-              { key: "tests", label: "Tests" },
+              { key: "gps", label: <span className="text-[18px]">GPs</span> },
+              { key: "tests", label: <span className="text-[18px]">Tests</span> },
             ]}
             tabBarGutter={40}
             animated={{ inkBar: true }}
-            className="riders-tabs uppercase font-semibold text-sm"
+            className="riders-tabs font-MGPText font-bold"
             tabBarStyle={{
               borderBottom: "1px solid #374151",
               height: 56,
