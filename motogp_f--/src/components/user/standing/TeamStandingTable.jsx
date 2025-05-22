@@ -9,14 +9,14 @@ const TeamStandingTable = ({teamStandings}) => {
       key: "position",
       align: "center",
       width: "100px",
-      render: (_, record, index) => <span className={"font-extrabold text-3xl"}>{index + 1}</span>
+      render: (_, record, index) => <span className={"font-extrabold text-3xl font-MGPDisplay"}>{index + 1}</span>
     },
     {
       title: "Team",
       dataIndex: "name",
       key: "name",
       render: (text) => (
-        <span className={"font-extrabold text-2xl"}>{text}</span>
+        <span className={"font-extrabold text-2xl font-MGPDisplay"}>{text}</span>
       ),
     },
     {
@@ -25,7 +25,7 @@ const TeamStandingTable = ({teamStandings}) => {
       key: "points",
       align: "center",
       width: "100px",
-      render: (text) => <span className={"font-extrabold text-3xl"}>{text}</span>
+      render: (text) => <span className={"font-extrabold text-3xl font-MGPDisplay"}>{text}</span>
     },
   ];
   return (

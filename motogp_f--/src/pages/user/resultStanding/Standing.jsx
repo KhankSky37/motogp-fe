@@ -117,9 +117,9 @@ const Standing = () => {
         </div>
 
         <div className="flex flex-col justify-center mt-16 bg-[#171c21] p-6 text-center items-center">
-          <div className={"text-4xl text-white font-extrabold text-center mb-4"}>Get the official MotoGP™ Newsletter!
+          <div className={"text-4xl text-white font-extrabold text-center mb-4 font-MGPDisplay"}>Get the official MotoGP™ Newsletter!
           </div>
-          <div className={'text-white text-center mb-8'}>Create a MotoGP™ account now and gain access to exclusive
+          <div className={'text-white text-center mb-8 font-MGPText'}>Create a MotoGP™ account now and gain access to exclusive
             content, such as the MotoGP™ Newsletter, which
             features GP Reports, incredible videos and other interesting information about our sport.
           </div>

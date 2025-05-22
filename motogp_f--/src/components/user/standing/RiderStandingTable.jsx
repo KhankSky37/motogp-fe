@@ -11,7 +11,7 @@ const RiderStandingTable = ({riderStandings}) => {
       key: "position",
       align: "center",
       width: "100px",
-      render: (_, record, index) => <span className={"font-extrabold text-3xl"}>{index + 1}</span>
+      render: (_, record, index) => <span className={"font-extrabold text-3xl font-MGPDisplay"}>{index + 1}</span>
     },
     {
       title: "Rider",
@@ -58,7 +58,7 @@ const RiderStandingTable = ({riderStandings}) => {
       dataIndex: "teamName",
       key: "teamName",
       render: (text) => (
-        <span className={"font-semibold text-gray-400 text-xl"}>{text}</span>
+        <span className={"font-medium text-gray-400 text-xl font-MGPText"}>{text}</span>
       ),
     },
     {
@@ -67,7 +67,7 @@ const RiderStandingTable = ({riderStandings}) => {
       key: "points",
       align: "center",
       width: "100px",
-      render: (text) => <span className={"font-extrabold text-3xl "}>{text}</span>
+      render: (text) => <span className={"font-extrabold text-3xl font-MGPDisplay"}>{text}</span>
     },
   ];
   const getRowClassName = (record, index) => {

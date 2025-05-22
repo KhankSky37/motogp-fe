@@ -18,7 +18,7 @@ const StandingBanner = ({type}) => {
         }}
       />
       <div className="absolute lg:w-[50%] w-[75%] top-1/2 -translate-y-1/2">
-        <div className="text-white text-5xl font-extrabold px-12 pb-4">
+        <div className="text-white text-5xl font-extrabold px-12 pb-4 font-MGPDisplay">
           {type === "rider"
             ? "CHAMPIONSHIP STANDINGS 2025"
             : type === "team"

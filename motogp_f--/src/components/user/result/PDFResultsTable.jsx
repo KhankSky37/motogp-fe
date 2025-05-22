@@ -68,7 +68,7 @@ const PDFResultsTable = () => {
 
   return (
     <section className="mx-14 mb-7">
-      <div className={'flex space-x-2 mb-4'}>
+      <div className={'flex space-x-2 mb-4 font-MGPText font-semibold'}>
         <button
           className={`border px-6 py-1 rounded-2xl ${activeTab === 'session' ? '!bg-red-700 text-white' : 'bg-gray-200 text-black'}`}
           onClick={() => setActiveTab('session')}
@@ -90,7 +90,7 @@ const PDFResultsTable = () => {
       </div>
 
       {currentItems.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 font-MGPText font-bold text-gray-700">
           <div className={"bg-white divide-y"}>
             {firstColumnItems.map(renderItem)}
           </div>

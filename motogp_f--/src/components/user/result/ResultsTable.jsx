@@ -13,7 +13,7 @@ const ResultsTable = ({loading, resultData, sessionType}) => {
       align: "center",
       width: "100px",
       render: (text) => (
-        <span className={"font-extrabold text-3xl"}>{text}</span>
+        <span className={"font-extrabold text-3xl font-MGPDisplay"}>{text}</span>
       ),
     },
     {
@@ -29,7 +29,8 @@ const ResultsTable = ({loading, resultData, sessionType}) => {
         ) {
           points = "-";
         }
-        return <span className={"text-gray-400 text-3xl"}>{points}</span>;
+        return <span className={"text-gray-400 text-3xl font-MGPDisplay font-light" +
+          ""}>{points}</span>;
       },
     },
     {
@@ -79,7 +80,7 @@ const ResultsTable = ({loading, resultData, sessionType}) => {
       dataIndex: ["team", "name"],
       key: "teamName",
       render: (text) => (
-        <span className={"font-semibold text-gray-400 text-xl"}>{text}</span>
+        <span className={"font-medium text-gray-400 text-xl font-MGPText"}>{text}</span>
       ),
     },
     {
@@ -90,7 +91,7 @@ const ResultsTable = ({loading, resultData, sessionType}) => {
       render: (text) => {
         const formattedTime = formatTime(text);
         return (
-          <span className={"text-lg"}>
+          <span className={"text-lg font-medium font-MGPText"}>
             {formattedTime}
           </span>
         );

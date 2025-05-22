@@ -14,11 +14,11 @@ const ResultStanding = () => {
   const items = [
     {
       key: "RESULTS",
-      label: <span className="font-semibold text-lg">RESULTS</span>,
+      label: <span className="font-semibold text-lg font-MGPText">RESULTS</span>,
     },
     {
       key: "STANDINGS",
-      label: <span className="font-semibold text-lg">STANDINGS</span>,
+      label: <span className="font-semibold text-lg font-MGPText">STANDINGS</span>,
     },
   ];
 
