@@ -26,7 +26,7 @@ const TeamCard = ({ team }) => {
             <div className="relative px-5 pb-3 z-20">
                 <Title
                     level={4}
-                    className="!m-0 text-[22px] uppercase font-extrabold leading-none tracking-wide"
+                    className="!m-0 text-[22px] uppercase font-extrabold leading-none tracking-wide font-MGPDisplay"
                     style={{
                         color: "#fff",
                         WebkitTextStroke: "0.5px #000",
@@ -36,7 +36,7 @@ const TeamCard = ({ team }) => {
                 </Title>
 
                 {/* Danh sách tay đua viết hoa chữ cái đầu */}
-                <div className="mt-2 flex flex-col text-sm text-white/90">
+                <div className="mt-2 flex flex-col text-sm text-gray-300 font-MGPText">
                     {riders.map((rider) => (
                         <span key={rider.id} className="capitalize">
                             {rider.name}

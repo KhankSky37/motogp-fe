@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 const menuItems = [
     { label: "Riders", path: "/riders" },
     { label: "Team", path: "/teams" },
-    { label: "Legends", path: "/legends" },
 ];
 
 const RidersTeamsMenu = () => {
@@ -76,7 +75,7 @@ const RidersTeamsMenu = () => {
                     onChange={onChange}
                     items={menuItems.map((item) => ({
                         key: item.path,
-                        label: item.label,
+                        label: <span className="font-semibold text-xl font-MGPText">{item.label}</span>,
                     }))}
                     tabBarGutter={40}
                     animated={{ inkBar: true }}

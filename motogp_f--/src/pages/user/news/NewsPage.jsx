@@ -101,7 +101,7 @@ const NewsPage = () => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 py-6">
+      <div className="px-12 py-8">
         {loading ? (
           <Skeleton active paragraph={{ rows: 6 }} />
         ) : Object.keys(groupedArticles).length === 0 ? (

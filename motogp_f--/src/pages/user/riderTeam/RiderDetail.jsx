@@ -5,6 +5,7 @@ import RiderService from "../../../services/RiderService.jsx";
 import {Button, Col, Row, Spin, Typography} from "antd";
 import {ArrowLeftOutlined, ShoppingCartOutlined} from '@ant-design/icons';
 import ReactCountryFlag from "react-country-flag";
+import { COUNTRIES } from "../../../constants/Countries.jsx"; // Added import
 
 const {Title, Text} = Typography;
 
@@ -13,6 +14,7 @@ const RiderDetail = () => {
   const [rider, setRider] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const countryName = COUNTRIES.find(country => country.code === rider.nationality)?.name || rider.nationality;
 
   useEffect(() => {
     const fetchRiderData = async () => {
@@ -112,17 +114,17 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
           <div className="mb-4">
             <Link to="/riders"
                   className="text-white hover:text-white transition-colors duration-300 inline-flex items-center">
-              <ArrowLeftOutlined className="mr-2"/>
+              <ArrowLeftOutlined className="mr-2 font-MGPText"/>
               ALL RIDERS
             </Link>
           </div>
           <Row align="middle">
             <Col xs={24} md={12} className="z-10">
-              <div className="text-3xl font-bold text-white">
+              <div className="text-3xl font-bold text-white font-MGPDisplay">
                 #{riderRacingNumber}
               </div>
               <Title
-                className="!text-7xl !font-extrabold !text-white !uppercase !leading-tight !mb-3">
+                className="!text-7xl !font-extrabold !text-white !uppercase !leading-tight !mb-3 font-MGPDisplay">
                 {riderDisplayName}
               </Title>
               <div className="flex items-center space-x-4 mb-6">
@@ -141,9 +143,7 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
                     height: "auto",
                   }}
                 />
-                <Text className="text-lg text-gray-300">{rider.nationality}</Text>
-                <span className="text-gray-500">|</span>
-                <Text className="text-lg text-gray-300">{rider.teamName || "N/A Team"}</Text>
+                <Text className="text-lg text-gray-300 font-MGPText">{countryName}</Text>
               </div>
               <Button
                 type="primary"
@@ -166,7 +166,7 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
             />
           )}
         </div>
-        <div className={"absolute bottom-0 z-1 right-0 text-gray-400 text-[300px] font-black"}>
+        <div className={"absolute bottom-0 z-1 right-0 text-gray-400 text-[300px] font-black font-MGPDisplay"}>
           {backgroundText}
         </div>
       </div>
@@ -176,21 +176,21 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
           <Row gutter={[48, 48]}>
             {/* Rider Story Column */}
             <Col xs={24} md={14}>
-              <Title level={3} className="!font-bold !text-2xl !mb-6 uppercase tracking-wider">Rider Story</Title>
-              <Text className="text-base text-gray-700 leading-relaxed whitespace-pre-line">
+              <Title level={3} className="!font-bold !text-2xl !mb-6 uppercase tracking-wider font-MGPDisplay">Rider Story</Title>
+              <Text className="text-base text-gray-700 leading-relaxed whitespace-pre-line font-MGPText">
                 {riderStory}
               </Text>
             </Col>
 
             {/* Rider Bio Column */}
             <Col xs={24} md={10}>
-              <Title level={3} className="!font-bold !text-2xl !mb-6 uppercase tracking-wider">Rider Bio</Title>
+              <Title level={3} className="!font-bold !text-2xl !mb-6 uppercase tracking-wider font-MGPDisplay">Rider Bio</Title>
               <div className="bg-gray-50 rounded-lg shadow">
                 {riderBioData.map((item, index) => (
                   <div key={index}
                        className={`flex justify-between items-center p-4 ${index < riderBioData.length - 1 ? 'border-b border-gray-200' : ''}`}>
-                    <Text className="text-sm font-medium text-gray-500 uppercase">{item.label}</Text>
-                    <Text className="text-sm font-semibold text-gray-800">{item.value}</Text>
+                    <Text className="text-sm font-medium text-gray-500 uppercase font-MGPText">{item.label}</Text>
+                    <Text className="text-sm font-semibold text-gray-800 font-MGPText">{item.value}</Text>
                   </div>
                 ))}
               </div>

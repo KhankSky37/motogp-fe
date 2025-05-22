@@ -66,8 +66,8 @@ const NewsSection = ({ showOverflow = false }) => {
   }
 
   return (
-    <div className="relative group px-6 py-4 overflow-hidden">
-      <Title level={2}>Latest News</Title>
+    <div className="relative group px-12 py-4 overflow-hidden">
+      <Title level={2} className={"font-MGPDisplay"}>Latest News</Title>
       <div className="px-0 mx-0">
         <Slider {...settings}>
           {articles.map((article) => (
@@ -98,8 +98,8 @@ const NewsSection = ({ showOverflow = false }) => {
                   }
                   onClick={() => window.open(article.articleLink, "_blank")}
                 >
-                  <Card.Meta title={article.title} />
-                  <Paragraph className="mt-2 text-xs">
+                  <Card.Meta title={<span className={"font-MGPDisplay"}>{article.title}</span>} />
+                  <Paragraph className="mt-2 text-xs font-MGPText">
                     {new Date(article.publishDate).toLocaleDateString()}
                   </Paragraph>
                 </Card>

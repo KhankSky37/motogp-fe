@@ -76,7 +76,7 @@ const DetailEvent = ({ schedule, event }) => {
             {["Results", "Replays", "Standings"].map((label) => (
               <button
                 key={label}
-                className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full uppercase shadow-md"
+                className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full uppercase shadow-md font-MGPText font-semibold"
               >
                 {label}
               </button>
@@ -107,13 +107,29 @@ const DetailEvent = ({ schedule, event }) => {
               onChange={setActiveKey}
               tabBarGutter={32}
               tabBarStyle={{ fontWeight: "bold", fontSize: 16 }}
-            >
-              <TabPane tab="Overview" key="overview" />
-              <TabPane tab="Starting Grid" key="starting-grid" />
-              <TabPane tab="Entry List" key="entry-list" />
-              <TabPane tab="Circuit Info" key="circuit-info" />
-              <TabPane tab="Destination Guide" key="destination-guide" />
-            </Tabs>
+              items={[
+                {
+                  key: "overview",
+                  label: <span className="font-MGPText font-semibold text-xl">Overview</span>,
+                },
+                {
+                  key: "starting-grid",
+                  label: <span className="font-MGPText font-semibold text-xl">Starting Grid</span>,
+                },
+                {
+                  key: "entry-list",
+                  label: <span className="font-MGPText font-semibold text-xl">Entry List</span>,
+                },
+                {
+                  key: "circuit-info",
+                  label: <span className="font-MGPText font-semibold text-xl">Circuit Info</span>,
+                },
+                {
+                  key: "destination-guide",
+                  label: <span className="font-MGPText font-semibold text-xl">Destination Guide</span>,
+                },
+              ]}
+            />
           </ConfigProvider>
         </div>
       </div>

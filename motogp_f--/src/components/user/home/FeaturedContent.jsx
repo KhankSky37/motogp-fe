@@ -9,7 +9,7 @@ const FeaturedContent = ({
                              reverse = false,
                          }) => {
     return (
-        <section className="py-10 px-6 md:px-16">
+        <section className="py-10 px-12">
             <div
                 className={`flex flex-col items-center justify-between gap-10 ${
                     reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'
@@ -18,15 +18,15 @@ const FeaturedContent = ({
                 {/* Text */}
                 <div className="max-w-xl w-full">
                     <a href={buttonLink} >
-                        <h2 className="text-2xl md:text-3xl font-bold text-black leading-tight cursor-pointer">
+                        <h2 className="text-2xl md:text-3xl font-bold text-black leading-tight cursor-pointer font-MGPDisplay">
                             {title}
                         </h2>
                     </a>
-                    <p className="text-gray-700 mt-4 text-xl md:text-base">{description}</p>
+                    <p className="text-gray-600 font-MGPText mt-4 text-xl md:text-base">{description}</p>
                     {buttonText && buttonLink && (
                         <a
                             href={buttonLink}
-                            className="inline-block mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                            className="inline-block mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full font-MGPText"
                         >
                             {buttonText}
                         </a>

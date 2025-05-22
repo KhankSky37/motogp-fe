@@ -19,13 +19,13 @@ const Home = () => {
         <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-b to-black from-transparent"></div>
         <div className="absolute inset-y-0 left-0 w-[30%] bg-gradient-to-l to-black from-transparent"></div>
 
-        <div className="absolute inset-x-16 text-white top-1/2 w-[600px]">
-          <h1 className="text-2xl font-bold mb-4">Welcome to MotoGP</h1>
-          <p className="text-4xl font-extrabold mb-8">
+        <div className="absolute inset-x-12 text-white top-1/2 w-[600px]">
+          <h1 className="text-xl font-bold mb-4 font-MGPText">Welcome to MotoGP</h1>
+          <p className="text-4xl font-extrabold mb-8 font-MGPDisplay">
             HOT HEADLINES AHEAD OF LE MANS: will home heroes mix it up with
             title contenders?
           </p>
-          <Button variant="solid" color={"danger"} size="large">
+          <Button variant="solid" color={"danger"} size="large" className={"!bg-red-700 rounded-full font-MGPText font-semibold"}>
             Get Started
           </Button>
         </div>
@@ -50,17 +50,11 @@ const Home = () => {
 
       {/* Phiên bản ẩn đi các slide bên ngoài khung (mặc định) */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4 px-6">
-          Tin tức mới nhất (Ẩn slider)
-        </h2>
         <NewsSection showOverflow={true} />
       </div>
 
       {/* Phiên bản hiển thị các slide bên ngoài khung */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4 px-6">
-          Tin tức mới nhất (Hiện slider)
-        </h2>
         <NewsSection showOverflow={true} />
       </div>
 
