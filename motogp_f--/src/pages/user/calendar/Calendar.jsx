@@ -184,10 +184,10 @@ const Calendar = () => {
       <div className="bg-[#F4F4F4] px-12 py-6 text-black">
         {activeTab === "gps" ? (
           <div className="flex flex-col gap-6">
-            <div className="flex space-x-2 mb-4">
+            <div className="flex space-x-2 mb-4 font-MGPText font-bold text-sm">
               <button
                 onClick={() => handleViewChange("grid")}
-                className={`px-6 py-2 rounded-full font-bold text-xs uppercase transition ${
+                className={`px-6 py-2 rounded-full uppercase transition ${
                   viewMode === "grid"
                     ? "bg-black text-white"
                     : "bg-gray-100 text-black"
@@ -197,7 +197,7 @@ const Calendar = () => {
               </button>
               <button
                 onClick={() => handleViewChange("list")}
-                className={`px-6 py-2 rounded-full font-bold text-xs uppercase transition ${
+                className={`px-6 py-2 rounded-full uppercase transition ${
                   viewMode === "list"
                     ? "bg-black text-white"
                     : "bg-gray-100 text-black"
@@ -231,7 +231,7 @@ const Calendar = () => {
 
                 return (
                   <div key={monthKey} className="flex flex-col gap-4">
-                    <div className="text-2xl font-bold mb-[-12px]">{month.label}</div>
+                    <div className="text-base font-bold mb-[-12px]">{month.label}</div>
                     {allItems.map((item) => {
                       const idx = globalIndex++;
                       if (item.type === "race") {
