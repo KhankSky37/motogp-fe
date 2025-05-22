@@ -23,11 +23,11 @@ const EventBanner = ({ selectedEvent, fallbackName }) => {
         }}
       />
       <div className="absolute lg:w-[50%] w-[75%]">
-        <div className="text-white text-4xl font-extrabold px-12 pb-4">
+        <div className="text-white text-4xl font-extrabold px-12 pb-4 font-MGPDisplay">
           {eventName}
         </div>
         {(cityName || eventDate) && (
-          <div className="text-white flex px-12 pb-12 space-x-2">
+          <div className="text-white flex px-12 pb-12 space-x-2 font-MGPText">
             <img
               src={`https://photos.motogp.com/countries/flags/iso2/${countryCode}.svg`}
               alt={`${countryCode.toUpperCase()} flag`}

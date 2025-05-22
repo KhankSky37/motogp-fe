@@ -84,11 +84,11 @@ const VideoPass = () => {
         <div className="absolute inset-y-0 left-0 w-[30%] bg-gradient-to-l to-black from-transparent"></div>
 
         <div className="absolute inset-x-16 text-white top-1/2 w-[600px]">
-          <h1 className="mb-4">MotoGP™</h1>
-          <p className="text-4xl font-extrabold mb-8">
+          <h1 className="mb-4 font-MGPText">MotoGP™</h1>
+          <p className="text-4xl font-extrabold mb-8 font-MGPDisplay">
             MotoGP™ Grand Prix: Michelin® Grand Prix of France
           </p>
-          <button className={'bg-red-700 p-2 px-6 rounded-3xl'}>
+          <button className={'bg-red-700 p-2 px-6 rounded-3xl font-MGPText'}>
             Watch Now
           </button>
 
