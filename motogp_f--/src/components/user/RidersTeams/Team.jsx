@@ -68,7 +68,7 @@ const Team = () => {
     const { teams = [], riders = [] } = teamRidersData;
 
     const filteredContracts = allContracts.filter(
-        (c) => c.categoryId === activeCategory && c.riderRole === "offical"
+        (c) => c.categoryId === activeCategory
     );
 
     const teamRidersMap = {};

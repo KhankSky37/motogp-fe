@@ -110,7 +110,7 @@ const DefaultLayout = () => {
                   className="!bg-red-700 py-1 hover:bg-red-700 border-red-600 hover:border-red-700 h-8 sm:h-auto text-xs sm:text-sm px-3 sm:px-4 rounded-xl">
             SUBSCRIBE
           </Button>
-          <Dropdown overlay={languageMenu} className={"px-4"}>
+          <Dropdown dropdownRender={() => languageMenu} className={"px-4"}>
             <a onClick={(e) => e.preventDefault()} className="hover:text-white flex items-center cursor-pointer">
               <Space>
                 ENG

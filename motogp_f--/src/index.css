@@ -1,14 +1,14 @@
 /* MGPDisplay Font Faces */
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-Bold.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-BoldExpanded.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-BoldExpanded.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-stretch: expanded;
@@ -16,7 +16,7 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-BoldNarrow.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-BoldNarrow.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-stretch: condensed;
@@ -24,7 +24,7 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-BoldWide.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-BoldWide.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-stretch: ultra-expanded;
@@ -32,14 +32,14 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-Light.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-Light.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-LightExpanded.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-LightExpanded.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
     font-stretch: expanded;
@@ -47,7 +47,7 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-LightNarrow.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-LightNarrow.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
     font-stretch: condensed;
@@ -55,7 +55,7 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-LightWide.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-LightWide.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
     font-stretch: ultra-expanded;
@@ -63,14 +63,14 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-Medium.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-MediumExpanded.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-MediumExpanded.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
     font-stretch: expanded;
@@ -78,7 +78,7 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-MediumNarrow.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-MediumNarrow.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
     font-stretch: condensed;
@@ -86,7 +86,7 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-MediumWide.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-MediumWide.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
     font-stretch: ultra-expanded;
@@ -94,14 +94,14 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-Regular.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-RegularExpanded.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-RegularExpanded.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-stretch: expanded;
@@ -109,7 +109,7 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-RegularNarrow.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-RegularNarrow.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-stretch: condensed;
@@ -117,7 +117,7 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-RegularWide.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-RegularWide.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-stretch: ultra-expanded;
@@ -125,14 +125,14 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-Thin.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-Thin.otf') format('opentype');
     font-weight: 100;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-ThinExpanded.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-ThinExpanded.otf') format('opentype');
     font-weight: 100;
     font-style: normal;
     font-stretch: expanded;
@@ -140,7 +140,7 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-ThinNarrow.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-ThinNarrow.otf') format('opentype');
     font-weight: 100;
     font-style: normal;
     font-stretch: condensed;
@@ -148,7 +148,7 @@
 
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/Display/MGPDisplay-ThinWide.otf') format('opentype');
+    src: url('/fonts/Display/MGPDisplay-ThinWide.otf') format('opentype');
     font-weight: 100;
     font-style: normal;
     font-stretch: ultra-expanded;
@@ -157,14 +157,14 @@
 /* MGPInline Font Faces */
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-Bold.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-BoldExpanded.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-BoldExpanded.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-stretch: expanded;
@@ -172,7 +172,7 @@
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-BoldNarrow.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-BoldNarrow.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-stretch: condensed;
@@ -180,7 +180,7 @@
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-BoldWide.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-BoldWide.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-stretch: ultra-expanded;
@@ -188,14 +188,14 @@
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-Medium.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-MediumExpanded.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-MediumExpanded.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
     font-stretch: expanded;
@@ -203,7 +203,7 @@
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-MediumNarrow.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-MediumNarrow.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
     font-stretch: condensed;
@@ -211,7 +211,7 @@
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-MediumWide.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-MediumWide.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
     font-stretch: ultra-expanded;
@@ -219,14 +219,14 @@
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-Regular.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-RegularExpanded.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-RegularExpanded.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-stretch: expanded;
@@ -234,7 +234,7 @@
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-RegularNarrow.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-RegularNarrow.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-stretch: condensed;
@@ -243,7 +243,7 @@
 
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/Inline/MGPInline-RegularWide.otf') format('opentype');
+    src: url('/fonts/Inline/MGPInline-RegularWide.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-stretch: ultra-expanded;
@@ -252,35 +252,35 @@
 /* MGPText Font Faces */
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-Black.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-Black.ttf') format('truetype');
     font-weight: 900;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-BlackItalic.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-BlackItalic.ttf') format('truetype');
     font-weight: 900;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-Bold.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-BoldItalic.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-BoldItalic.ttf') format('truetype');
     font-weight: 700;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-CondensedBold.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-CondensedBold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-stretch: condensed;
@@ -288,7 +288,7 @@
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-CondensedRegular.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-CondensedRegular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-stretch: condensed;
@@ -296,42 +296,42 @@
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-Light.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-Light.ttf') format('truetype');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-LightItalic.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-LightItalic.ttf') format('truetype');
     font-weight: 300;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-Medium.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-MediumItalic.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-MediumItalic.ttf') format('truetype');
     font-weight: 500;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-Regular.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MGPText';
-    src: url('public/fonts/MGPText/MGPText-RegularItalic.ttf') format('truetype');
+    src: url('/fonts/MGPText/MGPText-RegularItalic.ttf') format('truetype');
     font-weight: 400;
     font-style: italic;
 }
@@ -339,7 +339,7 @@
 /* Variable Font: MGPDisplay */
 @font-face {
     font-family: 'MGPDisplay';
-    src: url('public/fonts/VF/MGPDisplay-VF.ttf') format('truetype');
+    src: url('/fonts/VF/MGPDisplay-VF.ttf') format('truetype');
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
@@ -348,15 +348,15 @@
 /* Variable Font: MGPInline */
 @font-face {
     font-family: 'MGPInline';
-    src: url('public/fonts/VF/MGPInline-VF.ttf') format('truetype');
+    src: url('/fonts/VF/MGPInline-VF.ttf') format('truetype');
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
 }
 
-.riders-tabs .ant-tabs-tab-btn {
-    font-size: 18px !important;
-}
+/*.riders-tabs .ant-tabs-tab-btn {*/
+/*    font-size: 18px !important;*/
+/*}*/
 
 @tailwind base;
 @tailwind components;
