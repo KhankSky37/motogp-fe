@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from "react";
-import { Tabs, ConfigProvider } from "antd";
+import React, {useMemo, useState} from "react";
+import {Tabs, ConfigProvider} from "antd";
 import dayjs from "dayjs";
-import { getImageUrl } from "../../../utils/urlHelpers.jsx";
+import {getImageUrl} from "../../../utils/urlHelpers.jsx";
 import "dayjs/locale/en";
 
 import randomImg01 from "../../../assets/01Thai.jpg";
@@ -20,9 +20,9 @@ import randomImg13 from "../../../assets/20malasya.png";
 import randomImg14 from "../../../assets/21 Portugal.png";
 import randomImg15 from "../../../assets/22 valencia.png";
 
-const { TabPane } = Tabs;
+const {TabPane} = Tabs;
 
-const DetailEvent = ({ schedule, event }) => {
+const DetailEvent = ({schedule, event}) => {
   const days = Object.keys(schedule);
   const [activeKey, setActiveKey] = useState("overview");
 
@@ -106,7 +106,7 @@ const DetailEvent = ({ schedule, event }) => {
               activeKey={activeKey}
               onChange={setActiveKey}
               tabBarGutter={32}
-              tabBarStyle={{ fontWeight: "bold", fontSize: 16 }}
+              tabBarStyle={{fontWeight: "bold", fontSize: 16}}
               items={[
                 {
                   key: "overview",
@@ -137,67 +137,83 @@ const DetailEvent = ({ schedule, event }) => {
       {/* CONTENT AREA */}
       <div className="bg-white text-black px-4 sm:px-12 py-8">
         {activeKey === "overview" && (
-          <Tabs
-            defaultActiveKey={days[0]}
-            tabBarGutter={40}
-            className="custom-tabs mt-4"
-            tabBarStyle={{ fontWeight: "bold", fontSize: 16 }}
+          <ConfigProvider
+            theme={{
+              components: {
+                Tabs: {
+                  itemColor: "#000000",
+                  itemSelectedColor: "#000000",
+                  itemHoverColor: "#000000",
+                  inkBarColor: "#000000",
+                },
+              },
+            }}
           >
-            {days.map((date) => (
-              <TabPane
-                key={date}
-                tab={
-                  <div className="text-center leading-tight">
-                    <div className="text-lg font-bold">
-                      {dayjs(date).format("D")}
+            <Tabs
+              defaultActiveKey={days[0]}
+              tabBarGutter={40}
+              className="custom-tabs mt-4 font-MGPDisplay"
+              tabBarStyle={{fontWeight: "bold", fontSize: 16}}
+            >
+              {days.map((date) => (
+                <TabPane
+                  key={date}
+                  tab={
+                    <div className="text-center leading-tight">
+                      <div className="text-lg font-bold">
+                        {dayjs(date).format("D")}
+                      </div>
+                      <div className="text-sm capitalize">
+                        {dayjs(date).format("dddd")}
+                      </div>
                     </div>
-                    <div className="text-sm capitalize">
-                      {dayjs(date).format("dddd")}
-                    </div>
-                  </div>
-                }
-              >
-                <div className="mt-4">
-                  {schedule[date].length === 0 ? (
-                    <div className="text-gray-500 italic">No sessions</div>
-                  ) : (
-                    schedule[date].map((session) => (
-                      <div
-                        key={session.id}
-                        className="grid [grid-template-columns:230px_auto_260px_1fr_auto] items-center border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100 transition h-[86px] overflow-hidden gap-12"
-                      >
-                        <div className="relative h-full flex flex-col justify-center">
-                          <div className="absolute inset-0 z-0">
-                            <div className="flex flex-col justify-center finished-label w-full h-full pl-[60px] text-white text-xs font-extrabold">
-                              <div className="font-bold text-white">
-                                {dayjs(session.sessionDatetime).format("HH:mm")}
+                  }
+                >
+                  <div className="mt-4">
+                    {schedule[date].length === 0 ? (
+                      <div className="text-gray-500 italic">No sessions</div>
+                    ) : (
+                      schedule[date].map((session) => (
+                        <div
+                          key={session.id}
+                          className="grid [grid-template-columns:230px_auto_260px_1fr_auto] items-center border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100 transition h-[86px] overflow-hidden gap-12"
+                        >
+                          <div className="relative h-full flex flex-col justify-center">
+                            <div className="absolute inset-0 z-0">
+                              <div
+                                className="flex flex-col justify-center finished-label w-full h-full pl-[60px] text-white text-xs font-extrabold">
+                                <div className="font-bold text-white">
+                                  {dayjs(session.sessionDatetime).format("HH:mm")}
+                                </div>
+                                <div>FINISHED</div>
                               </div>
-                              <div>FINISHED</div>
                             </div>
                           </div>
+                          <div className="text-start text-gray-700 font-medium font-MGPText text-xl">
+                            {session.category.categoryId}
+                          </div>
+                          <div className="text-start text-gray-700 font-medium px-12">
+                            {session.sessionType}
+                          </div>
+                          <div></div>
+                          <div className="flex justify-center space-x-2">
+                            <button
+                              className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
+                              RESULTS
+                            </button>
+                            <button
+                              className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
+                              REPLAY
+                            </button>
+                          </div>
                         </div>
-                        <div className="text-start text-gray-700 font-medium">
-                          {session.category.categoryId}
-                        </div>
-                        <div className="text-start text-gray-700 font-medium px-12">
-                          {session.sessionType}
-                        </div>
-                        <div></div>
-                        <div className="flex justify-center space-x-2">
-                          <button className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
-                            RESULTS
-                          </button>
-                          <button className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
-                            REPLAY
-                          </button>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </TabPane>
-            ))}
-          </Tabs>
+                      ))
+                    )}
+                  </div>
+                </TabPane>
+              ))}
+            </Tabs>
+          </ConfigProvider>
         )}
 
         {activeKey === "starting-grid" && (
