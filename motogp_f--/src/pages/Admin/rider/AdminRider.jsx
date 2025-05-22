@@ -75,6 +75,7 @@ const AdminRider = () => {
       setRiders(prev => prev.filter(rider => rider.riderId !== riderId));
     } catch (error) {
       console.error("Error deleting rider:", error);
+      messageApi.error("Failed to delete rider. Please try again.");
     }
   };
 

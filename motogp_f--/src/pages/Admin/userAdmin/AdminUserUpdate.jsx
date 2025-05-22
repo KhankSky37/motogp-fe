@@ -133,7 +133,6 @@ const AdminUserUpdate = () => {
               <Form.Item
                 name="name"
                 label="Full Name"
-                rules={[{required: true, message: 'Please input the full name!'}]}
               >
                 <Input placeholder="Enter full name"/>
               </Form.Item>

@@ -138,7 +138,7 @@ const AdminResultCreate = () => {
               {sessions.map((session) => (
                 <Option key={session.id} value={session.id}>
                   {session.event?.name
-                    ? `${session.event.name} - ${session.sessionType}`
+                    ? `${session.event.name} - ${session.category?.name} -  ${session.sessionType}`
                     : session.sessionType}
                 </Option>
               ))}

@@ -6,7 +6,8 @@ import {
   EyeOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import { formatDate } from "../../../utils/formatters"; // Import helper
+import { formatDate } from "../../../utils/formatters";
+import {COUNTRIES} from "../../../constants/Countries.jsx"; // Import helper
 
 const safeStringSorter = (field) => (a, b) => {
   const valA = a[field] || "";
@@ -56,6 +57,7 @@ const RiderTable = ({
       title: "Nationality",
       dataIndex: "nationality",
       key: "nationality",
+      render: (text) => getCountryName(text),
     },
     {
       title: "Date of Birth",
@@ -106,7 +108,11 @@ const RiderTable = ({
       ),
     },
   ];
-
+  const getCountryName = (countryCode) => {
+    if (!countryCode) return "Unknown";
+    const country = COUNTRIES.find((c) => c.code === countryCode);
+    return country ? country.name : countryCode;
+  };
   return (
     <Spin spinning={loading}>
       <Table
