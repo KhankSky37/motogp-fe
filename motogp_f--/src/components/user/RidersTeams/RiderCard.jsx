@@ -45,25 +45,25 @@ const RiderCard = ({ rider, teamName }) => {
             </div>
 
             {/* Info area */}
-            <div className="relative px-4 py-3 z-20 bg-black/70">
+            <div className="absolute w-full bottom-0 left-0 px-4 py-6 z-20 ">
                 {/* Small ID phía trên tên */}
                 <div className="mb-1">
-                    <Text className="text-lg font-bold font-mono text-white">{`#${upperRiderId}`}</Text>
+                    <Text className="text-lg font-bold font-MGPDisplay text-white">{`#${upperRiderId}`}</Text>
                 </div>
 
-                <Title level={4} className="!m-0 !text-white !uppercase !font-extrabold leading-tight">
+                <Title level={4} className="!text-2xl !m-0 !text-white !uppercase !font-bold font-MGPDisplay">
                     {fullName}
                 </Title>
 
-                <div className="flex items-center gap-2 mt-1 text-sm opacity-90">
+                <div className="flex items-center gap-2 mt-1 text-lg">
                     <img
                         src={`https://flagcdn.com/w40/${countryCode}.png`}
                         alt={nationality}
-                        className="w-6 h-4 rounded"
+                        className="w-7 h-5 rounded-sm"
                     />
-                    <Text className="text-white">{nationality}</Text>
-                    <span className="mx-2 text-white">|</span>
-                    <Text className="text-white">{teamName || "Unknown Team"}</Text>
+                    <Text className="text-colorText font-MGPText capitalize">{nationality}</Text>
+                    <span className="text-colorText font-MGPText capitalize">|</span>
+                    <Text className="text-colorText font-MGPText capitalize">{teamName || "Unknown Team"}</Text>
                 </div>
             </div>
         </div>

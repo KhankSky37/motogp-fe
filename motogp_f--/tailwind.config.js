@@ -19,6 +19,9 @@ export default {
       //   bold: '700',
       //   black: '900',
       // },
+      colors: {
+        'colorText': '#C6C6C6',
+      }
     },
   },
   plugins: [],
