@@ -213,6 +213,14 @@ const DetailEvent = ({ schedule, event }) => {
           <div className="p-6 text-gray-700 italic">Destination Guide content goes here.</div>
         )}
       </div>
+
+      {/* Custom Style */}
+      <style jsx>{`
+          .finished-label {
+              background-color: #171c21;
+              clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+          }
+      `}</style>
     </>
   );
 };
