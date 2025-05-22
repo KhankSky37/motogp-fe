@@ -155,6 +155,7 @@ const ResultTable = ({
     <Table
       columns={columns}
       dataSource={results}
+      bordered
       rowKey="id"
       loading={loading}
       pagination={pagination || { pageSize: 10 }}

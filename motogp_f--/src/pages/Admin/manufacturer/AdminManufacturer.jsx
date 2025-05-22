@@ -212,7 +212,6 @@ const AdminManufacturer = () => {
     <div className="manufacturer-management">
       {contextHolder}
 
-      <Card className="mb-4">
         <div className="flex justify-between items-center mb-4">
           <Title level={3} className="m-0">
             Manufacturer Management
@@ -260,7 +259,6 @@ const AdminManufacturer = () => {
           visible={isModalVisible}
           onClose={handleModalClose}
         />
-      </Card>
     </div>
   );
 };

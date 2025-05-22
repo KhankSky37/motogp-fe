@@ -128,6 +128,7 @@ const SessionTable = ({
     <Table
       columns={columns}
       dataSource={sessions}
+      bordered
       rowKey="id"
       loading={loading}
       pagination={pagination || { pageSize: 10 }}

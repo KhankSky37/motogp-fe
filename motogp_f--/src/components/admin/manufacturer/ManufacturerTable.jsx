@@ -136,6 +136,7 @@ const ManufacturerTable = ({
       {contextHolder}
       <Table
         rowKey="id"
+        bordered
         columns={columns}
         dataSource={dataSource}
         loading={loading}
