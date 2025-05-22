@@ -231,7 +231,7 @@ const Calendar = () => {
 
                 return (
                   <div key={monthKey} className="flex flex-col gap-4">
-                    <div className="text-2xl font-bold mb-[-12px]">{month.label}</div>
+                    <div className="text-base font-bold mb-[-12px]">{month.label}</div>
                     {allItems.map((item) => {
                       const idx = globalIndex++;
                       if (item.type === "race") {
