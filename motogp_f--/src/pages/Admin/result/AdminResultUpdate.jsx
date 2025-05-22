@@ -60,7 +60,7 @@ const AdminResultUpdate = () => {
         // Set form values from result data
         const resultData = resultResponse.data;
         form.setFieldsValue({
-          sessionId: resultData.session?.id,
+          sessionId: resultData.sessionId,
           riderId: resultData.rider?.riderId,
           teamId: resultData.team?.id,
           manufacturerId: resultData.manufacturer?.id,
