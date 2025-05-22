@@ -27,7 +27,7 @@ const GPGridView = ({ event, index, isUpNext }) => {
   const countryCode = event.circuit?.locationCountry || "";
 
   const textColor = status === "upcoming" ? "text-white" : "text-black";
-  const subTextColor = status === "upcoming" ? "text-gray-300" : "text-[#606060]";
+  const subTextColor = status === "upcoming" ? "text-[#C6C6C6]" : "text-[#606060]";
 
   return (
     <div
@@ -48,13 +48,13 @@ const GPGridView = ({ event, index, isUpNext }) => {
       {status && (
         <div
           className={classNames(
-            "absolute top-0 right-0 px-4 py-2 text-white text-xs font-semibold rounded-bl-md",
+            "absolute font-MGPText top-0 right-0 px-4 py-1 text-white text-base font-medium rounded-bl-md",
             status === "finished" ? "bg-black" : "bg-red-600"
           )}
           style={{
             clipPath: "polygon(100% 0, 100% 100%, 20% 100%, 0% 0%, 0 0)",
-            width: "110px",
-            textAlign: "center",
+            width: "115px",
+            textAlign: "end",
             whiteSpace: "nowrap",
           }}
         >
@@ -78,8 +78,8 @@ const GPGridView = ({ event, index, isUpNext }) => {
 
       {/* Ngày tháng */}
       <div
-        className={`text-lg font-normal tracking-wide mb-2 ${
-          status === "upcoming" ? "text-gray-300" : "text-gray-500"
+        className={`text-sm font-MGPDisplay font-light tracking-wide mb-2 ${
+          status === "upcoming" ? "text-[#C6C6C6]" : "text-[#606060]"
         }`}
       >
         {start} - {end}
@@ -87,17 +87,19 @@ const GPGridView = ({ event, index, isUpNext }) => {
 
       {/* Tên quốc gia (tiêu đề) */}
       <div
-        className={`text-lg font-MGPDisplay leading-none uppercase mb-1 ${textColor}`}
+        className={`text-lg font-MGPDisplay  font-light leading-none uppercase mb-1 ${
+          status === "upcoming" ? "text-[#C6C6C6]" : "text-[#606060]"
+        }`}
       >
-        {index + 1}
-        <span className="ml-2 font-[500]">
+          {index + 1}
+        <span className={`font-bold ml-1 ${textColor}`}>
           {event.name}
         </span>
       </div>
 
       {/* Tên chính thức */}
       <div
-        className={`text-sm font-[300] leading-snug ${subTextColor}`}
+        className={`text-sm font-MGPText leading-snug ${subTextColor}`}
       >
         {event.officialName}
       </div>
