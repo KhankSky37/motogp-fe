@@ -184,7 +184,7 @@ const Calendar = () => {
       <div className="bg-[#F4F4F4] px-12 py-6 text-black">
         {activeTab === "gps" ? (
           <div className="flex flex-col gap-6">
-            <div className="flex space-x-2 mb-4 font-MGPText font-bold text-sm">
+            <div className="flex space-x-2 mb-4 font-MGPText font-bold text-sm ">
               <button
                 onClick={() => handleViewChange("grid")}
                 className={`px-6 py-2 rounded-full uppercase transition ${
@@ -231,7 +231,7 @@ const Calendar = () => {
 
                 return (
                   <div key={monthKey} className="flex flex-col gap-4">
-                    <div className="text-base font-bold mb-[-12px]">{month.label}</div>
+                    <div className="text-base font-bold font-MGPDisplay">{month.label}</div>
                     {allItems.map((item) => {
                       const idx = globalIndex++;
                       if (item.type === "race") {
@@ -268,7 +268,7 @@ const Calendar = () => {
             const { label, events } = testByMonth[monthKey];
             return (
               <div key={monthKey} className="flex flex-col gap-4">
-                <div className="text-2xl font-bold mb-[-12px]">{label}</div>
+                <div className="text-base font-bold font-MGPDisplay mt-4">{label}</div>
                 <div className="grid grid-cols-1 gap-2">
                   {events.map((event) => {
                     const index = testGlobalIndex++;
