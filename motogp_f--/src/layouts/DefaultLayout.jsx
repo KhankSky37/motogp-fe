@@ -91,9 +91,9 @@ const DefaultLayout = () => {
   );
 
   return (
-    <Layout>
+    <Layout className="text-[#C6C6C6]">
       <div
-        className="bg-black text-gray-300 px-4 sm:px-8 py-2 flex justify-end text-xs sm:text-sm border-b border-white">
+        className="bg-black text-gray-300 px-4 sm:px-8 py-2 flex justify-end font-MGPText sm:text-sm border-b border-white">
         <div className="flex items-center space-x-3 sm:space-x-4 overflow-x-auto">
           <span className="hover:text-white whitespace-nowrap cursor-pointer">Tickets</span>
           <span className="hover:text-white whitespace-nowrap cursor-pointer">Hospitality</span>
@@ -158,7 +158,7 @@ const DefaultLayout = () => {
             items={items}
             onClick={handleMenuClick}
             style={{flex: 1, minWidth: 0}}
-            className="text-white font-medium bg-black"
+            className="font-MGPText text-lg font-medium bg-black"
           />
         </ConfigProvider>
 
@@ -189,7 +189,7 @@ const DefaultLayout = () => {
       <Content>
         <Outlet/>
       </Content>
-      <Footer className={"py-4 border-t"} style={{margin: 0, padding: 0}}>
+      <Footer className={"py-4 border-t font-MGPText text-lg"} style={{margin: 0, padding: 0}}>
         <div className={"border-b p-6"}>
           <svg
             id="Layer_1"
@@ -300,7 +300,7 @@ const DefaultLayout = () => {
 
           {/* Cột 4 */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Game Hub</h3>
+            <h3 className="font-bold mb-4">Game Hub</h3>
             <ul className="space-y-2 text-[18px]">
               <li>
                 <a href="#">MotoGP™ Fantasy</a>
