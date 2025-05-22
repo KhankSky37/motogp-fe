@@ -72,6 +72,7 @@ const NewsArticleGrid = ({ articles, loading, articleType }) => {
                       whiteSpace: "normal",
                       overflow: "visible",
                     }}
+                    className={'font-MGPText'}
                   >
                     {article.title}
                   </Typography.Title>

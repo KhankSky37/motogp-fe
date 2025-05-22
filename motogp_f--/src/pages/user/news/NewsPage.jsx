@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Skeleton, Empty, Row, Col } from "antd"; // Thêm Row và Col từ Antd
+import {Typography, Skeleton, Empty, Row, Col, ConfigProvider, Tabs} from "antd"; // Thêm Row và Col từ Antd
 import { useNavigate } from "react-router-dom";
 import { RightOutlined } from "@ant-design/icons";
 import NewsArticleService from "../../../services/NewsArticleService.jsx";
@@ -10,6 +10,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CustomArrow from "../../../components/user/home/CustomArrow.jsx";
+import ResultsHeader from "../../../components/user/result/ResultsHeader.jsx";
 
 const { Title } = Typography;
 
@@ -44,8 +45,41 @@ const NewsPage = () => {
     fetchArticles();
   }, []);
 
+  const items=[
+    {
+      key: "NEWS",
+      label: <span className="font-medium text-lg font-MGPText">NEWS</span>,
+    },
+    {
+      key:"gp-report",
+      label: <span className="font-medium text-lg font-MGPText">GP REPORTS</span>,
+    },
+    {
+      key:"offical",
+      label: <span className="font-medium text-lg font-MGPText">OFFICAL COMMUNICATIONS</span>,
+    }
+  ]
   return (
     <>
+      <ResultsHeader title={"news"}/>
+      <div className={"px-12 relative bg-[#c80502]"}>
+        <div className="absolute inset-0 bg-black opacity-85"></div>
+        <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-l to-black from-transparent"></div>
+        <ConfigProvider
+          theme={{
+            components: {
+              Tabs: {
+                itemColor: "#ffffff",
+                itemSelectedColor: "#ffffff",
+                itemHoverColor: "#ffffff",
+                inkBarColor: "#ffffff",
+              },
+            },
+          }}
+        >
+          <Tabs items={items} rootClassName={"relative"}/>
+        </ConfigProvider>
+      </div>
       <div className="relative w-full h-[400px] flex items-end overflow-hidden">
         <img
           src={headerImg}
@@ -55,14 +89,13 @@ const NewsPage = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent z-10" />
         <div className="relative z-20 p-10 pb-14 max-w-2xl flex items-end">
           <div className="flex-1">
-            <div className="text-white/80 text-sm mb-2">MotoGP™ News</div>
+            <div className="text-white/80 text-sm mb-2 font-MGPText">MotoGP™ News</div>
             <h1
-              className="text-4xl md:text-5xl font-extrabold uppercase text-white leading-tight drop-shadow-lg mb-6"
-              style={{ fontFamily: "inherit" }}
+              className="font-MGPDisplay text-4xl font-extrabold uppercase text-white leading-tight drop-shadow-lg mb-6"
             >
               ESPARGARO SET FOR SECOND HRC WILDCARD AT SILVERSTONE
             </h1>
-            <button className="bg-red-600 hover:bg-red-700 text-white font-bold rounded-full px-6 py-2 text-base shadow-lg transition-all">
+            <button className="font-MGPText bg-red-600 hover:bg-red-700 text-white font-bold rounded-full px-6 py-2 text-base shadow-lg transition-all">
               READ NOW
             </button>
           </div>
@@ -80,13 +113,13 @@ const NewsPage = () => {
               <div key={type} className="mb-10">
                 <div className="flex items-center justify-between mb-4">
                   <Title
-                    level={2}
-                    className="pl-2 border-l-4 border-blue-600 mb-0 text-2xl font-semibold"
+                    level={3}
+                    className="font-MGPDisplay pl-2 border-l-4 border-blue-600 mb-0 text-xl font-semibold"
                   >
                     {type}
                   </Title>
                   <button
-                    className="flex items-center text-sm font-bold uppercase text-black hover:text-red-600 transition-colors duration-300 group"
+                    className="flex items-center text-sm font-bold uppercase text-black hover:text-red-600 transition-colors duration-300 group font-MGPDisplay"
                     onClick={() =>
                       navigate(`/news?type=${encodeURIComponent(type)}`)
                     }
@@ -147,7 +180,17 @@ const NewsPage = () => {
               </div>
             ))
         )}
+        <div className="flex flex-col justify-center mt-16 bg-[#171c21] p-6 text-center items-center">
+          <div className={"text-4xl text-white font-extrabold text-center mb-4 font-MGPDisplay"}>Get the official MotoGP™ Newsletter!
+          </div>
+          <div className={'text-white text-center mb-8 font-MGPText'}>Create a MotoGP™ account now and gain access to exclusive
+            content, such as the MotoGP™ Newsletter, which
+            features GP Reports, incredible videos and other interesting information about our sport.
+          </div>
+          <div className={"bg-white w-40 text-center px-5 py-3 rounded-3xl font-semibold"}>SIGN UP FOR FREE</div>
+        </div>
       </div>
+
     </>
   );
 };
