@@ -153,10 +153,10 @@ const DetailEvent = ({ schedule, event }) => {
                         <div className="relative h-full flex flex-col justify-center">
                           <div className="absolute inset-0 z-0">
                             <div className="flex flex-col justify-center finished-label w-full h-full pl-[60px] text-white text-xs font-extrabold">
-                              <div className="font-bold text-white">
+                              <div className="font-bold text-white font-MGPText">
                                 {dayjs(session.sessionDatetime).format("HH:mm")}
                               </div>
-                              <div>FINISHED</div>
+                              <div className="font-MGPText">FINISHED</div>
                             </div>
                           </div>
                         </div>

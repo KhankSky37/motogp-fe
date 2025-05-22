@@ -1,142 +1,212 @@
-import React, { useState } from "react";
-import ReactCountryFlag from "react-country-flag";
-import classNames from "classnames";
+import React, { useMemo, useState } from "react";
+import { Tabs, ConfigProvider } from "antd";
 import dayjs from "dayjs";
-import countries from "i18n-iso-countries";
-import enLocale from "i18n-iso-countries/langs/en.json";
+import { getImageUrl } from "../../../utils/urlHelpers.jsx";
+import "dayjs/locale/en";
 
-countries.registerLocale(enLocale);
+import randomImg01 from "../../../assets/01Thai.jpg";
+import randomImg02 from "../../../assets/THAI1.png";
+import randomImg03 from "../../../assets/03 Americas.jpg";
+import randomImg04 from "../../../assets/04 Qatarnew.png";
+import randomImg05 from "../../../assets/12 CZE.png";
+import randomImg06 from "../../../assets/13 Austria.png";
+import randomImg07 from "../../../assets/14 Hungary.png";
+import randomImg08 from "../../../assets/15 Catalunya.png";
+import randomImg09 from "../../../assets/16 San Marino.png";
+import randomImg10 from "../../../assets/17 Japan.png";
+import randomImg11 from "../../../assets/18 Indonesia.png";
+import randomImg12 from "../../../assets/19 australia.png";
+import randomImg13 from "../../../assets/20malasya.png";
+import randomImg14 from "../../../assets/21 Portugal.png";
+import randomImg15 from "../../../assets/22 valencia.png";
 
-const formatDate = (date) => dayjs(date).format("DD MMM").toUpperCase();
-const getCountryCode = (name) => countries.getAlpha2Code(name, "en") || "";
+const { TabPane } = Tabs;
 
-const formatName = (full) => {
-  const parts = full.trim().split(/\s+/);
-  if (parts.length === 0) return "";
-  if (parts.length === 1)
-    return parts[0].charAt(0).toUpperCase() + parts[0].slice(1).toLowerCase();
-  const lastName = parts.pop();
-  const firstInitial = parts[0].charAt(0).toUpperCase() + ".";
-  return `${firstInitial} ${lastName.charAt(0).toUpperCase()}${lastName.slice(1).toLowerCase()}`;
-};
+const DetailEvent = ({ schedule, event }) => {
+  const days = Object.keys(schedule);
+  const [activeKey, setActiveKey] = useState("overview");
 
-const getOrdinalSuffix = (rank) => {
-  if (rank === 1) return "st";
-  if (rank === 2) return "nd";
-  if (rank === 3) return "rd";
-  return "th";
-};
-
-const gradientSets = [
-  { 1: "from-black to-red-800", 2: "from-black to-gray-400", 3: "from-black to-red-900" },
-  { 1: "from-black to-blue-800", 2: "from-black to-yellow-600", 3: "from-black to-blue-900" },
-  { 1: "from-black to-red-900", 2: "from-black to-gray-500", 3: "from-black to-red-800" },
-  { 1: "from-black to-blue-900", 2: "from-black to-yellow-600", 3: "from-black to-blue-800" },
-  { 1: "from-black to-red-800", 2: "from-black to-gray-400", 3: "from-black to-red-900" },
-];
-
-const PodiumCard = ({ rider, gradients }) => {
-  const heightMap = { 1: "h-[120px]", 2: "h-[110px]", 3: "h-[100px]" };
-  const gradientMap = gradients || gradientSets[0];
-  const width = "w-[130px]";
+  const bgImage = useMemo(() => {
+    const images = [
+      randomImg01, randomImg02, randomImg03, randomImg04, randomImg05,
+      randomImg06, randomImg07, randomImg08, randomImg09, randomImg10,
+      randomImg11, randomImg12, randomImg13, randomImg14, randomImg15,
+    ];
+    const seed = event?.round || event?.name?.length || 0;
+    return images[seed % images.length];
+  }, [event]);
 
   return (
-    <div
-      className={classNames(
-        "flex flex-col items-center rounded-md text-white shadow-md p-2 relative font-MGPText",
-        `bg-gradient-to-b ${gradientMap[rider.rank]}`,
-        width,
-        heightMap[rider.rank]
-      )}
-    >
-      {rider.photoUrl && (
-        <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-white absolute -top-6 bg-black">
-          <img
-            src={rider.photoUrl}
-            alt={rider.name}
-            className="absolute w-20 h-20 object-cover scale-125"
-            style={{ top: "15px", left: "5px" }}
-          />
-        </div>
-      )}
-
+    <>
+      {/* BACKGROUND + INFO */}
       <div
-        className="flex flex-col items-center absolute left-1/2"
-        style={{ bottom: "10px", transform: "translateX(-50%)" }}
+        className="relative bg-cover bg-center text-white"
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          height: "330px",
+        }}
       >
-        <div className="flex items-baseline gap-1 font-MGPDisplay font-light">
-          <span className="text-[24px] leading-none tracking-tight">
-            {rider.rank}
-          </span>
-          <span className="text-xs tracking-wide">
-            {getOrdinalSuffix(rider.rank)}
-          </span>
-        </div>
-        <span className="text-base font-MGPText font-medium tracking-wide text-center whitespace-nowrap">
-          {formatName(rider.name)}
-        </span>
-      </div>
-    </div>
-  );
-};
-
-const GPListViewResults = ({ index, eventName, officialName, startDate, endDate, riders = [] }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const countryCode = getCountryCode(eventName);
-  const gradients = gradientSets[index % gradientSets.length];
-
-  return (
-    <div
-      className="flex relative w-full rounded-xl overflow-hidden shadow-md transition-shadow cursor-pointer px-[20px] py-5"
-      style={{
-        backgroundColor: "#ffffff",
-        boxShadow: isHovered ? "0 0 1rem rgba(0,0,0,0.25)" : "0 2px 26px rgba(0,0,0,0.05)",
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* LEFT: GP Info */}
-      <div className="flex flex-col gap-1 w-2/3 relative font-MGPText">
-        {/* Flag + date */}
-        <div className="flex items-center gap-1">
-          <ReactCountryFlag
-            countryCode={countryCode}
-            svg
-            style={{
-              width: "36px",
-              height: "24px",
-              filter: "contrast(1.2) saturate(1.3)",
-            }}
-            title={eventName}
-          />
-          <div className="text-base font-light font-MGPDisplay tracking-wide text-[#606060]">
-            {formatDate(startDate)} - {formatDate(endDate)}
+        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+        <div className="absolute inset-0 bg-black/40 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent"></div>
+        <div className="relative z-10 px-4 sm:px-12 py-12">
+          <div className="text-white text-base font-medium">
+            <div className="flex items-center gap-4 text-[20px]">
+              <img
+                src={`https://flagsapi.com/${event.circuit.locationCountry}/flat/32.png`}
+                alt="flag"
+                className="w-9 h-7 object-cover"
+              />
+              <div className="text-xl font-light font-MGPDisplay uppercase">
+                {dayjs(event.startDate).format("MMM D")} – {dayjs(event.endDate).format("MMM D")}
+              </div>
+            </div>
+            <h1 className="text-5xl font-MGPDisplay uppercase mt-4">{event.name}</h1>
+            <p className="text-xl mt-1 font-light">{event.officialName}</p>
+          </div>
+          <div className="flex items-center gap-4 mt-2">
+            <img
+              src={getImageUrl(event.circuit.imageUrl)}
+              alt="circuit"
+              className="w-6 h-6"
+            />
+            <p>{event.circuit.name}</p>
+          </div>
+          <div className="flex gap-4 mt-6">
+            {["Results", "Replays", "Standings"].map((label) => (
+              <button
+                key={label}
+                className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full uppercase shadow-md"
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </div>
+      </div>
 
-        {/* Event Name */}
-        <div className="text-[40px] uppercase flex items-center gap-3 font-MGPDisplay text-black leading-tight">
-          <span className="font-light text-[#606060]">{index + 1}</span>
-          <span className="font-extrabold tracking-wide">{eventName}</span>
-        </div>
-
-        {/* Official Name */}
-        <div className="text-base font-light leading-snug font-MGPText text-[#606060]">
-          {officialName}
+      {/* MAIN TABS */}
+      <div className="relative px-4 sm:px-12 bg-[#c80502]">
+        <div className="absolute inset-0 bg-black opacity-85 z-0"></div>
+        <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-l to-black from-transparent z-0"></div>
+        <div className="relative z-10">
+          <ConfigProvider
+            theme={{
+              components: {
+                Tabs: {
+                  itemColor: "#ffffff",
+                  itemSelectedColor: "#ffffff",
+                  itemHoverColor: "#ffffff",
+                  inkBarColor: "#ffffff",
+                },
+              },
+            }}
+          >
+            <Tabs
+              activeKey={activeKey}
+              onChange={setActiveKey}
+              tabBarGutter={32}
+              tabBarStyle={{ fontWeight: "bold", fontSize: 16 }}
+            >
+              <TabPane tab="Overview" key="overview" />
+              <TabPane tab="Starting Grid" key="starting-grid" />
+              <TabPane tab="Entry List" key="entry-list" />
+              <TabPane tab="Circuit Info" key="circuit-info" />
+              <TabPane tab="Destination Guide" key="destination-guide" />
+            </Tabs>
+          </ConfigProvider>
         </div>
       </div>
 
-      {/* RIGHT: Top 3 Riders */}
-      <div className="flex absolute bottom-0 right-0 items-end gap-1">
-        {[2, 1, 3]
-          .map((rank) => riders.find((r) => r.rank === rank))
-          .filter(Boolean)
-          .map((rider, idx) => (
-            <PodiumCard key={idx} rider={rider} gradients={gradients} />
-          ))}
+      {/* CONTENT AREA */}
+      <div className="bg-white text-black px-4 sm:px-12 py-8">
+        {activeKey === "overview" && (
+          <Tabs
+            defaultActiveKey={days[0]}
+            tabBarGutter={40}
+            className="custom-tabs mt-4"
+            tabBarStyle={{ fontWeight: "bold", fontSize: 16 }}
+          >
+            {days.map((date) => (
+              <TabPane
+                key={date}
+                tab={
+                  <div className="text-center leading-tight">
+                    <div className="text-lg font-bold">
+                      {dayjs(date).format("D")}
+                    </div>
+                    <div className="text-sm capitalize">
+                      {dayjs(date).format("dddd")}
+                    </div>
+                  </div>
+                }
+              >
+                <div className="mt-4">
+                  {schedule[date].length === 0 ? (
+                    <div className="text-gray-500 italic">No sessions</div>
+                  ) : (
+                    schedule[date].map((session) => (
+                      <div
+                        key={session.id}
+                        className="grid [grid-template-columns:230px_auto_260px_1fr_auto] items-center border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100 transition h-[86px] overflow-hidden gap-12"
+                      >
+                        <div className="relative h-full flex flex-col justify-center">
+                          <div className="absolute inset-0 z-0">
+                            <div className="flex flex-col justify-center finished-label w-full h-full pl-[60px] text-white text-xs font-extrabold">
+                              <div className="font-bold text-white font-MGPText">
+                                {dayjs(session.sessionDatetime).format("HH:mm")}
+                              </div>
+                              <div className="font-MGPText">FINISHED</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-start text-gray-700 font-medium">
+                          {session.category.categoryId}
+                        </div>
+                        <div className="text-start text-gray-700 font-medium px-12">
+                          {session.sessionType}
+                        </div>
+                        <div></div>
+                        <div className="flex justify-center space-x-2">
+                          <button className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
+                            RESULTS
+                          </button>
+                          <button className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
+                            REPLAY
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </TabPane>
+            ))}
+          </Tabs>
+        )}
+
+        {activeKey === "starting-grid" && (
+          <div className="p-6 text-gray-700 italic">Starting Grid content goes here.</div>
+        )}
+        {activeKey === "entry-list" && (
+          <div className="p-6 text-gray-700 italic">Entry List content goes here.</div>
+        )}
+        {activeKey === "circuit-info" && (
+          <div className="p-6 text-gray-700 italic">Circuit Info content goes here.</div>
+        )}
+        {activeKey === "destination-guide" && (
+          <div className="p-6 text-gray-700 italic">Destination Guide content goes here.</div>
+        )}
       </div>
-    </div>
+
+      {/* Custom Style */}
+      <style jsx>{`
+          .finished-label {
+              background-color: #171c21;
+              clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+          }
+      `}</style>
+    </>
   );
 };
 
-export default GPListViewResults;
+export default DetailEvent;
