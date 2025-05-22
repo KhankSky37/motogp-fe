@@ -20,13 +20,14 @@ const ResultTable = ({
   const columns = [
     {
      title: "No.",
-      dataIndex: "number",
-      key: "number",
-      render: (text, record, index) => index + 1,
-      width: 50,
-
+      key: "index",
+      width: 60,
+      render: (text, record, index) => {
+        const current = pagination?.current ?? 1;
+        const pageSize = pagination?.pageSize ?? 10;
+        return (current - 1) * pageSize + index + 1;
+      },
     },
- 
     {
       title: "Rider",
       dataIndex: ["rider"],

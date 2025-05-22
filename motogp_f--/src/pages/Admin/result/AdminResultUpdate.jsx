@@ -93,20 +93,16 @@ const AdminResultUpdate = () => {
       setLoading(true);
 
       try {
-        // Format the result object
+        // values từ Form đã chứa các trường như sessionId, riderId, teamId, manufacturerId
+        // nếu các Form.Item có name tương ứng.
+        // Chúng ta chỉ cần đảm bảo payload gửi đi có cấu trúc phẳng mà ResultDto ở backend mong đợi.
         const resultData = {
-          ...values,
-          session: { id: values.sessionId },
-          rider: { riderId: values.riderId },
-          team: { id: values.teamId },
-          manufacturer: { id: values.manufacturerId },
+          ...values, // Giữ lại tất cả các giá trị từ form, bao gồm sessionId, riderId, etc.
         };
 
-        // Remove separate IDs as they're now in nested objects
-        delete resultData.sessionId;
-        delete resultData.riderId;
-        delete resultData.teamId;
-        delete resultData.manufacturerId;
+        // Không cần tạo các đối tượng lồng nhau như session: { id: ... }
+        // và không cần xóa các ID ở cấp cao nhất nữa, vì backend ResultDto
+        // (dựa trên ResultServiceImpl) mong đợi một trường String sessionId.
 
         await ResultService.updateResult(resultId, resultData);
         messageApi.success("Result updated successfully!");
@@ -179,31 +175,31 @@ const AdminResultUpdate = () => {
             </Select>
           </Form.Item>
 
-            <Form.Item
-                      name="riderId"
-                      label="Rider"
-                      rules={[{required: true, message: "Please select a rider!"}]}
-                    >
-                      <Select
-                        placeholder="Select rider"
-                        loading={ridersLoading}
-                        showSearch
-                        optionLabelProp="label"
-                        filterOption={(input, option) =>
-                          option.label.toLowerCase().includes(input.toLowerCase())
-                        }
-                      >
-                        {riders.map((rider) => (
-                          <Option
-                            key={rider.riderId}
-                            value={rider.riderId}
-                            label={`${rider.firstName} ${rider.lastName}`}
-                          >
-                            {rider.firstName} {rider.lastName}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
+          <Form.Item
+            name="riderId"
+            label="Rider"
+            rules={[{ required: true, message: "Please select a rider!" }]}
+          >
+            <Select
+              placeholder="Select rider"
+              loading={ridersLoading}
+              showSearch
+              optionLabelProp="label"
+              filterOption={(input, option) =>
+                option.label.toLowerCase().includes(input.toLowerCase())
+              }
+            >
+              {riders.map((rider) => (
+                <Option
+                  key={rider.riderId}
+                  value={rider.riderId}
+                  label={`${rider.firstName} ${rider.lastName}`}
+                >
+                  {rider.firstName} {rider.lastName}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
 
           <Form.Item
             name="teamId"

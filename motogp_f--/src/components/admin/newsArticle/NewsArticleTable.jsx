@@ -1,94 +1,124 @@
-import React, {useState} from 'react';
-import {Button, Popconfirm, Space, Table, Tag, Tooltip} from 'antd';
-import {DeleteOutlined, EditOutlined, EyeOutlined} from '@ant-design/icons';
-import {formatDate} from '../../../utils/formatters'; // Giả sử bạn có hàm này
+import React, { useState } from "react";
+import { Button, Popconfirm, Space, Table, Tag, Tooltip } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
+import { formatDate } from "../../../utils/formatters"; // Giả sử bạn có hàm này
 
 const NewsArticleTable = ({
-                            dataSource,
-                            loading,
-                            pagination,
-                            onTableChange,
-                            onEdit,
-                            onDelete,
-                            onView,
-                          }) => {
+  dataSource,
+  loading,
+  pagination,
+  onTableChange,
+  onEdit,
+  onDelete,
+  onView,
+}) => {
   const [confirmLoading, setConfirmLoading] = useState({});
 
   const handleDeleteConfirm = async (id) => {
-    setConfirmLoading(prev => ({...prev, [id]: true}));
+    setConfirmLoading((prev) => ({ ...prev, [id]: true }));
     try {
       await onDelete(id);
     } finally {
-      setConfirmLoading(prev => ({...prev, [id]: false}));
+      setConfirmLoading((prev) => ({ ...prev, [id]: false }));
     }
   };
 
   const columns = [
     {
-      title: 'No.',
-      key: 'index',
+      title: "No.",
+      key: "index",
       width: 60,
       render: (text, record, index) => {
-        const {current = 1, pageSize = 10} = pagination || {};
+        const { current = 1, pageSize = 10 } = pagination || {};
         return (current - 1) * pageSize + index + 1;
       },
     },
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
       sorter: (a, b) => a.title.localeCompare(b.title),
       ellipsis: true,
     },
     {
-      title: 'Article Type',
-      dataIndex: 'articleType',
-      key: 'articleType',
+      title: "Article Type",
+      dataIndex: "articleType",
+      key: "articleType",
       width: 150,
-      render: (type) => <Tag color="cyan">{type || 'N/A'}</Tag>,
-      responsive: ['sm'],
+      render: (type) => <Tag color="cyan">{type || "N/A"}</Tag>,
+      responsive: ["sm"],
     },
     {
-      title: 'Publish Date',
-      dataIndex: 'publishDate',
-      key: 'publishDate',
+      title: "Publish Date",
+      dataIndex: "publishDate",
+      key: "publishDate",
       width: 180,
-      render: (text) => text ? formatDate(text, 'YYYY-MM-DD HH:mm') : '-',
+      render: (text) => (text ? formatDate(text, "YYYY-MM-DD HH:mm") : "-"),
       sorter: (a, b) => new Date(a.publishDate) - new Date(b.publishDate),
-      responsive: ['lg'],
+      responsive: ["lg"],
     },
     {
-      title: 'Article Link',
-      dataIndex: 'articleLink',
-      key: 'articleLink',
+      title: "Article Link",
+      dataIndex: "articleLink",
+      key: "articleLink",
       ellipsis: true,
-      render: (link) => link ? <a href={link} target="_blank" rel="noopener noreferrer">{link}</a> : 'N/A',
-      responsive: ['lg'],
+      render: (link) =>
+        link ? (
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            {link}
+          </a>
+        ) : (
+          "N/A"
+        ),
+      responsive: ["lg"],
     },
     {
-      title: 'Actions',
-      key: 'actions',
+      title: "Actions",
+      key: "actions",
       width: 150,
-      align: 'center',
-      fixed: 'right',
+      align: "center",
+      fixed: "right",
       render: (text, record) => (
         <Space size="small">
-          <Tooltip title="View Details">
-            <Button icon={<EyeOutlined/>} onClick={() => onView(record)} size="small"/>
-          </Tooltip>
+          {onView && (
+            <Tooltip title="View Details">
+              <Button
+                type="default"
+                icon={<EyeOutlined />}
+                onClick={() => onView(record)}
+                size="small"
+              />
+            </Tooltip>
+          )}
           <Tooltip title="Edit Article">
-            <Button icon={<EditOutlined/>} onClick={() => onEdit(record.id)} size="small" type="primary"/>
+            <Button
+              type="primary"
+              ghost
+              icon={<EditOutlined />}
+              onClick={() => onEdit(record.id)}
+              size="small"
+            />
           </Tooltip>
           <Popconfirm
             title="Are you sure to delete this article?"
             onConfirm={() => handleDeleteConfirm(record.id)}
             okText="Yes"
             cancelText="No"
-            okButtonProps={{loading: confirmLoading[record.id]}}
+            placement="topRight"
+            icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+            okButtonProps={{ loading: confirmLoading[record.id] }}
           >
-            <Tooltip title="Delete Article">
-              <Button icon={<DeleteOutlined/>} size="small" danger/>
-            </Tooltip>
+            <Button
+              type="primary"
+              danger
+              icon={<DeleteOutlined />}
+              size="small"
+            />
           </Popconfirm>
         </Space>
       ),
@@ -106,9 +136,10 @@ const NewsArticleTable = ({
         pageSizeOptions: ["10", "20", "50"],
         showTotal: (total, range) =>
           `[${range[0]}-${range[1]}] - ${total} records`,
-      }}      onChange={onTableChange}
+      }}
+      onChange={onTableChange}
       rowKey="id"
-      scroll={{x: 'max-content'}}
+      scroll={{ x: "max-content" }}
     />
   );
 };
