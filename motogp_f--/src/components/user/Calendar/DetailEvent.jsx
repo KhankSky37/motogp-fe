@@ -4,10 +4,10 @@ import dayjs from "dayjs";
 import { getImageUrl } from "../../../utils/urlHelpers.jsx";
 import "dayjs/locale/en";
 
-import randomImg01 from "../../../assets/08 Aragon.png";
-import randomImg02 from "../../../assets/09 Italia.png";
-import randomImg03 from "../../../assets/10 Assen.png";
-import randomImg04 from "../../../assets/11 Sachsenring.png";
+import randomImg01 from "../../../assets/01Thai.jpg";
+import randomImg02 from "../../../assets/THAI1.png";
+import randomImg03 from "../../../assets/03 Americas.jpg";
+import randomImg04 from "../../../assets/04 Qatarnew.png";
 import randomImg05 from "../../../assets/12 CZE.png";
 import randomImg06 from "../../../assets/13 Austria.png";
 import randomImg07 from "../../../assets/14 Hungary.png";
@@ -32,34 +32,37 @@ const DetailEvent = ({ schedule, event }) => {
       randomImg06, randomImg07, randomImg08, randomImg09, randomImg10,
       randomImg11, randomImg12, randomImg13, randomImg14, randomImg15,
     ];
-    return images[Math.floor(Math.random() * images.length)];
-  }, []);
+    const seed = event?.round || event?.name?.length || 0;
+    return images[seed % images.length];
+  }, [event]);
 
   return (
     <>
-      {/* PHẦN BACKGROUND + THÔNG TIN CHẶNG ĐUA */}
+      {/* BACKGROUND + INFO */}
       <div
-        className="relative bg-cover bg-center text-white "
+        className="relative bg-cover bg-center text-white"
         style={{
           backgroundImage: `url(${bgImage})`,
-          height: "460px",
+          height: "330px",
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-        <div className="absolute inset-0 bg-black/70 z-0"></div>
+        <div className="absolute inset-0 bg-black/40 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent"></div>
         <div className="relative z-10 px-4 sm:px-12 py-12">
           <div className="text-white text-base font-medium">
-            <div className="flex items-center gap-4 mt-2">
+            <div className="flex items-center gap-4 text-[20px]">
               <img
                 src={`https://flagsapi.com/${event.circuit.locationCountry}/flat/32.png`}
                 alt="flag"
-                className="w-6 h-6"
+                className="w-9 h-7 object-cover"
               />
-              {dayjs(event.startDate).format("MMM D")} – {dayjs(event.endDate).format("MMM D, YYYY")}
-
-          </div>
-          <h1 className="text-5xl font-extrabold uppercase mt-4">{event.name}</h1>
-          <p className="text-xl mt-1 font-light">{event.officialName}</p>
+              <div className="text-xl font-light font-MGPDisplay uppercase">
+                {dayjs(event.startDate).format("MMM D")} – {dayjs(event.endDate).format("MMM D")}
+              </div>
+            </div>
+            <h1 className="text-5xl font-MGPDisplay uppercase mt-4">{event.name}</h1>
+            <p className="text-xl mt-1 font-light">{event.officialName}</p>
           </div>
           <div className="flex items-center gap-4 mt-2">
             <img
@@ -73,7 +76,7 @@ const DetailEvent = ({ schedule, event }) => {
             {["Results", "Replays", "Standings"].map((label) => (
               <button
                 key={label}
-                className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full font-semibold uppercase shadow-md"
+                className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full uppercase shadow-md"
               >
                 {label}
               </button>
@@ -82,8 +85,8 @@ const DetailEvent = ({ schedule, event }) => {
         </div>
       </div>
 
-      {/* TABS SELECTOR DƯỚI ẢNH */}
-      <div className="relative px-12 bg-[#c80502]">
+      {/* MAIN TABS */}
+      <div className="relative px-4 sm:px-12 bg-[#c80502]">
         <div className="absolute inset-0 bg-black opacity-85 z-0"></div>
         <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-l to-black from-transparent z-0"></div>
         <div className="relative z-10">
@@ -115,7 +118,7 @@ const DetailEvent = ({ schedule, event }) => {
         </div>
       </div>
 
-      {/* PHẦN NỘI DUNG TABS */}
+      {/* CONTENT AREA */}
       <div className="bg-white text-black px-4 sm:px-12 py-8">
         {activeKey === "overview" && (
           <Tabs
@@ -195,7 +198,7 @@ const DetailEvent = ({ schedule, event }) => {
         )}
       </div>
 
-      {/* Style FINISHED label */}
+      {/* Custom Style */}
       <style jsx>{`
           .finished-label {
               background-color: #171c21;

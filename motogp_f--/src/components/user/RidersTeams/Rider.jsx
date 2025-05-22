@@ -108,7 +108,7 @@ const Rider = () => {
                     return (
                         <div key={role}>
                             <h2 className="text-[37px] font-bold font-MGPDisplay text-black mb-4">{role}</h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                                 {contractsInRole.length > 0 ? (
                                     [...contractsInRole]
                                         .sort((a, b) => {
