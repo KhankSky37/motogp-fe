@@ -229,14 +229,6 @@ const AdminResultCreate = () => {
           <Form.Item
             name="position"
             label="Position"
-            rules={[
-              {required: true, message: "Please enter the position!"},
-              {
-                type: "number",
-                min: 1,
-                message: "Position must be a positive number!",
-              },
-            ]}
           >
             <InputNumber
               placeholder="Enter position"
@@ -247,17 +239,6 @@ const AdminResultCreate = () => {
           <Form.Item
             name="timeMillis"
             label="Time (ms)"
-            rules={[
-              {
-                required: true,
-                message: "Please enter the time in milliseconds!",
-              },
-              {
-                type: "number",
-                min: 0,
-                message: "Time must be a non-negative number!",
-              },
-            ]}
           >
             <InputNumber
               placeholder="Enter time in milliseconds"
@@ -285,14 +266,6 @@ const AdminResultCreate = () => {
           <Form.Item
             name="laps"
             label="Laps"
-            rules={[
-              {required: true, message: "Please enter the number of laps!"},
-              {
-                type: "number",
-                min: 0,
-                message: "Laps must be a non-negative number!",
-              },
-            ]}
           >
             <InputNumber
               placeholder="Enter number of laps"
