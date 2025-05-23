@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Button, message, Spin } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
+import {Button, message, Spin} from "antd";
+import {PlusOutlined} from "@ant-design/icons";
 import ContractService from "../../../services/ContractService.jsx";
 import ContractTable from "../../../components/admin/contract/ContractTable.jsx";
 import ContractFormModal from "../../../components/admin/contract/ContractFormModal.jsx";
@@ -75,7 +75,7 @@ const AdminContract = () => {
   const fetchContracts = useCallback(
     async (page = pagination.current, pageSize = pagination.pageSize) => {
       setLoading(true);
-      const queryParams = { ...searchParams };
+      const queryParams = {...searchParams};
 
       try {
         const response = await ContractService.getAllContracts(queryParams);
@@ -139,7 +139,7 @@ const AdminContract = () => {
   };
   const handleFormSubmit = async (values) => {
     setFormModalLoading(true);
-    let contractDto = { ...values };
+    let contractDto = {...values};
 
     try {
       if (modalMode === "edit" && editingContract) {
@@ -169,7 +169,7 @@ const AdminContract = () => {
       );
       messageApi.error(
         err.response?.data?.message ||
-          `Failed to ${modalMode === "edit" ? "update" : "create"} contract.`
+        `Failed to ${modalMode === "edit" ? "update" : "create"} contract.`
       );
     } finally {
       setFormModalLoading(false);
@@ -189,7 +189,7 @@ const AdminContract = () => {
   const handleSearch = (values) => {
     console.log("helo search", values);
     setSearchParams(values);
-    setPagination((prev) => ({ ...prev, current: 1 })); // Reset về trang 1 khi tìm kiếm
+    setPagination((prev) => ({...prev, current: 1})); // Reset về trang 1 khi tìm kiếm
   };
 
   return (
@@ -199,7 +199,7 @@ const AdminContract = () => {
         <h2 className={"text-2xl font-medium"}>Contracts Management</h2>
         <Button
           type="primary"
-          icon={<PlusOutlined />}
+          icon={<PlusOutlined/>}
           onClick={handleAdd}
           className={"bg-blue-700"}
         >
