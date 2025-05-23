@@ -61,5 +61,5 @@ const CalendarDetail = () => {
     </div>
   );
 };
-// đây là user/calendar/calendarDetail
+
 export default CalendarDetail;
