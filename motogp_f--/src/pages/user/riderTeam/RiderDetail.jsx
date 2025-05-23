@@ -5,7 +5,7 @@ import RiderService from "../../../services/RiderService.jsx";
 import {Button, Col, Row, Spin, Typography} from "antd";
 import {ArrowLeftOutlined, ShoppingCartOutlined} from '@ant-design/icons';
 import ReactCountryFlag from "react-country-flag";
-import { COUNTRIES } from "../../../constants/Countries.jsx"; // Added import
+import {COUNTRIES} from "../../../constants/Countries.jsx"; // Added import
 
 const {Title, Text} = Typography;
 
@@ -14,7 +14,7 @@ const RiderDetail = () => {
   const [rider, setRider] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const countryName = COUNTRIES.find(country => country.code === rider.nationality)?.name || rider.nationality;
+  const countryName = COUNTRIES.find(country => country.code === rider?.nationality)?.name || rider?.nationality;
 
   useEffect(() => {
     const fetchRiderData = async () => {
@@ -176,7 +176,8 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
           <Row gutter={[48, 48]}>
             {/* Rider Story Column */}
             <Col xs={24} md={14}>
-              <Title level={3} className="!font-bold !text-2xl !mb-6 uppercase tracking-wider font-MGPDisplay">Rider Story</Title>
+              <Title level={3} className="!font-bold !text-2xl !mb-6 uppercase tracking-wider font-MGPDisplay">Rider
+                Story</Title>
               <Text className="text-base text-gray-700 leading-relaxed whitespace-pre-line font-MGPText">
                 {riderStory}
               </Text>
@@ -184,7 +185,8 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
 
             {/* Rider Bio Column */}
             <Col xs={24} md={10}>
-              <Title level={3} className="!font-bold !text-2xl !mb-6 uppercase tracking-wider font-MGPDisplay">Rider Bio</Title>
+              <Title level={3} className="!font-bold !text-2xl !mb-6 uppercase tracking-wider font-MGPDisplay">Rider
+                Bio</Title>
               <div className="bg-gray-50 rounded-lg shadow">
                 {riderBioData.map((item, index) => (
                   <div key={index}
