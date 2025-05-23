@@ -20,9 +20,10 @@ const AdminSeasonCreate = () => {
 
     try {
       await SeasonService.createSeason(seasonDto);
-      messageApi.success('Season created successfully!');
-      form.resetFields();
-      navigate('/admin/seasons');
+      messageApi.success('Season created successfully!', 0.5, () => {
+        form.resetFields();
+        navigate('/admin/seasons');
+      });
     } catch (error) {
       console.error('Failed to create season:', error);
       const errorMsg = error.response?.data?.message || 'Failed to create season. Please try again.';

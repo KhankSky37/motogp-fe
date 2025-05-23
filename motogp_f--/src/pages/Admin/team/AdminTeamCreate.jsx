@@ -56,9 +56,10 @@ const AdminTeamCreate = () => {
 
       try {
         await TeamService.createTeam(teamDto, logoFile);
-        messageApi.success("Team created successfully!");
-        form.resetFields();
-        navigate("/admin/teams");
+        messageApi.success("Team created successfully!", 0.5, () => {
+          form.resetFields();
+          navigate("/admin/teams");
+        });
       } catch (error) {
         console.error("Failed to create team:", error);
         const errorMsg =

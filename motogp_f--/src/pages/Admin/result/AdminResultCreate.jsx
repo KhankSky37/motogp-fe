@@ -75,9 +75,10 @@ const AdminResultCreate = () => {
         };
 
         await ResultService.createResult(resultData);
-        messageApi.success("Result created successfully!");
-        form.resetFields();
-        navigate("/admin/results");
+        messageApi.success("Result created successfully!", 0.5, () => {
+          form.resetFields();
+          navigate("/admin/results");
+        });
       } catch (error) {
         console.error("Failed to create result:", error);
         const errorMsg =
@@ -94,6 +95,15 @@ const AdminResultCreate = () => {
   const handleCancel = useCallback(() => {
     navigate("/admin/results");
   }, [navigate]);
+
+  const handleTeamChange = useCallback((teamId) => {
+    const selectedTeam = teams.find(team => team.id === teamId);
+    if (selectedTeam && selectedTeam.manufacturer) {
+      form.setFieldsValue({
+        manufacturerId: selectedTeam.manufacturer.id
+      });
+    }
+  }, [teams, form]);
 
   return (
     <Spin spinning={loading}>
@@ -180,6 +190,7 @@ const AdminResultCreate = () => {
               placeholder="Select team"
               loading={teamsLoading}
               showSearch
+              onChange={handleTeamChange}
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
@@ -218,14 +229,6 @@ const AdminResultCreate = () => {
           <Form.Item
             name="position"
             label="Position"
-            rules={[
-              {required: true, message: "Please enter the position!"},
-              {
-                type: "number",
-                min: 1,
-                message: "Position must be a positive number!",
-              },
-            ]}
           >
             <InputNumber
               placeholder="Enter position"
@@ -236,17 +239,6 @@ const AdminResultCreate = () => {
           <Form.Item
             name="timeMillis"
             label="Time (ms)"
-            rules={[
-              {
-                required: true,
-                message: "Please enter the time in milliseconds!",
-              },
-              {
-                type: "number",
-                min: 0,
-                message: "Time must be a non-negative number!",
-              },
-            ]}
           >
             <InputNumber
               placeholder="Enter time in milliseconds"
@@ -274,14 +266,6 @@ const AdminResultCreate = () => {
           <Form.Item
             name="laps"
             label="Laps"
-            rules={[
-              {required: true, message: "Please enter the number of laps!"},
-              {
-                type: "number",
-                min: 0,
-                message: "Laps must be a non-negative number!",
-              },
-            ]}
           >
             <InputNumber
               placeholder="Enter number of laps"

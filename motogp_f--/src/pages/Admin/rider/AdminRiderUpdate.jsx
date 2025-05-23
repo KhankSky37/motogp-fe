@@ -69,8 +69,9 @@ const AdminRiderUpdate = () => {
     try {
       // Call the updated service function, passing the new file (or null)
       await RiderService.updateRider(riderId, riderDto, newPhotoFile);
-      messageApi.success('Rider updated successfully!');
-      navigate('/admin/riders');
+      messageApi.success('Rider updated successfully!', 0.5, () => {
+        navigate('/admin/riders');
+      });
     } catch (error) {
       console.error('Failed to update rider:', error);
       const errorMsg = error.response?.data?.message || 'Failed to update rider. Please try again.';

@@ -95,8 +95,9 @@ const AdminCircuitUpdate = () => {
           imageFile
         );
         console.log("Update response:", response);
-        messageApi.success("Circuit updated successfully!");
-        navigate("/admin/circuits");
+        messageApi.success("Circuit updated successfully!", 0.5, () => {
+          navigate("/admin/circuits");
+        });
       } catch (error) {
         console.error("Failed to update circuit:", error);
         const errorMsg =

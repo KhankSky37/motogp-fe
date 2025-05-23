@@ -1,5 +1,6 @@
 import { Button, Card, DatePicker, Form, Select } from "antd";
 import { SearchOutlined, UndoOutlined } from "@ant-design/icons";
+import React from "react";
 
 const { Option } = Select;
 
@@ -55,13 +56,19 @@ const SessionSearchForm = ({
             </Select>
           </Form.Item>{" "}
           <Form.Item name="sessionType">
-            <Select allowClear placeholder="Select session type">
-              <Option value="PRACTICE">Practice</Option>
-              <Option value="QUALIFYING">Qualifying</Option>
-              <Option value="RACE">Race</Option>
-              <Option value="SPRINT">Sprint</Option>
-              <Option value="WARM_UP">Warm Up</Option>
-
+            <Select placeholder="Select session type">
+              <Option value="FP1">Free Practice Nr. 1</Option>
+              <Option value="FP2">Free Practice Nr. 2</Option>
+              <Option value="P1">Practice Nr. 1</Option>
+              <Option value="P2">Practice Nr. 2</Option>
+              <Option value="Q1">Qualifying Nr. 1</Option>
+              <Option value="Q2">Qualifying Nr. 2</Option>
+              <Option value="RAC1">Race Nr.1</Option>
+              <Option value="RAC2">Race Nr.2</Option>
+              <Option value="PR">Practice</Option>
+              <Option value="WUP">Warm Up</Option>
+              <Option value="RAC">Race</Option>
+              <Option value="SPR">Tissot Sprint </Option>
             </Select>
           </Form.Item>
           <Form.Item name="dateFrom">

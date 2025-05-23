@@ -94,10 +94,12 @@ const AdminEventUpdate = () => {
         // Remove separate IDs as they're now in nested objects
         delete formattedValues.seasonId;
         delete formattedValues.circuitId;
-
         await EventService.updateEvent(eventId, formattedValues);
-        messageApi.success("Event updated successfully!");
-        navigate("/admin/events");
+
+        // Hiển thị thông báo thành công và đợi một chút trước khi chuyển hướng
+        messageApi.success("Event updated successfully!", 0.5, () => {
+          navigate("/admin/events");
+        });
       } catch (error) {
         console.error("Failed to update event:", error);
         const errorMsg =

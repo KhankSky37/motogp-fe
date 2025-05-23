@@ -110,8 +110,9 @@ const AdminSessionUpdate = () => {
         delete formattedValues.categoryId;
 
         await SessionService.updateSession(sessionId, formattedValues);
-        messageApi.success("Session updated successfully!");
-        navigate("/admin/sessions");
+        messageApi.success("Session updated successfully!", 0.5, () => {
+          navigate("/admin/sessions");
+        });
       } catch (error) {
         console.error("Failed to update session:", error);
         const errorMsg =
@@ -219,15 +220,18 @@ const AdminSessionUpdate = () => {
             ]}
           >
             <Select placeholder="Select session type">
-              <Option value="PRACTICE_1">Practice 1</Option>
-              <Option value="PRACTICE_2">Practice 2</Option>
-              <Option value="PRACTICE_3">Practice 3</Option>
-              <Option value="PRACTICE_4">Practice 4</Option>
-              <Option value="QUALIFYING_1">Qualifying 1</Option>
-              <Option value="QUALIFYING_2">Qualifying 2</Option>
-              <Option value="RACE">Race</Option>
-              <Option value="SPRINT">Sprint</Option>
-              <Option value="WARM_UP">Warm Up</Option>
+              <Option value="FP1">Free Practice Nr. 1</Option>
+              <Option value="FP2">Free Practice Nr. 2</Option>
+              <Option value="P1">Practice Nr. 1</Option>
+              <Option value="P2">Practice Nr. 2</Option>
+              <Option value="Q1">Qualifying Nr. 1</Option>
+              <Option value="Q2">Qualifying Nr. 2</Option>
+              <Option value="RAC1">Race Nr.1</Option>
+              <Option value="RAC2">Race Nr.2</Option>
+              <Option value="PR">Practice</Option>
+              <Option value="WUP">Warm Up</Option>
+              <Option value="RAC">Race</Option>
+              <Option value="SPR">Tissot Sprint </Option>
             </Select>
           </Form.Item>{" "}
           <Form.Item

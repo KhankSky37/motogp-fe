@@ -29,9 +29,10 @@ const AdminRiderCreate = () => {
 
     try {
       await RiderService.createRider(riderDto, photoFile);
-      messageApi.success('Rider created successfully!');
-      form.resetFields();
-      navigate('/admin/riders');
+      messageApi.success('Rider created successfully!', 0.5, () => {
+        form.resetFields();
+        navigate('/admin/riders');
+      });
     } catch (error) {
       console.error('Failed to create rider:', error);
       const errorMsg = error.response?.data?.message || 'Failed to create rider. Please try again.';

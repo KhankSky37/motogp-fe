@@ -57,9 +57,10 @@ const AdminSessionCreate = () => {
         };
 
         await SessionService.createSession(formattedValues);
-        messageApi.success("Session created successfully!");
-        form.resetFields();
-        navigate("/admin/sessions");
+        messageApi.success("Session created successfully!", 0.5, () => {
+          form.resetFields();
+          navigate("/admin/sessions");
+        });
       } catch (error) {
         console.error("Failed to create session:", error);
         const errorMsg =

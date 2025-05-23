@@ -105,8 +105,9 @@ const AdminResultUpdate = () => {
         // (dựa trên ResultServiceImpl) mong đợi một trường String sessionId.
 
         await ResultService.updateResult(resultId, resultData);
-        messageApi.success("Result updated successfully!");
-        navigate("/admin/results");
+        messageApi.success("Result updated successfully!", 0.5, () => {
+          navigate("/admin/results");
+        });
       } catch (error) {
         console.error("Failed to update result:", error);
         const errorMsg =

@@ -36,9 +36,10 @@ const AdminCircuitCreate = () => {
 
       try {
         await CircuitService.createCircuit(circuitDto, values.image);
-        messageApi.success("Circuit created successfully!");
-        form.resetFields();
-        navigate("/admin/circuits");
+        messageApi.success("Circuit created successfully!", 0.5, () => {
+          form.resetFields();
+          navigate("/admin/circuits");
+        });
       } catch (error) {
         console.error("Failed to create circuit:", error);
         const errorMsg =

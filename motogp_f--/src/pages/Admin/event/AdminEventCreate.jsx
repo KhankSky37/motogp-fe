@@ -75,9 +75,10 @@ const AdminEventCreate = () => {
         delete formattedValues.circuitId;
 
         await EventService.createEvent(formattedValues);
-        messageApi.success("Event created successfully!");
-        form.resetFields();
-        navigate("/admin/events");
+        messageApi.success("Event created successfully!", 0.5, () => {
+          form.resetFields();
+          navigate("/admin/events");
+        });
       } catch (error) {
         console.error("Failed to create event:", error);
         const errorMsg =
