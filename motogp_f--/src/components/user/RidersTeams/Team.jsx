@@ -5,7 +5,9 @@ import RiderService from "../../../services/RiderService.jsx";
 import CategoryService from "../../../services/CategoryService.jsx";
 import TeamCard from "./TeamCard";
 import { Spin, Alert } from "antd";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+
+const cardColors = ["#ff4d4f", "#8c8c8c", "#13c2c2", "#9254de", "#fa8c16", "green"];
 
 const Team = () => {
     const [teamRidersData, setTeamRidersData] = useState([]);
@@ -30,9 +32,7 @@ const Team = () => {
                 const riders = ridersRes.data;
                 setAllContracts(contracts);
 
-                const uniqueCategoryIds = Array.from(
-                    new Set(contracts.map((c) => c.categoryId))
-                );
+                const uniqueCategoryIds = Array.from(new Set(contracts.map((c) => c.categoryId)));
                 setCategories(uniqueCategoryIds);
                 if (uniqueCategoryIds.length > 0) {
                     setActiveCategory(uniqueCategoryIds[0]);
@@ -40,14 +40,14 @@ const Team = () => {
 
                 const categoryMap = {};
                 await Promise.all(
-                    uniqueCategoryIds.map(async (catId) => {
-                        try {
-                            const res = await CategoryService.getCategoryById(catId);
-                            categoryMap[catId] = res.data?.name || "Unknown Category";
-                        } catch (err) {
-                            categoryMap[catId] = "Unknown Category";
-                        }
-                    })
+                  uniqueCategoryIds.map(async (catId) => {
+                      try {
+                          const res = await CategoryService.getCategoryById(catId);
+                          categoryMap[catId] = res.data?.name || "Unknown Category";
+                      } catch (err) {
+                          categoryMap[catId] = "Unknown Category";
+                      }
+                  })
                 );
 
                 setTeamRidersData({ teams, riders, categoryMap });
@@ -67,9 +67,7 @@ const Team = () => {
 
     const { teams = [], riders = [] } = teamRidersData;
 
-    const filteredContracts = allContracts.filter(
-        (c) => c.categoryId === activeCategory
-    );
+    const filteredContracts = allContracts.filter((c) => c.categoryId === activeCategory);
 
     const teamRidersMap = {};
     filteredContracts.forEach(({ teamId, riderId }) => {
@@ -80,60 +78,63 @@ const Team = () => {
     });
 
     const visibleTeams = teams
-        .map((team) => {
-            const riderIds = teamRidersMap[team.id] || [];
-            const teamRiders = riderIds
-                .map((riderId) => {
-                    const rider = riders.find((r) => r.riderId === riderId);
-                    if (!rider) return null;
-                    return {
-                        id: rider.riderId,
-                        name: `${rider.firstName} ${rider.lastName}`,
-                        categoryId: activeCategory,
-                    };
-                })
-                .filter(Boolean)
-                .sort((a, b) => a.name.localeCompare(b.name)); // Sắp xếp rider trong team theo ABC
+      .map((team) => {
+          const riderIds = teamRidersMap[team.id] || [];
+          const teamRiders = riderIds
+            .map((riderId) => {
+                const rider = riders.find((r) => r.riderId === riderId);
+                if (!rider) return null;
+                return {
+                    id: rider.riderId,
+                    name: `${rider.firstName} ${rider.lastName}`,
+                    categoryId: activeCategory,
+                };
+            })
+            .filter(Boolean)
+            .sort((a, b) => a.name.localeCompare(b.name));
 
-            return {
-                id: team.id,
-                name: team.name,
-                nationality: team.nationality || "Unknown",
-                logoPath: team.logoUrl,
-                riders: teamRiders,
-            };
-        })
-        .filter((team) => team.riders.length > 0)
-        .sort((a, b) => a.name.localeCompare(b.name)); // ✅ Sắp xếp các team theo tên team
+          return {
+              id: team.id,
+              name: team.name,
+              nationality: team.nationality || "Unknown",
+              logoPath: team.logoUrl,
+              riders: teamRiders,
+          };
+      })
+      .filter((team) => team.riders.length > 0)
+      .sort((a, b) => a.name.localeCompare(b.name));
 
     return (
-        <div className="p-12">
-            {/* Tabs categoryId */}
-            <div className="flex flex-wrap gap-3 mb-6">
-                {categories.map((catId) => (
-                    <button
-                        key={catId}
-                        onClick={() => setActiveCategory(catId)}
-                        className={`font-MGPText px-5 py-2 rounded-full font-semibold transition-all duration-300 shadow-sm text-sm uppercase ${
-                            activeCategory === catId
-                                ? "bg-red-700 text-white"
-                                : "bg-gray-200 text-gray-800 hover:bg-blue-100"
-                        }`}
-                    >
-                        {catId}
-                    </button>
-                ))}
-            </div>
+      <div className="p-12">
+          {/* Tabs categoryId */}
+          <div className="flex flex-wrap gap-3 mb-6">
+              {categories.map((catId) => (
+                <button
+                  key={catId}
+                  onClick={() => setActiveCategory(catId)}
+                  className={`font-MGPText px-5 py-2 rounded-full font-semibold transition-all duration-300 shadow-sm text-sm uppercase ${
+                    activeCategory === catId
+                      ? "bg-red-700 text-white"
+                      : "bg-gray-200 text-gray-800 hover:bg-blue-100"
+                  }`}
+                >
+                    {catId}
+                </button>
+              ))}
+          </div>
 
-            {/* Danh sách đội đua */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {visibleTeams.map((team) => (
-                  <Link to={`${team.id}`}>
-                    <TeamCard key={team.id} team={team} />
-                  </Link>
-                ))}
-            </div>
-        </div>
+          {/* Danh sách đội đua */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+              {visibleTeams.map((team, index) => {
+                  const bgColor = cardColors[index % cardColors.length];
+                  return (
+                    <Link key={team.id} to={`${team.id}`}>
+                        <TeamCard team={team} bgColor={bgColor} />
+                    </Link>
+                  );
+              })}
+          </div>
+      </div>
     );
 };
 
