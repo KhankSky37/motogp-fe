@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import {getImageUrl} from "../../../utils/urlHelpers.jsx";
 import "dayjs/locale/en";
 
-// Hình ảnh ngẫu nhiên
+// Random images
 import randomImg01 from "../../../assets/01Thai.jpg";
 import randomImg02 from "../../../assets/THAI1.png";
 import randomImg03 from "../../../assets/03 Americas.jpg";
@@ -48,6 +48,10 @@ const sessionDurations = {
   WUP: 10,
   GP: 30,
 };
+
+// const lapMap = [19, 22, 26, 24, 23];
+//
+// let lapIndex = 0;
 
 const DetailEvent = ({schedule, event}) => {
   const days = Object.keys(schedule);
@@ -136,22 +140,10 @@ const DetailEvent = ({schedule, event}) => {
               tabBarStyle={{fontWeight: "bold", fontSize: 16}}
               items={[
                 {key: "overview", label: <span className="font-MGPText font-bold uppercase text-lg">Overview</span>},
-                {
-                  key: "starting-grid",
-                  label: <span className="font-MGPText font-semibold uppercase text-lg">Starting Grid</span>
-                },
-                {
-                  key: "entry-list",
-                  label: <span className="font-MGPText font-semibold uppercase text-lg">Entry List</span>
-                },
-                {
-                  key: "circuit-info",
-                  label: <span className="font-MGPText font-semibold uppercase text-lg">Circuit Info</span>
-                },
-                {
-                  key: "destination-guide",
-                  label: <span className="font-MGPText font-semibold uppercase text-lg">Destination Guide</span>
-                },
+                {key: "starting-grid", label: <span className="font-MGPText font-semibold uppercase text-lg">Starting Grid</span>},
+                {key: "entry-list", label: <span className="font-MGPText font-semibold uppercase text-lg">Entry List</span>},
+                {key: "circuit-info", label: <span className="font-MGPText font-semibold uppercase text-lg">Circuit Info</span>},
+                {key: "destination-guide", label: <span className="font-MGPText font-semibold uppercase text-lg">Destination Guide</span>},
               ]}
             />
           </ConfigProvider>
@@ -226,7 +218,10 @@ const DetailEvent = ({schedule, event}) => {
                             <div className="text-start text-black px-12 font-bold text-xl">
                               {getFullSessionType(session.sessionType)}
                             </div>
-                            <div className="font-MGPText"></div>
+                            <div className="font-MGPText text-gray-600 text-xl font-MGPText font-bold
+                            ">
+                              {isRace ? `19Laps` : ""}
+                            </div>
                             <div className="flex justify-center space-x-2 mr-12">
                               <button
                                 className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
@@ -248,20 +243,17 @@ const DetailEvent = ({schedule, event}) => {
           </ConfigProvider>
         )}
 
-        {activeKey === "starting-grid" &&
-          <div className="p-6 text-gray-700 italic">Starting Grid content goes here.</div>}
+        {activeKey === "starting-grid" && <div className="p-6 text-gray-700 italic">Starting Grid content goes here.</div>}
         {activeKey === "entry-list" && <div className="p-6 text-gray-700 italic">Entry List content goes here.</div>}
-        {activeKey === "circuit-info" &&
-          <div className="p-6 text-gray-700 italic">Circuit Info content goes here.</div>}
-        {activeKey === "destination-guide" &&
-          <div className="p-6 text-gray-700 italic">Destination Guide content goes here.</div>}
+        {activeKey === "circuit-info" && <div className="p-6 text-gray-700 italic">Circuit Info content goes here.</div>}
+        {activeKey === "destination-guide" && <div className="p-6 text-gray-700 italic">Destination Guide content goes here.</div>}
       </div>
 
       <style jsx>{`
-          .finished-label {
-              background-color: #171c21;
-              clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
-          }
+        .finished-label {
+          background-color: #171c21;
+          clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+        }
       `}</style>
     </>
   );
