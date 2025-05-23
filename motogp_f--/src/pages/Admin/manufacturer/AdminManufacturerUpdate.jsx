@@ -57,8 +57,9 @@ const AdminManufacturerUpdate = () => {
 
       try {
         await ManufacturerService.updateManufacturer(id, manufacturerDto);
-        messageApi.success("Manufacturer updated successfully!");
-        navigate("/admin/manufacturers");
+        messageApi.success("Manufacturer updated successfully!", 0.5, () => {
+          navigate("/admin/manufacturers");
+        });
       } catch (error) {
         console.error("Failed to update manufacturer:", error);
         const errorMsg =

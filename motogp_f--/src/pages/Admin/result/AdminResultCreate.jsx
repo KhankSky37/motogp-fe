@@ -75,9 +75,10 @@ const AdminResultCreate = () => {
         };
 
         await ResultService.createResult(resultData);
-        messageApi.success("Result created successfully!");
-        form.resetFields();
-        navigate("/admin/results");
+        messageApi.success("Result created successfully!", 0.5, () => {
+          form.resetFields();
+          navigate("/admin/results");
+        });
       } catch (error) {
         console.error("Failed to create result:", error);
         const errorMsg =

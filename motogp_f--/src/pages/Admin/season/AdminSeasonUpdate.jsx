@@ -51,8 +51,9 @@ const AdminSeasonUpdate = () => {
         };
 
         await SeasonService.updateSeason(seasonId, seasonDto);
-        messageApi.success("Cập nhật mùa giải thành công!");
-        navigate("/admin/seasons");
+        messageApi.success("Season updated successfully!", 0.5, () => {
+          navigate("/admin/seasons");
+        });
       } catch (error) {
         console.error("Failed to update season:", error);
         const errorMsg =

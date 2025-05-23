@@ -84,8 +84,9 @@ const AdminTeamUpdate = () => {
 
       try {
         await TeamService.updateTeam(id, teamDto, logoFile);
-        messageApi.success("Team updated successfully!");
-        navigate("/admin/teams");
+        messageApi.success("Team updated successfully!", 0.5, () => {
+          navigate("/admin/teams");
+        });
       } catch (error) {
         console.error("Failed to update team:", error);
         const errorMsg =

@@ -110,8 +110,9 @@ const AdminSessionUpdate = () => {
         delete formattedValues.categoryId;
 
         await SessionService.updateSession(sessionId, formattedValues);
-        messageApi.success("Session updated successfully!");
-        navigate("/admin/sessions");
+        messageApi.success("Session updated successfully!", 0.5, () => {
+          navigate("/admin/sessions");
+        });
       } catch (error) {
         console.error("Failed to update session:", error);
         const errorMsg =

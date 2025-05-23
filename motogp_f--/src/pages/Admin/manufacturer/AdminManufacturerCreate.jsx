@@ -42,16 +42,10 @@ const AdminManufacturerCreate = () => {
         console.log("Manufacturer creation response:", response); // Debug log
 
         if (response && (response.status === 200 || response.status === 201)) {
-          messageApi.success("Manufacturer created successfully!");
-          form.resetFields();
+          messageApi.success("Manufacturer created successfully!", 0.5, () => {
+            form.resetFields();
 
-          // Điều hướng về trang danh sách với state chứa thông tin thành công
-          // để trigger việc refresh danh sách
-          navigate("/admin/manufacturers", {
-            state: {
-              success: true,
-              message: "Manufacturer created successfully!",
-            },
+            navigate("/admin/manufacturers");
           });
         } else {
           throw new Error(
