@@ -28,7 +28,7 @@ const SearchForm = ({form, seasonYears, eventsList, availableCategories, availab
                 <Option key="ALL" value="ALL">
                   All Events
                 </Option>
-                <Option key="GRAND_PRIX" value="GRAND_PRIX">
+                <Option key="RACE" value="RACE">
                   Grands Prix
                 </Option>
               </Select>
