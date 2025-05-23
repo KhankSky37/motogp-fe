@@ -96,6 +96,15 @@ const AdminResultCreate = () => {
     navigate("/admin/results");
   }, [navigate]);
 
+  const handleTeamChange = useCallback((teamId) => {
+    const selectedTeam = teams.find(team => team.id === teamId);
+    if (selectedTeam && selectedTeam.manufacturer) {
+      form.setFieldsValue({
+        manufacturerId: selectedTeam.manufacturer.id
+      });
+    }
+  }, [teams, form]);
+
   return (
     <Spin spinning={loading}>
       {contextHolder}
@@ -181,6 +190,7 @@ const AdminResultCreate = () => {
               placeholder="Select team"
               loading={teamsLoading}
               showSearch
+              onChange={handleTeamChange}
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
