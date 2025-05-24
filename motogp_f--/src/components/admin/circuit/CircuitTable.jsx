@@ -76,7 +76,7 @@ const CircuitTable = ({
       sorter: safeStringSorter("locationCity"),
     },
     {
-      title: "Length (km)",
+      title: "Length (m)",
       dataIndex: "lengthKm",
       key: "lengthKm",
       sorter: (a, b) => (a.lengthKm || 0) - (b.lengthKm || 0),
