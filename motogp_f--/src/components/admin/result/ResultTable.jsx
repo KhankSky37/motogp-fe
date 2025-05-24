@@ -110,6 +110,7 @@ const ResultTable = ({
     {
       title: "Actions",
       key: "actions",
+      fixed: "right",
       render: (_, record) => (
         <Space size="small">
           {onView && (
@@ -158,7 +159,13 @@ const ResultTable = ({
       bordered
       rowKey="id"
       loading={loading}
-      pagination={pagination || { pageSize: 10 }}
+      // pagination={pagination || { pageSize: 10 }}
+      pagination={{
+        showSizeChanger: true,
+        pageSizeOptions: ["10", "20", "50"],
+        showTotal: (total, range) =>
+          `[${range[0]}-${range[1]}] - ${total} records`,
+      }}
       onChange={onTableChange}
       scroll={{ x: true }}
     />
