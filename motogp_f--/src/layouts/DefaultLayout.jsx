@@ -191,7 +191,7 @@ const DefaultLayout = () => {
       <Content>
         <Outlet/>
       </Content>
-      <Footer className={"py-4 border-t font-MGPText text-lg"} style={{margin: 0, padding: 0}}>
+      <Footer className={"py-4 border-t font-MGPText text-lg"} style={{margin: 0, padding: 0, background: "#FAFCFF"}}>
         <div className={"border-b p-6"}>
           <svg
             id="Layer_1"
