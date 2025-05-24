@@ -5,7 +5,8 @@ import RiderService from "../../../services/RiderService.jsx";
 import {Button, Col, Row, Spin, Typography} from "antd";
 import {ArrowLeftOutlined, ShoppingCartOutlined} from '@ant-design/icons';
 import ReactCountryFlag from "react-country-flag";
-import {COUNTRIES} from "../../../constants/Countries.jsx"; // Added import
+import {COUNTRIES} from "../../../constants/Countries.jsx";
+import VideosSecion from "../../../components/user/home/VideosSecion.jsx"; // Added import
 
 const {Title, Text} = Typography;
 
@@ -173,6 +174,8 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
         <div className="absolute z-2 bottom-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent opacity-70"></div>
       </div>
 
+      <VideosSecion/>
+
       <div className="bg-white text-black py-12 md:py-20 px-4">
         <div className="mx-12">
           <Row gutter={[48, 48]}>
@@ -202,6 +205,7 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
           </Row>
         </div>
       </div>
+
     </>
 
   );
