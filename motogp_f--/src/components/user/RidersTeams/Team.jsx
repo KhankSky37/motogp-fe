@@ -124,9 +124,9 @@ const Team = () => {
           <button
             key={id}
             onClick={() => setActiveCategory(id)}
-            className={`font-MGPText px-5 py-2 rounded-full font-semibold transition-all duration-300 shadow-sm text-sm uppercase ${
+            className={`px-5 py-2 rounded-full font-medium font-MGPText transition-all duration-300 shadow-sm text-sm ${
               activeCategory === id
-                ? "bg-red-700 text-white"
+                ? "bg-red-600 text-white"
                 : "bg-gray-200 text-gray-800 hover:bg-blue-100"
             }`}
           >
@@ -136,6 +136,7 @@ const Team = () => {
       </div>
 
       {/* ✅ Danh sách đội đua */}
+      <h1 className="font-MGPDisplay text-[37px] font-bold mb-4">offical</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
         {visibleTeams.map((team, index) => {
           const bgColor = cardColors[index % cardColors.length];

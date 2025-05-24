@@ -100,7 +100,7 @@ const Rider = () => {
                     <button
                       key={id}
                       onClick={() => setActiveCategory(id)}
-                      className={`px-5 py-2 rounded-full font-medium font-MGPText transition-all duration-300 shadow-sm text-sm uppercase ${
+                      className={`px-5 py-2 rounded-full font-medium font-MGPText transition-all duration-300 shadow-sm text-sm ${
                         activeCategory === id
                           ? "bg-red-600 text-white"
                           : "bg-gray-200 text-gray-800 hover:bg-blue-100"
