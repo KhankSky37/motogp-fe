@@ -52,6 +52,7 @@ import UserProfile from "../pages/user/UserProfile.jsx";
 import RiderDetail from "../pages/user/riderTeam/RiderDetail.jsx";
 import CalendarDetail from "../pages/user/calendar/CalendarDetail.jsx";
 import TeamDetail from "../pages/user/riderTeam/TeamDetail.jsx";
+import ForgotPassword from "../pages/auth/ForgotPassword.jsx";
 
 
 export const routes = [
@@ -285,6 +286,10 @@ export const routes = [
   {
     path: "/register",
     element: <Register/>,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword/>,
   },
   {
     path: "*",
