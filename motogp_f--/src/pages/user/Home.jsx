@@ -103,6 +103,8 @@ const Home = () => {
         imageUrl={bestMoments}
       />
 
+      <UpcomingSection />
+
       <FeaturedContent
         title="Price Drop! Get VideoPass at 44% off!"
         description="The championship battle is only just heating up! Get your 2025 VideoPass before this offer ends!"
