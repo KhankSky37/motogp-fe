@@ -1,5 +1,5 @@
 import httpClient from "../config/HttpClient.jsx";
-import { API } from "../constants/Endpoints.jsx";
+import {API} from "../constants/Endpoints.jsx";
 
 const UserService = {
   login: (credentials) => {
@@ -11,7 +11,7 @@ const UserService = {
   },
 
   getAllUsers: (params) => {
-    return httpClient.get(API.USERS, { params });
+    return httpClient.get(API.USERS, {params});
   },
 
   getUserById: (id) => {
@@ -31,6 +31,13 @@ const UserService = {
   },
   changePassword: (id, passwordDto) => {
     return httpClient.put(`${API.USERS}/change-password/${id}`, passwordDto);
+  },
+  forgotPassword: (forgotPasswordRequestDto) => {
+    return httpClient.post(`${API.USERS}/forgot-password`, forgotPasswordRequestDto);
+  },
+
+  resetPassword: (resetPasswordRequestDto) => {
+    return httpClient.post(`${API.USERS}/reset-password`, resetPasswordRequestDto);
   },
 };
 
