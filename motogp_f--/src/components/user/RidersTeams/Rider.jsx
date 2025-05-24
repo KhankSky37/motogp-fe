@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
 import ContractService from "../../../services/ContractService.jsx";
 import RiderService from "../../../services/RiderService.jsx";
-import TeamService from "../../../services/TeamService.jsx"; // Thêm import này
+import TeamService from "../../../services/TeamService.jsx";
 import RiderCard from "./RiderCard.jsx";
 import { Spin, Alert } from "antd";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import TshirtsSection from "../home/TshirtsSection.jsx";
 import FeaturedContent from "../home/FeaturedContent.jsx";
-import fanClub from "../../../assets/01_1579x970-Single-Promo-Home-MGP-Campaign_fan_club.webp";
+import WhoIs from "../../../assets/Who_is_your_favourite_rider.webp";
 
-import WhoIs from "../../../assets/Who_is_your_favourite_rider.webp"
+// ✅ Thứ tự cố định và tên hiển thị cho category
+const CATEGORY_ORDER = [
+    { id: "motogp", label: "MotoGP™" },
+    { id: "moto2", label: "Moto2™" },
+    { id: "moto3", label: "Moto3™" },
+    { id: "motoe", label: "MotoE™" },
+];
 
 const Rider = () => {
     const [contracts, setContracts] = useState([]);
     const [riders, setRiders] = useState([]);
     const [categories, setCategories] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [teams, setTeams] = useState({}); // Lưu teamId -> team object
+    const [teams, setTeams] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const cardColors = ["#ff4d4f", "#8c8c8c", "#13c2c2", "#9254de", "#fa8c16"]; // red, gray, aqua, tím, cam
+    const cardColors = ["#ff4d4f", "#8c8c8c", "#13c2c2", "#9254de", "#fa8c16"];
 
     useEffect(() => {
         async function fetchData() {
@@ -36,10 +42,8 @@ const Rider = () => {
                 setContracts(contractsData);
                 setRiders(ridersData);
 
-                // Lấy danh sách unique teamIds từ contracts
                 const teamIds = Array.from(new Set(contractsData.map((c) => c.teamId)));
 
-                // Gọi API lấy team theo teamId, cache kết quả
                 const teamCache = {};
                 const fetchTeamIfNeeded = async (teamId) => {
                     if (teamCache[teamId]) return teamCache[teamId];
@@ -60,10 +64,11 @@ const Rider = () => {
                 });
                 setTeams(teamMap);
 
-                // Lấy unique categories
                 const uniqueCategories = Array.from(new Set(contractsData.map((c) => c.categoryId)));
                 setCategories(uniqueCategories);
-                if (uniqueCategories.length > 0) {
+                if (uniqueCategories.includes("motogp")) {
+                    setActiveCategory("motogp");
+                } else if (uniqueCategories.length > 0) {
                     setActiveCategory(uniqueCategories[0]);
                 }
 
@@ -87,79 +92,80 @@ const Rider = () => {
     const findRiderById = (id) => riders.find((r) => r.riderId === id || r.id === id);
 
     return (
-        <>
-            <div className="p-12">
-                {/* Tabs chọn category */}
-                <div className="flex flex-wrap gap-3 mb-6">
-                    {categories.map((cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => setActiveCategory(cat)}
-                        className={`px-5 py-2 rounded-full font-medium font-MGPText transition-all duration-300 shadow-sm text-sm uppercase ${
-                          activeCategory === cat
-                            ? "bg-red-600 text-white"
-                            : "bg-gray-200 text-gray-800 hover:bg-blue-100"
-                        }`}
-                      >
-                          {cat}
-                      </button>
-                    ))}
-                </div>
+      <>
+          <div className="p-12">
+              {/* ✅ Tabs với thứ tự cố định */}
+              <div className="flex flex-wrap gap-3 mb-6">
+                  {CATEGORY_ORDER.filter((cat) => categories.includes(cat.id)).map(({ id, label }) => (
+                    <button
+                      key={id}
+                      onClick={() => setActiveCategory(id)}
+                      className={`px-5 py-2 rounded-full font-medium font-MGPText transition-all duration-300 shadow-sm text-sm uppercase ${
+                        activeCategory === id
+                          ? "bg-red-600 text-white"
+                          : "bg-gray-200 text-gray-800 hover:bg-blue-100"
+                      }`}
+                    >
+                        {label}
+                    </button>
+                  ))}
+              </div>
 
-                {/* Hiển thị rider theo vai trò */}
-                <div className="space-y-10">
-                    {rolesInCategory.map((role) => {
-                        const contractsInRole = filteredContracts.filter((c) => c.riderRole === role);
+              {/* Riders theo vai trò */}
+              <div className="space-y-10">
+                  {rolesInCategory.map((role) => {
+                      const contractsInRole = filteredContracts.filter((c) => c.riderRole === role);
 
-                        return (
-                          <div key={role}>
-                              <h2 className="text-[37px] font-bold font-MGPDisplay text-black mb-4">{role}</h2>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                                  {contractsInRole.length > 0 ? (
-                                    [...contractsInRole]
-                                      .sort((a, b) => {
-                                          const getNumber = (riderId) => {
-                                              const match = riderId.match(/\d+$/); // Tìm số ở cuối
-                                              return match ? parseInt(match[0], 10) : 0;
-                                          };
-                                          return getNumber(a.riderId) - getNumber(b.riderId);
-                                      })
-                                      .map((contract, index) => {
-                                          const rider = findRiderById(contract.riderId);
-                                          if (!rider) return null;
+                      return (
+                        <div key={role}>
+                            <h2 className="text-[37px] font-bold font-MGPDisplay text-black mb-4">{role}</h2>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                                {contractsInRole.length > 0 ? (
+                                  [...contractsInRole]
+                                    .sort((a, b) => {
+                                        const getNumber = (riderId) => {
+                                            const match = riderId.match(/\d+$/);
+                                            return match ? parseInt(match[0], 10) : 0;
+                                        };
+                                        return getNumber(a.riderId) - getNumber(b.riderId);
+                                    })
+                                    .map((contract, index) => {
+                                        const rider = findRiderById(contract.riderId);
+                                        if (!rider) return null;
 
-                                          const bgColor = cardColors[index % cardColors.length];
+                                        const bgColor = cardColors[index % cardColors.length];
 
-                                          return (
-                                            <Link to={`/riders/${rider.riderId}`} key={rider.riderId}>
-                                                <RiderCard
-                                                  rider={rider}
-                                                  teamName={teams[contract.teamId]?.name || "Unknown Team"}
-                                                  bgColor={bgColor}
-                                                />
-                                            </Link>
-                                          );
-                                      })
-                                  ) : (
-                                    <div className="text-gray-500">Không có rider nào cho vai trò này</div>
-                                  )}
-                              </div>
-                          </div>
-                        );
-                    })}
-                </div>
-            </div>
-            <TshirtsSection />
+                                        return (
+                                          <Link to={`/riders/${rider.riderId}`} key={rider.riderId}>
+                                              <RiderCard
+                                                rider={rider}
+                                                teamName={teams[contract.teamId]?.name || "Unknown Team"}
+                                                bgColor={bgColor}
+                                              />
+                                          </Link>
+                                        );
+                                    })
+                                ) : (
+                                  <div className="text-gray-500">Không có rider nào cho vai trò này</div>
+                                )}
+                            </div>
+                        </div>
+                      );
+                  })}
+              </div>
+          </div>
 
-            <FeaturedContent
-              title="👀👀 Who's your favourite rider? 👀👀"
-              description="Personalize your MotoGP™ experience by logging in and selecting your all-time favourite rider on your account!"
-              buttonText="Select rider now!"
-              reverse={true}
-              buttonLink="#"
-              imageUrl={WhoIs}
-            />
-        </>
+          <TshirtsSection />
+
+          <FeaturedContent
+            title="👀👀 Who's your favourite rider? 👀👀"
+            description="Personalize your MotoGP™ experience by logging in and selecting your all-time favourite rider on your account!"
+            buttonText="Select rider now!"
+            reverse={true}
+            buttonLink="#"
+            imageUrl={WhoIs}
+          />
+      </>
     );
 };
 
