@@ -67,7 +67,7 @@ const NewsSection = ({ showOverflow = false }) => {
 
   return (
     <div className="relative group px-12 py-4 overflow-hidden">
-      <Title level={2} className={"font-MGPDisplay"}>Latest News</Title>
+      <Title level={2} className={"font-MGPDisplay !text-2xl"}>Latest News</Title>
       <div className="px-0 mx-0">
         <Slider {...settings}>
           {articles.map((article) => (

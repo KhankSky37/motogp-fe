@@ -11,6 +11,8 @@ import { useNewsList } from "../../hooks/useNewsArticles.jsx"
 import { getImageUrl } from "../../utils/urlHelpers.jsx";
 import TicketsSection from "../../components/user/home/TicketsSection.jsx";
 import UpcomingSection from "../../components/user/home/UpcomingSection.jsx";
+import VideosSecion from "../../components/user/home/VideosSecion.jsx";
+import RidersSection from "../../components/user/home/RidersSection.jsx";
 
 const Home = () => {
   const { articles, loading } = useNewsList();
@@ -95,6 +97,7 @@ const Home = () => {
         ))}
       </div>
 
+      <VideosSecion />
       <FeaturedContent
         title="Best MotoGP™ Moments 👏 | 2025 French GP"
         description="With the 2025 French GP now fast approaching, relive the countless memories of the classic race!"
@@ -103,7 +106,9 @@ const Home = () => {
         imageUrl={bestMoments}
       />
 
-      <UpcomingSection />
+      <div className="mb-8">
+        <NewsSection showOverflow={true} />
+      </div>
 
       <FeaturedContent
         title="Price Drop! Get VideoPass at 44% off!"
@@ -114,15 +119,6 @@ const Home = () => {
         reverse={true}
       />
 
-      {/* Phiên bản ẩn đi các slide bên ngoài khung (mặc định) */}
-      <div className="mb-8">
-        <NewsSection showOverflow={true} />
-      </div>
-
-      {/*/!* Phiên bản hiển thị các slide bên ngoài khung *!/*/}
-      {/*<div className="mb-8">*/}
-      {/*  <NewsSection showOverflow={true} />*/}
-      {/*</div>*/}
       <UpcomingSection />
 
       <FeaturedContent
@@ -134,6 +130,7 @@ const Home = () => {
       />
       <TicketsSection />
 
+      <RidersSection  />
       <TshirtsSection />
 
       <div className="text-center bg-[#171C21] text-white p-6">
