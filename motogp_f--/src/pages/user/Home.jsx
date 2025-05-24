@@ -10,6 +10,7 @@ import FeaturedContent from "../../components/user/home/FeaturedContent.jsx";
 import { useNewsList } from "../../hooks/useNewsArticles.jsx"
 import { getImageUrl } from "../../utils/urlHelpers.jsx";
 import TicketsSection from "../../components/user/home/TicketsSection.jsx";
+import UpcomingSection from "../../components/user/home/UpcomingSection.jsx";
 
 const Home = () => {
   const { articles, loading } = useNewsList();
@@ -120,6 +121,7 @@ const Home = () => {
       {/*<div className="mb-8">*/}
       {/*  <NewsSection showOverflow={true} />*/}
       {/*</div>*/}
+      <UpcomingSection />
 
       <FeaturedContent
         title="Visit the Official MotoGP™ Fan Club"
@@ -129,6 +131,7 @@ const Home = () => {
         imageUrl={fanClub}
       />
       <TicketsSection />
+
       <TshirtsSection />
 
       <div className="text-center bg-[#171C21] text-white p-6">
