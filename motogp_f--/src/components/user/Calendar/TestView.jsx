@@ -16,10 +16,10 @@ import randomImg08 from "../../../assets/mal1.png";
 import randomImg09 from "../../../assets/mal2.jpg";
 import randomImg10 from "../../../assets/rsm.jpg";
 import randomImg11 from "../../../assets/THAI1.png";
-import randomImg12 from "../../../assets/19 australia.png";
-import randomImg13 from "../../../assets/20malasya.png";
-import randomImg14 from "../../../assets/21 Portugal.png";
-import randomImg15 from "../../../assets/22 valencia.png";
+import randomImg12 from "../../../assets/a-racing-track-with-twisting-traffic-blurred-background-bokeh-the-concept-of-racing-and-fast-driving-photo.jpg";
+import randomImg13 from "../../../assets/race-car-motorcycle-racetrack-after-260nw-1737545399.webp";
+import randomImg14 from "../../../assets/360_F_566610405_hZGYdfVSYHho4wxA6WP9EOSTU6ssBlVH.jpg";
+import randomImg15 from "../../../assets/360_F_565254168_5RdItR4hEGAiVqtwU1IKuDwlwsblYjsn.jpg";
 
 const imgs = [
   randomImg01, randomImg02, randomImg03, randomImg04, randomImg05,

@@ -9,6 +9,7 @@ import TshirtsSection from "../../components/user/home/TshirtsSection.jsx";
 import FeaturedContent from "../../components/user/home/FeaturedContent.jsx";
 import { useNewsList } from "../../hooks/useNewsArticles.jsx"
 import { getImageUrl } from "../../utils/urlHelpers.jsx";
+import TicketsSection from "../../components/user/home/TicketsSection.jsx";
 
 const Home = () => {
   const { articles, loading } = useNewsList();
@@ -127,7 +128,7 @@ const Home = () => {
         buttonLink="https://fanclub.motogp.com/?utm_source=motogp.com&utm_medium=link&utm_content=fanclub2025singlepromo&utm_campaign=fanclub&_gl=1*1jz3u8p*_gcl_au*NDc4MzkyMTgzLjE3NDUyNjY4MDc.*_ga*MTc2OTk2NjE4Mi4xNzQ1MjY2ODEw*_ga_0204YNR4C1*czE3NDcxNDYxNjUkbzIxJGcxJHQxNzQ3MTQ3OTQ0JGo1MSRsMCRoMA.."
         imageUrl={fanClub}
       />
-
+      <TicketsSection />
       <TshirtsSection />
 
       <div className="text-center bg-[#171C21] text-white p-6">
