@@ -11,6 +11,7 @@ import GPListViewUP from "../../../components/user/Calendar/GPListViewUP.jsx";
 import TestView from "../../../components/user/Calendar/TestView.jsx";
 import CalendarNavTabs from "../../../components/user/Calendar/CalendarNavTabs.jsx";
 import TicketsSection from "../../../components/user/home/TicketsSection.jsx";
+import NewsSection from "../../../components/user/home/NewsSection.jsx";
 
 const formatMonthKey = (date) => dayjs(date).format("YYYY-MM");
 const formatMonthLabel = (date) => dayjs(date).format("MMMM").toUpperCase();
@@ -292,6 +293,8 @@ const Calendar = () => {
 
       <div className="bg-[#F4F4F4] text-black">
         <TicketsSection />
+
+        <NewsSection />
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ const NewsSection = ({ showOverflow = false }) => {
   const settings = {
     dots: false,
     infinite: false,
-    speed: 500,
+    speed: 300,
     slidesToShow: slidesToShow,
     slidesToScroll: slidesToShow,
     beforeChange: (_, next) => setCurrentSlide(next),
@@ -67,7 +67,7 @@ const NewsSection = ({ showOverflow = false }) => {
 
   return (
     <div className="relative group px-12 py-4 overflow-hidden">
-      <Title level={2} className={"font-MGPDisplay !text-2xl"}>Latest News</Title>
+      <Title level={2} className={"font-MGPDisplay !font-bold !text-2xl"}>Latest News</Title>
       <div className="px-0 mx-0">
         <Slider {...settings}>
           {articles.map((article) => (
