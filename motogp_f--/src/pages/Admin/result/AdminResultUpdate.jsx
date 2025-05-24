@@ -250,7 +250,6 @@ const AdminResultUpdate = () => {
             name="position"
             label="Position"
             rules={[
-              { required: true, message: "Please enter the position!" },
               {
                 type: "number",
                 min: 1,
@@ -268,10 +267,6 @@ const AdminResultUpdate = () => {
             name="timeMillis"
             label="Time (ms)"
             rules={[
-              {
-                required: true,
-                message: "Please enter the time in milliseconds!",
-              },
               {
                 type: "number",
                 min: 0,
@@ -306,7 +301,6 @@ const AdminResultUpdate = () => {
             name="laps"
             label="Laps"
             rules={[
-              { required: true, message: "Please enter the number of laps!" },
               {
                 type: "number",
                 min: 0,

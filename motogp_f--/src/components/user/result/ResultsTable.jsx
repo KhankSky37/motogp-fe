@@ -100,7 +100,7 @@ const ResultsTable = ({loading, resultData, sessionType}) => {
   ];
 
   const shouldShowPointsColumn =
-    sessionType === "RACE" || sessionType === "SPRINT";
+    sessionType === "RAC1" ||sessionType === "RAC2" || sessionType === "SPR";
 
   if (!shouldShowPointsColumn) {
     columns.splice(1, 1);
