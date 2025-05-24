@@ -5,6 +5,11 @@ import TeamService from "../../../services/TeamService.jsx"; // Thêm import nà
 import RiderCard from "./RiderCard.jsx";
 import { Spin, Alert } from "antd";
 import {Link} from "react-router-dom";
+import TshirtsSection from "../home/TshirtsSection.jsx";
+import FeaturedContent from "../home/FeaturedContent.jsx";
+import fanClub from "../../../assets/01_1579x970-Single-Promo-Home-MGP-Campaign_fan_club.webp";
+
+import WhoIs from "../../../assets/Who_is_your_favourite_rider.webp"
 
 const Rider = () => {
     const [contracts, setContracts] = useState([]);
@@ -82,42 +87,43 @@ const Rider = () => {
     const findRiderById = (id) => riders.find((r) => r.riderId === id || r.id === id);
 
     return (
-        <div className="p-12">
-            {/* Tabs chọn category */}
-            <div className="flex flex-wrap gap-3 mb-6">
-                {categories.map((cat) => (
-                    <button
+        <>
+            <div className="p-12">
+                {/* Tabs chọn category */}
+                <div className="flex flex-wrap gap-3 mb-6">
+                    {categories.map((cat) => (
+                      <button
                         key={cat}
                         onClick={() => setActiveCategory(cat)}
                         className={`px-5 py-2 rounded-full font-medium font-MGPText transition-all duration-300 shadow-sm text-sm uppercase ${
-                            activeCategory === cat
-                                ? "bg-red-600 text-white"
-                                : "bg-gray-200 text-gray-800 hover:bg-blue-100"
+                          activeCategory === cat
+                            ? "bg-red-600 text-white"
+                            : "bg-gray-200 text-gray-800 hover:bg-blue-100"
                         }`}
-                    >
-                        {cat}
-                    </button>
-                ))}
-            </div>
+                      >
+                          {cat}
+                      </button>
+                    ))}
+                </div>
 
-            {/* Hiển thị rider theo vai trò */}
-            <div className="space-y-10">
-                {rolesInCategory.map((role) => {
-                    const contractsInRole = filteredContracts.filter((c) => c.riderRole === role);
+                {/* Hiển thị rider theo vai trò */}
+                <div className="space-y-10">
+                    {rolesInCategory.map((role) => {
+                        const contractsInRole = filteredContracts.filter((c) => c.riderRole === role);
 
-                    return (
-                        <div key={role}>
-                            <h2 className="text-[37px] font-bold font-MGPDisplay text-black mb-4">{role}</h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                                {contractsInRole.length > 0 ? (
+                        return (
+                          <div key={role}>
+                              <h2 className="text-[37px] font-bold font-MGPDisplay text-black mb-4">{role}</h2>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                                  {contractsInRole.length > 0 ? (
                                     [...contractsInRole]
-                                        .sort((a, b) => {
-                                            const getNumber = (riderId) => {
-                                                const match = riderId.match(/\d+$/); // Tìm số ở cuối
-                                                return match ? parseInt(match[0], 10) : 0;
-                                            };
-                                            return getNumber(a.riderId) - getNumber(b.riderId);
-                                        })
+                                      .sort((a, b) => {
+                                          const getNumber = (riderId) => {
+                                              const match = riderId.match(/\d+$/); // Tìm số ở cuối
+                                              return match ? parseInt(match[0], 10) : 0;
+                                          };
+                                          return getNumber(a.riderId) - getNumber(b.riderId);
+                                      })
                                       .map((contract, index) => {
                                           const rider = findRiderById(contract.riderId);
                                           if (!rider) return null;
@@ -134,15 +140,26 @@ const Rider = () => {
                                             </Link>
                                           );
                                       })
-                                ) : (
+                                  ) : (
                                     <div className="text-gray-500">Không có rider nào cho vai trò này</div>
-                                )}
-                            </div>
-                        </div>
-                    );
-                })}
+                                  )}
+                              </div>
+                          </div>
+                        );
+                    })}
+                </div>
             </div>
-        </div>
+            <TshirtsSection />
+
+            <FeaturedContent
+              title="👀👀 Who's your favourite rider? 👀👀"
+              description="Personalize your MotoGP™ experience by logging in and selecting your all-time favourite rider on your account!"
+              buttonText="Select rider now!"
+              reverse={true}
+              buttonLink="#"
+              imageUrl={WhoIs}
+            />
+        </>
     );
 };
 

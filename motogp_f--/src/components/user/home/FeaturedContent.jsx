@@ -26,7 +26,7 @@ const FeaturedContent = ({
                     {buttonText && buttonLink && (
                         <a
                             href={buttonLink}
-                            className="inline-block mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full font-MGPText"
+                            className="inline-block mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full font-MGPText uppercase"
                         >
                             {buttonText}
                         </a>

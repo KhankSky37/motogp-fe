@@ -131,6 +131,7 @@ const Home = () => {
       <TicketsSection />
 
       <RidersSection  />
+
       <TshirtsSection />
 
       <div className="text-center bg-[#171C21] text-white p-6">
