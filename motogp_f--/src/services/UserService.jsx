@@ -2,10 +2,6 @@ import httpClient from "../config/HttpClient.jsx";
 import {API} from "../constants/Endpoints.jsx";
 
 const UserService = {
-  // login: (credentials) => {
-  //   return httpClient.post(`${API.USERS}/login`, credentials);
-  // },
-
   register: (userData) => {
     return httpClient.post(`${API.USERS}/register`, userData);
   },
