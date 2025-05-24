@@ -8,6 +8,7 @@ import motogp from "../../assets/motogp1.jpg";
 import sbk from "../../assets/sbk-logo-landscape-white.svg";
 
 import {getImageUrl} from "../../utils/urlHelpers.jsx";
+import AuthService from "../../services/AuthService.jsx";
 
 const {Sider, Content} = Layout;
 const {Title, Text, Link} = Typography;
@@ -105,9 +106,18 @@ const UserProfile = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const token = localStorage.getItem("motogp_token");
+    if (token) {
+      try {
+        await AuthService.logout(token);
+      } catch (error) {
+        console.error("Logout API call failed:", error);
+      }
+    }
     localStorage.removeItem("motogp_user");
-    messageApi.success("Logged out successfully!");
+    localStorage.removeItem("motogp_token");
+    messageApi.success("Logged out successfully!"); // Giả sử bạn dùng messageApi ở đây
     navigate("/login");
   };
 

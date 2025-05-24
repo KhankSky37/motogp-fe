@@ -13,5 +13,6 @@ export const API = {
   USERS: "/users",
   CONTRACTS: "/contracts",
   NEWS: "/news",
-  STANDINGS: "/standings"
+  STANDINGS: "/standings",
+  AUTH: "/auth",
 }

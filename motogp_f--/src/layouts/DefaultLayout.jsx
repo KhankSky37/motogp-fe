@@ -11,6 +11,7 @@ import tissot from "../assets/Tissot_Main_Sponsor.webp";
 import app_store from "../assets/app-store.webp";
 import play_store from "../assets/play-store.webp";
 import {DownOutlined, MenuOutlined} from "@ant-design/icons";
+import AuthService from "../services/AuthService.jsx";
 
 const {Header, Content, Footer} = Layout;
 
@@ -31,10 +32,19 @@ const DefaultLayout = () => {
     }
   }, []); // Runs once on component mount
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const token = localStorage.getItem("motogp_token");
+    if (token) {
+      try {
+        await AuthService.logout(token); // Gọi API logout của backend
+      } catch (error) {
+        console.error("Logout API call failed:", error);
+        // Vẫn tiếp tục logout ở client dù API lỗi
+      }
+    }
     localStorage.removeItem("motogp_user");
     localStorage.removeItem("motogp_token");
-    setLoggedInUser(null);
+    setLoggedInUser(null); // Giả sử bạn có state này để cập nhật UI
     message.success("Logged out successfully!");
     navigate("/login");
   };
