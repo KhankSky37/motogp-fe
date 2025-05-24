@@ -2,10 +2,10 @@ import React, {useState} from "react";
 import {Button, Checkbox, Form, Input, message, Space, Typography} from "antd";
 import {FacebookFilled, GithubOutlined, GoogleOutlined, LockOutlined, UserOutlined,} from "@ant-design/icons";
 import motogpLogo from "../../assets/motogp1.jpg"; // Assuming you have a logo asset
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import UserService from "../../services/UserService.jsx"; // Import UserService
 
-const {Title, Text, Link} = Typography;
+const {Title, Text} = Typography;
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -129,7 +129,7 @@ const Login = () => {
                     <span className="text-gray-600">Remember me</span>
                   </Checkbox>
                 </Form.Item>
-                <Link href="#" className="!text-red-600 hover:!text-red-500">
+                <Link to="/forgot-password" className="!text-red-600 hover:!text-red-500">
                   Forgot password?
                 </Link>
               </div>
