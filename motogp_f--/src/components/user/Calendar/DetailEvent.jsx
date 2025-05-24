@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import {getImageUrl} from "../../../utils/urlHelpers.jsx";
 import "dayjs/locale/en";
 
+// Random images
 import randomImg01 from "../../../assets/01Thai.jpg";
 import randomImg02 from "../../../assets/THAI1.png";
 import randomImg03 from "../../../assets/03 Americas.jpg";
@@ -22,6 +23,36 @@ import randomImg15 from "../../../assets/22 valencia.png";
 
 const {TabPane} = Tabs;
 
+const getFullSessionType = (shortType) => {
+  const map = {
+    FP1: "Free Practice Nr. 1",
+    FP2: "Free Practice Nr. 2",
+    Q1: "Qualifying Nr. 1",
+    Q2: "Qualifying Nr. 2",
+    PR: "Practice",
+    WUP: "Warm Up",
+    RAC: "Race",
+    GP: "Grand Prix",
+    SPR: "Tissot Sprint",
+  };
+  return map[shortType] || shortType;
+};
+
+const sessionDurations = {
+  FP1: 30,
+  FP2: 30,
+  PR: 40,
+  Q1: 15,
+  Q2: 15,
+  SPR: 20,
+  WUP: 10,
+  GP: 30,
+};
+
+// const lapMap = [19, 22, 26, 24, 23];
+//
+// let lapIndex = 0;
+
 const DetailEvent = ({schedule, event}) => {
   const days = Object.keys(schedule);
   const [activeKey, setActiveKey] = useState("overview");
@@ -38,7 +69,7 @@ const DetailEvent = ({schedule, event}) => {
 
   return (
     <>
-      {/* BACKGROUND + INFO */}
+      {/* Banner */}
       <div
         className="relative bg-cover bg-center text-white"
         style={{
@@ -61,16 +92,16 @@ const DetailEvent = ({schedule, event}) => {
                 {dayjs(event.startDate).format("MMM D")} – {dayjs(event.endDate).format("MMM D")}
               </div>
             </div>
-            <h1 className="text-5xl font-MGPDisplay uppercase mt-4">{event.name}</h1>
-            <p className="text-xl mt-1 font-light">{event.officialName}</p>
+            <h1 className="text-[40px] font-MGPDisplay uppercase mt-6 mb-4">{event.name}</h1>
+            <p className="text-xl mt-1 font-medium font-MGPText text-colorText">{event.officialName}</p>
           </div>
-          <div className="flex items-center gap-4 mt-2">
+          <div className="flex items-center gap-4 mt-2 font-MGPText text-colorText">
             <img
               src={getImageUrl(event.circuit.imageUrl)}
               alt="circuit"
-              className="w-6 h-6"
+              className="w-[60px] h-[60px]"
             />
-            <p>{event.circuit.name}</p>
+            <p className="text-lg">{event.circuit.name}</p>
           </div>
           <div className="flex gap-4 mt-6">
             {["Results", "Replays", "Standings"].map((label) => (
@@ -85,7 +116,7 @@ const DetailEvent = ({schedule, event}) => {
         </div>
       </div>
 
-      {/* MAIN TABS */}
+      {/* Tabs */}
       <div className="relative px-4 sm:px-12 bg-[#c80502]">
         <div className="absolute inset-0 bg-black opacity-85 z-0"></div>
         <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-l to-black from-transparent z-0"></div>
@@ -108,34 +139,20 @@ const DetailEvent = ({schedule, event}) => {
               tabBarGutter={32}
               tabBarStyle={{fontWeight: "bold", fontSize: 16}}
               items={[
-                {
-                  key: "overview",
-                  label: <span className="font-MGPText font-semibold text-xl">Overview</span>,
-                },
-                {
-                  key: "starting-grid",
-                  label: <span className="font-MGPText font-semibold text-xl">Starting Grid</span>,
-                },
-                {
-                  key: "entry-list",
-                  label: <span className="font-MGPText font-semibold text-xl">Entry List</span>,
-                },
-                {
-                  key: "circuit-info",
-                  label: <span className="font-MGPText font-semibold text-xl">Circuit Info</span>,
-                },
-                {
-                  key: "destination-guide",
-                  label: <span className="font-MGPText font-semibold text-xl">Destination Guide</span>,
-                },
+                {key: "overview", label: <span className="font-MGPText font-bold uppercase text-lg">Overview</span>},
+                {key: "starting-grid", label: <span className="font-MGPText font-semibold uppercase text-lg">Starting Grid</span>},
+                {key: "entry-list", label: <span className="font-MGPText font-semibold uppercase text-lg">Entry List</span>},
+                {key: "circuit-info", label: <span className="font-MGPText font-semibold uppercase text-lg">Circuit Info</span>},
+                {key: "destination-guide", label: <span className="font-MGPText font-semibold uppercase text-lg">Destination Guide</span>},
               ]}
             />
           </ConfigProvider>
         </div>
       </div>
 
-      {/* CONTENT AREA */}
+      {/* Schedule */}
       <div className="bg-white text-black px-4 sm:px-12 py-8">
+        <div className="text-[40px] font-MGPDisplay font-bold">Schedule</div>
         {activeKey === "overview" && (
           <ConfigProvider
             theme={{
@@ -153,61 +170,71 @@ const DetailEvent = ({schedule, event}) => {
               defaultActiveKey={days[0]}
               tabBarGutter={40}
               className="custom-tabs mt-4 font-MGPDisplay"
-              tabBarStyle={{fontWeight: "bold", fontSize: 16}}
+              tabBarStyle={{fontSize: 16}}
             >
               {days.map((date) => (
                 <TabPane
                   key={date}
                   tab={
-                    <div className="text-center leading-tight">
-                      <div className="text-lg font-bold">
-                        {dayjs(date).format("D")}
-                      </div>
-                      <div className="text-sm capitalize">
-                        {dayjs(date).format("dddd")}
-                      </div>
+                    <div>
+                      <div className="text-[32px] font-bold">{dayjs(date).format("D")}</div>
+                      <div className="text-sm uppercase font-MGPText font-bold">{dayjs(date).format("dddd")}</div>
                     </div>
                   }
                 >
                   <div className="mt-4">
                     {schedule[date].length === 0 ? (
-                      <div className="text-gray-500 italic">No sessions</div>
+                      <div className="text-colorText italic">No sessions</div>
                     ) : (
-                      schedule[date].map((session) => (
-                        <div
-                          key={session.id}
-                          className="grid [grid-template-columns:230px_auto_260px_1fr_auto] items-center border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100 transition h-[86px] overflow-hidden gap-12"
-                        >
-                          <div className="relative h-full flex flex-col justify-center">
-                            <div className="absolute inset-0 z-0">
-                              <div
-                                className="flex flex-col justify-center finished-label w-full h-full pl-[60px] text-white text-xs font-extrabold">
-                                <div className="font-bold text-white">
-                                  {dayjs(session.sessionDatetime).format("HH:mm")}
+                      schedule[date].map((session) => {
+                        const start = dayjs(session.sessionDatetime);
+                        const duration = sessionDurations[session.sessionType] || 0;
+                        const isRace = session.sessionType === "RAC";
+                        const end = start.add(duration, "minute");
+
+                        return (
+                          <div
+                            key={session.id}
+                            className="grid [grid-template-columns:220px_90px_300px_1fr_auto] font-MGPText items-center border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100 transition h-[86px] overflow-hidden gap-12"
+                          >
+                            <div className="relative h-full flex flex-col justify-center">
+                              <div className="absolute inset-0 z-0">
+                                <div
+                                  className="flex flex-col justify-center finished-label w-full h-full pl-[30px] text-white text-xs font-extrabold">
+                                  <div className="font-medium text-white text-lg ml-2">
+                                    {start.format("HH:mm")}
+                                    {!isRace && duration > 0 && ` – ${end.format("HH:mm")}`}
+                                  </div>
+                                  <div className="text-sm font-MGPDisplay font-bold">
+                                    <span className="text-lg">🏁 </span>
+                                    FINISHED
+                                  </div>
                                 </div>
-                                <div>FINISHED</div>
                               </div>
                             </div>
+                            <div className="text-start text-gray-600 font-medium font-MGPText text-xl">
+                              {session.category.name}
+                            </div>
+                            <div className="text-start text-black px-12 font-bold text-xl">
+                              {getFullSessionType(session.sessionType)}
+                            </div>
+                            <div className="font-MGPText text-gray-600 text-xl font-MGPText font-bold
+                            ">
+                              {isRace ? `19Laps` : ""}
+                            </div>
+                            <div className="flex justify-center space-x-2 mr-12">
+                              <button
+                                className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
+                                RESULTS
+                              </button>
+                              <button
+                                className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
+                                REPLAY
+                              </button>
+                            </div>
                           </div>
-                          <div className="text-start text-gray-700 font-medium font-MGPText text-xl">
-                            {session.category.categoryId}
-                          </div>
-                          <div className="text-start text-gray-700 font-medium px-12">
-                            {session.sessionType}
-                          </div>
-                          <div></div>
-                          <div className="flex justify-center space-x-2">
-                            <button
-                              className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
-                              RESULTS
-                            </button>
-                            <button
-                              className="border border-gray-400 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-gray-200">
-                              REPLAY
-                            </button>
-                          </div>
-                        </div>
-                      ))
+                        );
+                      })
                     )}
                   </div>
                 </TabPane>
@@ -216,26 +243,17 @@ const DetailEvent = ({schedule, event}) => {
           </ConfigProvider>
         )}
 
-        {activeKey === "starting-grid" && (
-          <div className="p-6 text-gray-700 italic">Starting Grid content goes here.</div>
-        )}
-        {activeKey === "entry-list" && (
-          <div className="p-6 text-gray-700 italic">Entry List content goes here.</div>
-        )}
-        {activeKey === "circuit-info" && (
-          <div className="p-6 text-gray-700 italic">Circuit Info content goes here.</div>
-        )}
-        {activeKey === "destination-guide" && (
-          <div className="p-6 text-gray-700 italic">Destination Guide content goes here.</div>
-        )}
+        {activeKey === "starting-grid" && <div className="p-6 text-gray-700 italic">Starting Grid content goes here.</div>}
+        {activeKey === "entry-list" && <div className="p-6 text-gray-700 italic">Entry List content goes here.</div>}
+        {activeKey === "circuit-info" && <div className="p-6 text-gray-700 italic">Circuit Info content goes here.</div>}
+        {activeKey === "destination-guide" && <div className="p-6 text-gray-700 italic">Destination Guide content goes here.</div>}
       </div>
 
-      {/* Custom Style */}
       <style jsx>{`
-          .finished-label {
-              background-color: #171c21;
-              clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
-          }
+        .finished-label {
+          background-color: #171c21;
+          clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+        }
       `}</style>
     </>
   );

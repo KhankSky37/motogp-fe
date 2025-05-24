@@ -114,17 +114,17 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
           <div className="mb-4">
             <Link to="/riders"
                   className="text-white hover:text-white transition-colors duration-300 inline-flex items-center">
-              <ArrowLeftOutlined className="mr-2 font-MGPText"/>
-              ALL RIDERS
+              <ArrowLeftOutlined className="mr-2"/>
+              <span className="font-MGPText text-xs font-light tracking-widest">ALL RIDERS</span>
             </Link>
           </div>
           <Row align="middle">
             <Col xs={24} md={12} className="z-10">
-              <div className="text-3xl font-bold text-white font-MGPDisplay">
+              <div className="text-2xl font-bold text-white font-MGPDisplay">
                 #{riderRacingNumber}
               </div>
               <Title
-                className="!text-7xl !font-extrabold !text-white !uppercase !leading-tight !mb-3 font-MGPDisplay">
+                className="!text-[64px] !font-extrabold !text-white !uppercase !leading-tight !mb-3 font-MGPDisplay">
                 {riderDisplayName}
               </Title>
               <div className="flex items-center space-x-4 mb-6">
@@ -156,7 +156,7 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
             </Col>
           </Row>
         </div>
-        <div className={'absolute right-0 bottom-0 z-20'}> {/* Changed z-11 to z-20 */}
+        <div className={'absolute right-0 bottom-0 z-2'}> {/* Changed z-11 to z-20 */}
           {rider.photoUrl && (
             <img
               src={getImageUrl(rider.photoUrl)}
@@ -166,9 +166,11 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
             />
           )}
         </div>
-        <div className={"absolute bottom-0 z-1 right-0 text-gray-400 text-[300px] font-black font-MGPDisplay"}>
+        <div className={"absolute bottom-0 z-0 right-0 text-[#6D6E74] text-[300px] font-black font-MGPDisplay"}>
           {backgroundText}
         </div>
+
+        <div className="absolute z-2 bottom-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent opacity-70"></div>
       </div>
 
       <div className="bg-white text-black py-12 md:py-20 px-4">
@@ -191,8 +193,8 @@ In 2025, Martin will defend his title with Aprilia Racing. Can the new King of M
                 {riderBioData.map((item, index) => (
                   <div key={index}
                        className={`flex justify-between items-center p-4 ${index < riderBioData.length - 1 ? 'border-b border-gray-200' : ''}`}>
-                    <Text className="text-sm font-medium text-gray-500 uppercase font-MGPText">{item.label}</Text>
-                    <Text className="text-sm font-semibold text-gray-800 font-MGPText">{item.value}</Text>
+                    <Text className="text-base font-medium text-gray-400 uppercase font-MGPText">{item.label}</Text>
+                    <Text className="text-base font-semibold text-gray-800 font-MGPText">{item.value}</Text>
                   </div>
                 ))}
               </div>
