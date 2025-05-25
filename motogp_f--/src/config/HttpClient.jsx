@@ -1,7 +1,7 @@
 import axios from "axios";
 // import AuthService from "../services/AuthService.jsx"; // Sẽ cần cho refresh token nâng cao
 
-const API_BASE_URL = "http://localhost:9096/api/v1";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api/v1";
 
 const httpClient = axios.create({
   baseURL: API_BASE_URL,
