@@ -151,7 +151,7 @@ const TeamDetail = () => {
                     {rider?.firstName} {rider?.lastName}
                   </span>
                   </div>
-                  <div className="absolute right-[5%] scale-150 text-colorText">></div>
+                  <div className="absolute right-[5%] scale-150 text-colorText"></div>
                   <div className="absolute z-2 bottom-0 left-0 w-full h-[10%] bg-gradient-to-t from-black to-transparent opacity-10"></div>
                 </Link>
               ))
