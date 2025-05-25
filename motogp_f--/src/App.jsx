@@ -1,6 +1,6 @@
 import './App.css'
 import { useRoutes } from "react-router-dom";
-import { routes } from "./constants/Routes";
+import { routes } from "./constants/routes";
 function App() {
   const element = useRoutes(routes);
 
