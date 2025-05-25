@@ -354,9 +354,13 @@
     font-display: swap;
 }
 
-/*.riders-tabs .ant-tabs-tab-btn {*/
-/*    font-size: 18px !important;*/
-/*}*/
+.slick-list {
+    overflow: visible !important;
+}
+
+.riders-tabs .ant-tabs-tab-btn {
+    font-size: 18px !important;
+}
 
 @tailwind base;
 @tailwind components;

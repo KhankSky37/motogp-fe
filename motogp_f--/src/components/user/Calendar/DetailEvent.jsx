@@ -20,6 +20,8 @@ import randomImg12 from "../../../assets/19 australia.png";
 import randomImg13 from "../../../assets/20malasya.png";
 import randomImg14 from "../../../assets/21 Portugal.png";
 import randomImg15 from "../../../assets/22 valencia.png";
+import VideosSecion from "../home/VideosSecion.jsx";
+import UpcomingSection from "../home/UpcomingSection.jsx";
 
 const {TabPane} = Tabs;
 
@@ -255,6 +257,18 @@ const DetailEvent = ({schedule, event}) => {
           clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
         }
       `}</style>
+
+      <VideosSecion/>
+
+      <UpcomingSection/>
+
+      <div className="text-center bg-[#171C21] text-white p-6 m-12">
+        <h1 className="text-[32px] font-MGPDisplay font-bold mb-4">Get the official MotoGP™ Newsletter!</h1>
+        <p className="font-MGPText font-light text-lg px-16 mb-4">Create a MotoGP™ account now and gain access to exclusive content, such as the MotoGP™ Newsletter, which features GP Reports, incredible videos and other interesting information about our sport.</p>
+        <button className="px-4 py-2 text-sm font-bold bg-white uppercase font-MGPText text-black rounded-full">
+          sign up for free
+        </button>
+      </div>
     </>
   );
 };

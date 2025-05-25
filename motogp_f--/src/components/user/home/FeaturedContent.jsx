@@ -18,15 +18,15 @@ const FeaturedContent = ({
                 {/* Text */}
                 <div className="max-w-xl w-full">
                     <a href={buttonLink} >
-                        <h2 className="text-2xl md:text-3xl font-bold text-black leading-tight cursor-pointer font-MGPDisplay">
+                        <h2 className="text-2xl font-bold text-black leading-tight cursor-pointer font-MGPDisplay">
                             {title}
                         </h2>
                     </a>
-                    <p className="text-gray-600 font-MGPText mt-4 text-xl md:text-base">{description}</p>
+                    <p className="text-gray-600 font-MGPText mt-4 text-xl font-light">{description}</p>
                     {buttonText && buttonLink && (
                         <a
                             href={buttonLink}
-                            className="inline-block mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full font-MGPText"
+                            className="inline-block mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full font-MGPText uppercase"
                         >
                             {buttonText}
                         </a>
@@ -34,7 +34,7 @@ const FeaturedContent = ({
                 </div>
 
                 {/* Image */}
-                <div className="w-full lg:w-[50%] overflow-hidden">
+                <div className="w-full lg:w-[50%] overflow-hidden h-[300px]">
                     <a href={buttonLink}>
                         <div className="w-full h-full transform scale-125">
                             <img

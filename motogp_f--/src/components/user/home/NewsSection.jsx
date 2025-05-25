@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { Card, Typography, Spin } from "antd";
 import Slider from "react-slick";
-import NewsArticleService from "../../../../services/NewsArticleService.jsx";
-import CustomArrow from "../CustomArrow.jsx";
+import NewsArticleService from "../../../services/NewsArticleService.jsx";
+import CustomArrow from "./CustomArrow.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./news-section.css";
-import { getImageUrl } from "../../../../utils/urlHelpers.jsx";
+// import "./NewsSection/news-section.css";
+import { getImageUrl } from "../../../utils/urlHelpers.jsx";
 
 const { Title, Paragraph } = Typography;
 
@@ -29,7 +29,7 @@ const NewsSection = ({ showOverflow = false }) => {
   const settings = {
     dots: false,
     infinite: false,
-    speed: 500,
+    speed: 300,
     slidesToShow: slidesToShow,
     slidesToScroll: slidesToShow,
     beforeChange: (_, next) => setCurrentSlide(next),
@@ -67,7 +67,7 @@ const NewsSection = ({ showOverflow = false }) => {
 
   return (
     <div className="relative group px-12 py-4 overflow-hidden">
-      <Title level={2} className={"font-MGPDisplay"}>Latest News</Title>
+      <Title level={2} className={"font-MGPDisplay !font-bold !text-2xl"}>Latest News</Title>
       <div className="px-0 mx-0">
         <Slider {...settings}>
           {articles.map((article) => (
@@ -75,13 +75,13 @@ const NewsSection = ({ showOverflow = false }) => {
               <div className="group relative transition-transform duration-300 ease-in-out hover:scale-[1.2] hover:z-10">
                 <Card
                   hoverable
-                  className="rounded-md overflow-hidden shadow-md transition-all duration-300"
-                  style={{ width: "400px" }}
+                  className="rounded-md overflow-hidden  shadow-md transition-all duration-300"
+                  style={{ width: "350px", height: "300px" }}
                   cover={
                     <div
                       style={{
                         height: "200px",
-                        width: "400px",
+                        width: "350px",
                         overflow: "hidden",
                       }}
                     >
@@ -92,6 +92,7 @@ const NewsSection = ({ showOverflow = false }) => {
                           width: "100%",
                           height: "100%",
                           objectFit: "cover",
+                          objectPosition: "center",
                         }}
                       />
                     </div>
