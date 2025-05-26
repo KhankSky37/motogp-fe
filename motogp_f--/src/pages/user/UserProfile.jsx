@@ -146,7 +146,7 @@ const UserProfile = () => {
             </Text>
             <Form form={form} layout="vertical" onFinish={onFinishPersonalDetails} initialValues={currentUser}>
               <Form.Item label="Email">
-                <Input value={currentUser.email} disabled
+                <Input value={currentUser.email}
                        addonAfter={<Button type="link" size="small">Change Email</Button>}/>
               </Form.Item>
               <Form.Item name="name" label="Name">
