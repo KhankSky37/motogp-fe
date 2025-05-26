@@ -25,7 +25,7 @@ const CircuitDetailModal = ({ circuit, visible, onClose }) => {
       <Descriptions bordered column={1} size="small">
         <Descriptions.Item label="Image">
           {imageUrl ? (
-            <Image width={200} src={imageUrl} alt={circuit.name || "Circuit"} />
+            <Image width={100} src={imageUrl} alt={circuit.name || "Circuit"} />
           ) : (
             "No Image Available"
           )}

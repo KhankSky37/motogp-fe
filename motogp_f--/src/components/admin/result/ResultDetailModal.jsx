@@ -18,7 +18,7 @@ const ResultDetailModal = ({result, visible, onClose, loading = false}) => {
       ]}
     >
       <Spin spinning={loading}>
-        <Descriptions bordered column={1}>
+        <Descriptions bordered column={1} size={"small"}>
           <Descriptions.Item label="Session">
             {result?.sessionId}
             

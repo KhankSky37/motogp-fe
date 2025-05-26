@@ -6,7 +6,6 @@ import NewsArticleService from "../../../services/NewsArticleService.jsx";
 import CustomArrow from "./CustomArrow.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import "./NewsSection/news-section.css";
 import { getImageUrl } from "../../../utils/urlHelpers.jsx";
 
 const { Title, Paragraph } = Typography;
@@ -17,7 +16,6 @@ const NewsSection = ({ showOverflow = false }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    // ✅ Sửa đúng hàm gọi API theo NewsArticleService
     NewsArticleService.getAllNewsArticles()
       .then((response) => setArticles(response.data))
       .catch((error) => console.error("Error fetching news articles:", error))
@@ -50,65 +48,48 @@ const NewsSection = ({ showOverflow = false }) => {
       />
     ),
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } },
+      { breakpoint: 1280, settings: { slidesToShow: 3, slidesToScroll: 3 } },
+      { breakpoint: 1024, settings: { slidesToShow: 2, slidesToScroll: 2 } },
+      { breakpoint: 640, settings: { slidesToShow: 1, slidesToScroll: 1 } },
     ],
-    centerMode: false,
-    centerPadding: "0px",
-    cssEase: "linear",
-    slidesSpacing: 0,
     className: showOverflow ? "show-overflow" : "hide-overflow",
   };
 
-  if (loading) {
-    return <Spin size="large" />;
-  }
+  if (loading) return <Spin size="large" />;
 
   return (
-    <div className="relative group px-12 py-4 overflow-hidden">
-      <Title level={2} className={"font-MGPDisplay !font-bold !text-2xl"}>Latest News</Title>
-      <div className="px-0 mx-0">
-        <Slider {...settings}>
-          {articles.map((article) => (
-            <div key={article.id} className="pl-0 pr-1">
-              <div className="group relative transition-transform duration-300 ease-in-out hover:scale-[1.2] hover:z-10">
-                <Card
-                  hoverable
-                  className="rounded-md overflow-hidden  shadow-md transition-all duration-300"
-                  style={{ width: "350px", height: "300px" }}
-                  cover={
-                    <div
-                      style={{
-                        height: "200px",
-                        width: "350px",
-                        overflow: "hidden",
-                      }}
-                    >
-                      <img
-                        alt="news"
-                        src={getImageUrl(article.imageUrl)}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          objectPosition: "center",
-                        }}
-                      />
-                    </div>
-                  }
-                  onClick={() => window.open(article.articleLink, "_blank")}
-                >
-                  <Card.Meta title={<span className={"font-MGPDisplay"}>{article.title}</span>} />
-                  <Paragraph className="mt-2 text-xs font-MGPText">
-                    {new Date(article.publishDate).toLocaleDateString()}
-                  </Paragraph>
-                </Card>
-              </div>
+    <div className="relative group px-4 md:px-12 py-4">
+      <Title level={2} className="font-MGPDisplay !font-bold !text-2xl">Latest News</Title>
+      <Slider {...settings}>
+        {articles.map((article) => (
+          <div key={article.id} className="">
+            <div className="group relative transition-transform duration-300 ease-in-out hover:scale-[1.1] hover:z-10">
+              <Card
+                hoverable
+                className="rounded-md overflow-hidden shadow-md transition-all duration-300 w-full max-w-[350px] mx-auto"
+                cover={
+                  <div className="h-[200px] w-full overflow-hidden">
+                    <img
+                      alt={article.title}
+                      src={getImageUrl(article.imageUrl)}
+                      onError={(e) => (e.target.style.display = "none")}
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
+                }
+                onClick={() => window.open(article.articleLink, "_blank")}
+              >
+                <Card.Meta
+                  title={<span className="font-MGPDisplay">{article.title}</span>}
+                />
+                <Paragraph className="mt-2 text-xs font-MGPText">
+                  {new Date(article.publishDate).toLocaleDateString()}
+                </Paragraph>
+              </Card>
             </div>
-          ))}
-        </Slider>
-      </div>
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 };
