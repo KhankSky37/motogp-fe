@@ -37,22 +37,6 @@ const TeamTable = ({
       },
     },
     {
-      title: "Logo",
-      dataIndex: "logoUrl",
-      key: "logo",
-      width: 80,
-      render: (logoUrl, record) => (
-        <Avatar
-          src={logoUrl ? getImageUrl(logoUrl) : null}
-          alt={record.name}
-          shape="square"
-          size="large"
-        >
-          {!logoUrl && record.name ? record.name.charAt(0) : "T"}
-        </Avatar>
-      ),
-    },
-    {
       title: "Name",
       dataIndex: "name",
       key: "name",

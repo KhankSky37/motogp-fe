@@ -37,23 +37,6 @@ const CircuitTable = ({
       },
     },
     {
-      title: "Image",
-      dataIndex: "imageUrl",
-      key: "image",
-      width: 100,
-      render: (imageUrl) =>
-        imageUrl ? (
-          <Image
-            src={getImageUrl(imageUrl)}
-            alt="Circuit"
-            style={{ width: 60, height: 60, objectFit: "cover" }}
-            preview={{ mask: <EyeOutlined /> }}
-          />
-        ) : (
-          "No image"
-        ),
-    },
-    {
       title: "Name",
       dataIndex: "name",
       key: "name",

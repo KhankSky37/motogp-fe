@@ -17,7 +17,7 @@ const EventDetailModal = ({ event, visible, onCancel = true }) => {
         </Button>,
       ]}
     >
-      <Descriptions bordered column={1}>
+      <Descriptions bordered column={1} size={"small"}>
         <Descriptions.Item label="ID">{event.id || "N/A"}</Descriptions.Item>
         <Descriptions.Item label="Name">
           {event.name || "N/A"}
