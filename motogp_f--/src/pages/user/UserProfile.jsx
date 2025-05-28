@@ -29,13 +29,16 @@ const UserProfile = () => {
   const [passwordChangeLoading, setPasswordChangeLoading] = useState(false);
   const [selectedKey, setSelectedKey] = useState('personal-details');
   const [messageApi, contextHolder] = message.useMessage();
-  const {user, logout, updateUser} = useAuth();
+  const {user, logout, updateUser, loading: authLoading} = useAuth();
 
 
   const fetchUserData = useCallback(async () => {
-    if (!user || !user.id) {
+    if (!authLoading && (!user || !user.id)) {
       messageApi.error('You are not logged in.');
       navigate('/login');
+      return;
+    }
+    if (authLoading) {
       return;
     }
     try {
