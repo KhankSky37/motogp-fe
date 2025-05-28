@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Button, ConfigProvider, Dropdown, Layout, Menu, message, Space} from "antd";
+import React from "react";
+import {Button, ConfigProvider, Dropdown, Layout, Menu, Space} from "antd";
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import motogp from "../assets/motogp1.jpg";
 import bwm from "../assets/BMW-M_logo.webp";
@@ -11,41 +11,16 @@ import tissot from "../assets/Tissot_Main_Sponsor.webp";
 import app_store from "../assets/app-store.webp";
 import play_store from "../assets/play-store.webp";
 import {DownOutlined, MenuOutlined} from "@ant-design/icons";
-import AuthService from "../services/AuthService.jsx";
+import {useAuth} from "../contexts/AuthContext.jsx";
 
 const {Header, Content, Footer} = Layout;
 
 const DefaultLayout = () => {
   const navigate = useNavigate();
-  const [loggedInUser, setLoggedInUser] = useState(null);
-
-  useEffect(() => {
-    const userString = localStorage.getItem("motogp_user");
-    if (userString) {
-      try {
-        setLoggedInUser(JSON.parse(userString));
-      } catch (e) {
-        console.error("Failed to parse user from localStorage", e);
-        localStorage.removeItem("motogp_user"); // Clear corrupted item
-        localStorage.removeItem("motogp_token");
-      }
-    }
-  }, []); // Runs once on component mount
+  const {user, isAuthenticated, logout} = useAuth();
 
   const handleLogout = async () => {
-    const token = localStorage.getItem("motogp_token");
-    if (token) {
-      try {
-        await AuthService.logout(token); // Gọi API logout của backend
-      } catch (error) {
-        console.error("Logout API call failed:", error);
-        // Vẫn tiếp tục logout ở client dù API lỗi
-      }
-    }
-    localStorage.removeItem("motogp_user");
-    localStorage.removeItem("motogp_token");
-    setLoggedInUser(null); // Giả sử bạn có state này để cập nhật UI
-    message.success("Logged out successfully!");
+    await logout();
     navigate("/login");
   };
   const items = [
@@ -173,13 +148,13 @@ const DefaultLayout = () => {
         </ConfigProvider>
 
         <div className={"text-[#e5e7eb] flex items-center"}>
-          {loggedInUser ? (
+          {isAuthenticated ? (
             <>
               <Button type="link" onClick={handleLogout} className="!text-white hover:!text-red-400 px-3">
                 Logout
               </Button>
               <Link to={'/profile'}
-                    className={"px-3 font-bold"}>Welcome, {loggedInUser.name || loggedInUser.nickname || 'Rider'}</Link>
+                    className={"px-3 font-bold"}>Welcome, {user.name || user.nickname || 'Rider'}</Link>
             </>
           ) : (
             <>

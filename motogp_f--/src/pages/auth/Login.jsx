@@ -3,9 +3,7 @@ import {Button, Checkbox, Form, Input, message, Space, Typography} from "antd";
 import {FacebookFilled, GithubOutlined, GoogleOutlined, LockOutlined, UserOutlined,} from "@ant-design/icons";
 import motogpLogo from "../../assets/motogp1.jpg"; // Assuming you have a logo asset
 import {Link, useNavigate} from "react-router-dom";
-import UserService from "../../services/UserService.jsx";
-import {jwtDecode} from "jwt-decode";
-import AuthService from "../../services/AuthService.jsx"; // Import UserService
+import {useAuth} from "../../contexts/AuthContext.jsx"; // Import UserService
 
 const {Title, Text} = Typography;
 const Login = () => {
@@ -13,6 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
+  const {login} = useAuth(); // Sử dụng context
 
 
   const onFinish = async (values) => {
@@ -22,38 +21,24 @@ const Login = () => {
         email: values.email,
         password: values.password,
       };
-      const response = await AuthService.login(credentials);
-      const token = response.data;
+      const user = await login(credentials);
 
-      if (token && typeof token === 'string') {
-        localStorage.setItem("motogp_token", token);
-        const decodedToken = jwtDecode(token);
-        const user = {
-          id: decodedToken.userId, // Lấy từ claim "userId"
-          email: decodedToken.sub,    // Lấy từ claim "sub" (subject)
-          role: decodedToken.role,    // Lấy từ claim "role"
-        };
-        localStorage.setItem("motogp_user", JSON.stringify(user));
-
+      if (user) {
         messageApi.success("Login successful!");
 
+        // Navigate dựa trên role
         if (user.role?.toUpperCase() === "ADMIN") {
           navigate("/admin");
         } else {
           navigate("/");
         }
       } else {
-        // Xử lý trường hợp backend không trả về token hoặc trả về lỗi có cấu trúc khác
-        const errorMessageFromServer = typeof response.data === 'string'
-          ? response.data
-          : (response.data?.message || response.data?.error || "Login failed: Invalid response from server.");
-        messageApi.error(errorMessageFromServer);
+        messageApi.error("Login failed: Invalid response from server.");
       }
     } catch (error) {
       console.error("Login failed:", error);
       let errorMessage = "Login failed. Please check your credentials and try again.";
       if (error.response && error.response.data) {
-        // Backend có thể trả về lỗi dạng string hoặc object
         errorMessage = typeof error.response.data === 'string'
           ? error.response.data
           : (error.response.data.error || error.response.data.message || errorMessage);

@@ -8,7 +8,7 @@ import motogp from "../../assets/motogp1.jpg";
 import sbk from "../../assets/sbk-logo-landscape-white.svg";
 
 import {getImageUrl} from "../../utils/urlHelpers.jsx";
-import AuthService from "../../services/AuthService.jsx";
+import {useAuth} from "../../contexts/AuthContext.jsx";
 
 const {Sider, Content} = Layout;
 const {Title, Text, Link} = Typography;
@@ -29,23 +29,18 @@ const UserProfile = () => {
   const [passwordChangeLoading, setPasswordChangeLoading] = useState(false);
   const [selectedKey, setSelectedKey] = useState('personal-details');
   const [messageApi, contextHolder] = message.useMessage();
+  const {user, logout, updateUser} = useAuth();
+
 
   const fetchUserData = useCallback(async () => {
-    const userString = localStorage.getItem('motogp_user');
-    if (!userString) {
+    if (!user || !user.id) {
       messageApi.error('You are not logged in.');
       navigate('/login');
       return;
     }
     try {
-      const storedUser = JSON.parse(userString);
-      if (!storedUser.id) {
-        messageApi.error('User ID not found. Please log in again.');
-        navigate('/login');
-        return;
-      }
       setLoading(true);
-      const response = await UserService.getUserById(storedUser.id);
+      const response = await UserService.getUserById(user.id);
       const userData = response.data;
       setCurrentUser(userData);
       form.setFieldsValue({
@@ -58,7 +53,7 @@ const UserProfile = () => {
     } finally {
       setLoading(false);
     }
-  }, [form, messageApi, navigate]);
+  }, [form, messageApi, navigate, user]);
 
   useEffect(() => {
     fetchUserData();
@@ -77,8 +72,9 @@ const UserProfile = () => {
         phoneNumber: values.phoneNumber,
       };
       const response = await UserService.updateUser(currentUser.id, updatedUserData);
-      setCurrentUser(response.data); // Update local state with response from server
-      localStorage.setItem('motogp_user', JSON.stringify(response.data)); // Update localStorage
+      setCurrentUser(response.data);
+      updateUser(response.data);
+
       messageApi.success('Profile updated successfully!');
     } catch (error) {
       console.error('Failed to update profile:', error);
@@ -107,17 +103,7 @@ const UserProfile = () => {
   };
 
   const handleLogout = async () => {
-    const token = localStorage.getItem("motogp_token");
-    if (token) {
-      try {
-        await AuthService.logout(token);
-      } catch (error) {
-        console.error("Logout API call failed:", error);
-      }
-    }
-    localStorage.removeItem("motogp_user");
-    localStorage.removeItem("motogp_token");
-    messageApi.success("Logged out successfully!"); // Giả sử bạn dùng messageApi ở đây
+    await logout();
     navigate("/login");
   };
 

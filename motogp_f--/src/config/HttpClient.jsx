@@ -73,7 +73,6 @@ httpClient.interceptors.response.use(
 
       // Xử lý đơn giản: logout
       localStorage.removeItem("motogp_token");
-      localStorage.removeItem("motogp_user");
       // Sử dụng window.location để đảm bảo reload hoàn toàn và state được reset
       if (window.location.pathname !== '/login') {
         window.location.href = '/login';

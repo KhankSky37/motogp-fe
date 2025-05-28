@@ -1,41 +1,20 @@
-import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { jwtDecode } from "jwt-decode";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import NotFound from "../../pages/NotFound.jsx";
 
 const ProtectedRoute = ({ allowedRoles }) => {
-  const token = localStorage.getItem('motogp_token');
-  let isAuthenticated = false;
-  let userRole = null;
+  const { user, loading, hasRole } = useAuth();
 
-  if (token) {
-    try {
-      const decodedToken = jwtDecode(token);
-      const currentTime = Date.now() / 1000;
-
-      if (decodedToken.exp > currentTime) {
-        isAuthenticated = true;
-        userRole = decodedToken.role?.toUpperCase(); // Lấy vai trò từ token và chuyển thành chữ hoa
-      } else {
-        // Token hết hạn
-        localStorage.removeItem('motogp_token');
-        localStorage.removeItem('motogp_user');
-      }
-    } catch (error) {
-      console.error("Invalid token:", error);
-      localStorage.removeItem('motogp_token');
-      localStorage.removeItem('motogp_user');
-    }
+  if (loading) {
+    return <div>Loading...</div>; // hoặc component loading khác
   }
 
-  if (!isAuthenticated) {
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // Backend trả về role (ví dụ "ADMIN"), allowedRoles cũng nên là ["ADMIN"]
-  if (allowedRoles && userRole && !allowedRoles.includes(userRole)) {
-    // Đã đăng nhập, nhưng vai trò không được phép
-    // Chuyển hướng về trang chủ hoặc trang "Không có quyền truy cập"
-    return <Navigate to="/" replace />; // Hoặc một trang lỗi 403
+  if (allowedRoles && !hasRole(allowedRoles)) {
+    return <NotFound/>;
   }
 
   return <Outlet />;
