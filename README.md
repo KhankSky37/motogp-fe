@@ -12,33 +12,33 @@ MotoGP Frontend is a dynamic web application designed for MotoGP enthusiasts. It
 
 ### User-Facing Features:
 *   **Homepage**: Overview of latest news, upcoming events, and videos.
-*   **News Section**: Browse and read the latest MotoGP news articles ([`src/pages/user/news/NewsPage.jsx`](src/pages/user/news/NewsPage.jsx)).
-*   **Results & Standings**: View detailed race results and championship standings by season, event, and category ([`src/pages/user/resultStanding/Result.jsx`](src/pages/user/resultStanding/Result.jsx)).
-*   **Riders & Teams**: Explore profiles of MotoGP riders and teams ([`src/layouts/RidersTeamsMenu.jsx`](src/layouts/RidersTeamsMenu.jsx)).
-*   **Authentication**: Secure user registration and login ([`src/pages/auth/Login.jsx`](src/pages/auth/Login.jsx), [`src/contexts/AuthContext.jsx`](src/contexts/AuthContext.jsx)).
+*   **News Section**: Browse and read the latest MotoGP news articles ([`src/pages/user/news/NewsPage.jsx`](motogp_f--/src/pages/user/news/NewsPage.jsx)).
+*   **Results & Standings**: View detailed race results and championship standings by season, event, and category ([`src/pages/user/resultStanding/Result.jsx`](motogp_f--/src/pages/user/resultStanding/Result.jsx)).
+*   **Riders & Teams**: Explore profiles of MotoGP riders and teams ([`src/layouts/RidersTeamsMenu.jsx`](motogp_f--/src/layouts/RidersTeamsMenu.jsx)).
+*   **Authentication**: Secure user registration and login ([`src/pages/auth/Login.jsx`](motogp_f--/src/pages/auth/Login.jsx), [`src/contexts/AuthContext.jsx`](motogp_f--/src/contexts/AuthContext.jsx)).
 *   **User Profile**: Manage user-specific information (accessible via `/profile`).
 *   **Responsive Design**: Adapts to various screen sizes for a seamless experience.
 
 ### Admin Panel Features:
 *   **Dashboard**: Overview of site statistics and management links.
-*   **User Management**: CRUD operations for users ([`src/pages/Admin/userAdmin/AdminUser.jsx`](src/pages/Admin/userAdmin/AdminUser.jsx)).
-*   **News Article Management**: Create, read, update, and delete news articles with image uploads ([`src/pages/Admin/newsArticle/AdminNewsArticle.jsx`](src/pages/Admin/newsArticle/AdminNewsArticle.jsx)).
-*   **Event Management**: Manage race events, including details and scheduling ([`src/pages/Admin/event/AdminEventUpdate.jsx`](src/pages/Admin/event/AdminEventUpdate.jsx)).
-*   **Rider Management**: Manage rider profiles and information ([`src/pages/Admin/rider/AdminRiderUpdate.jsx`](src/pages/Admin/rider/AdminRiderUpdate.jsx)).
+*   **User Management**: CRUD operations for users ([`src/pages/Admin/userAdmin/AdminUser.jsx`](motogp_f--/src/pages/Admin/userAdmin/AdminUser.jsx)).
+*   **News Article Management**: Create, read, update, and delete news articles with image uploads ([`src/pages/Admin/newsArticle/AdminNewsArticle.jsx`](motogp_f--/src/pages/Admin/newsArticle/AdminNewsArticle.jsx)).
+*   **Event Management**: Manage race events, including details and scheduling ([`src/pages/Admin/event/AdminEventUpdate.jsx`](motogp_f--/src/pages/Admin/event/AdminEventUpdate.jsx)).
+*   **Rider Management**: Manage rider profiles and information ([`src/pages/Admin/rider/AdminRiderUpdate.jsx`](motogp_f--/src/pages/Admin/rider/AdminRiderUpdate.jsx)).
 *   **Team Management**: Manage team details and associated riders.
-*   **Manufacturer Management**: Manage manufacturers involved in MotoGP ([`src/pages/Admin/manufacturer/AdminManufacturer.jsx`](src/pages/Admin/manufacturer/AdminManufacturer.jsx)).
-*   **Contract Management**: Manage contracts between riders, teams, and seasons ([`src/pages/Admin/contract/AdminContract.jsx`](src/pages/Admin/contract/AdminContract.jsx)).
-*   **Session Management**: Manage specific race sessions (e.g., FP1, Q2, Race) ([`src/pages/Admin/session/AdminSession.jsx`](src/pages/Admin/session/AdminSession.jsx)).
-*   **Result Management**: Input and manage results for various sessions ([`src/pages/Admin/result/AdminResultUpdate.jsx`](src/pages/Admin/result/AdminResultUpdate.jsx)).
+*   **Manufacturer Management**: Manage manufacturers involved in MotoGP ([`src/pages/Admin/manufacturer/AdminManufacturer.jsx`](motogp_f--/src/pages/Admin/manufacturer/AdminManufacturer.jsx)).
+*   **Contract Management**: Manage contracts between riders, teams, and seasons ([`src/pages/Admin/contract/AdminContract.jsx`](motogp_f--/src/pages/Admin/contract/AdminContract.jsx)).
+*   **Session Management**: Manage specific race sessions (e.g., FP1, Q2, Race) ([`src/pages/Admin/session/AdminSession.jsx`](motogp_f--/src/pages/Admin/session/AdminSession.jsx)).
+*   **Result Management**: Input and manage results for various sessions ([`src/pages/Admin/result/AdminResultUpdate.jsx`](motogp_f--/src/pages/Admin/result/AdminResultUpdate.jsx)).
 
 ## Technologies Used
 
 *   **Frontend**: React, Vite
 *   **UI Framework**: Ant Design
-*   **Styling**: Tailwind CSS, CSS Modules, Global CSS ([`src/App.css`](src/App.css), [`src/index.css`](src/index.css))
+*   **Styling**: Tailwind CSS, CSS Modules, Global CSS ([`src/App.css`](motogp_f--/src/App.css), [`src/index.css`](motogp_f--/src/index.css))
 *   **Routing**: React Router DOM
-*   **State Management**: React Context API ([`src/contexts/AuthContext.jsx`](src/contexts/AuthContext.jsx))
-*   **HTTP Client**: Axios (configured in [`src/config/HttpClient.jsx`](src/config/HttpClient.jsx))
+*   **State Management**: React Context API ([`src/contexts/AuthContext.jsx`](motogp_f--/src/contexts/AuthContext.jsx))
+*   **HTTP Client**: Axios (configured in [`src/config/HttpClient.jsx`](motogp_f--/src/config/HttpClient.jsx))
 *   **Linting**: ESLint ([`eslint.config.js`](eslint.config.js))
 *   **Date Handling**: Day.js
 *   **Carousel/Slider**: React Slick
@@ -136,7 +136,7 @@ Create a `.env.local` file in the root of the project and add the following:
 VITE_API_BASE_URL=http://localhost:8080/api/v1
 ```
 
-Replace `http://localhost:8080/api/v1` with your actual backend API URL if it's different. This is used in [`src/config/HttpClient.jsx`](src/config/HttpClient.jsx).
+Replace `http://localhost:8080/api/v1` with your actual backend API URL if it's different. This is used in [`src/config/HttpClient.jsx`](motogp_f--/src/config/HttpClient.jsx).
 
 ## Getting Started
 
@@ -184,7 +184,7 @@ This will start the development server, typically at [http://localhost:5137](htt
 
 ## API Backend
 
-This frontend application consumes a backend API for data. The base URL for the API is configured using the `VITE_API_BASE_URL` environment variable. If not set, it defaults to `http://localhost:8080/api/v1` as defined in [`src/config/HttpClient.jsx`](src/config/HttpClient.jsx).
+This frontend application consumes a backend API for data. The base URL for the API is configured using the `VITE_API_BASE_URL` environment variable. If not set, it defaults to `http://localhost:8080/api/v1` as defined in [`src/config/HttpClient.jsx`](motogp_f--/src/config/HttpClient.jsx).
 
 Ensure the backend server is running and accessible at the configured URL.
 
