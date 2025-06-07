@@ -4,6 +4,7 @@
 
 MotoGP Frontend is a dynamic web application designed for MotoGP enthusiasts. It provides users with up-to-date information on race schedules, rider profiles, team details, and current standings. The application also features an administrative backend for managing the content, including users, news articles, events, and more.
 
+![background](motogp_f--/src/assets/bg.jpg)
 ## Live Demo
 
 `Deployed: [https://motogp-k.me](https://motogp-k.me)`
