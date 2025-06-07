@@ -39,10 +39,10 @@ MotoGP Frontend is a dynamic web application designed for MotoGP enthusiasts. It
 *   **Routing**: React Router DOM
 *   **State Management**: React Context API ([`src/contexts/AuthContext.jsx`](motogp_f--/src/contexts/AuthContext.jsx))
 *   **HTTP Client**: Axios (configured in [`src/config/HttpClient.jsx`](motogp_f--/src/config/HttpClient.jsx))
-*   **Linting**: ESLint ([`eslint.config.js`](eslint.config.js))
+*   **Linting**: ESLint ([`eslint.config.js`](motogp_f--/eslint.config.js))
 *   **Date Handling**: Day.js
 *   **Carousel/Slider**: React Slick
-*   **Deployment**: Vercel (inferred from [vercel.json](vercel.json))
+*   **Deployment**: Vercel (inferred from [vercel.json](motogp_f--/vercel.json))
 
 ## Project Structure
 
@@ -173,7 +173,7 @@ npm run dev
 # yarn dev
 ```
 
-This will start the development server, typically at [http://localhost:5137](http://localhost:5137) (as configured in [vite.config.js](vite.config.js)).
+This will start the development server, typically at [http://localhost:5137](http://localhost:5137) (as configured in [vite.config.js](motogp_f--/vite.config.js)).
 
 ## Available Scripts
 
